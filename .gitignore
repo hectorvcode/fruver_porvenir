@@ -1,0 +1,66 @@
+# Archivos y carpetas generados por Android Studio
+/.idea/
+/.gradle/
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+/build/
+/captures/
+.externalNativeBuild
+.cxx/
+
+# Archivos de configuración específicos del IDE
+*.iml
+.idea/misc.xml
+.idea/gradle.xml
+.idea/codeStyles/
+.idea/runConfigurations.xml
+.DS_Store
+
+# Archivos generados durante la compilación
+/app/debug
+/app/release
+/app/build/
+*.apk
+*.ap_
+*.aab
+
+# Archivos de Java
+*.class
+*.dex
+*.jar
+*.war
+*.ear
+*.log
+
+# Archivos generados por Gradle
+.gradle/
+/gradlew
+/gradlew.bat
+/gradle/wrapper/gradle-wrapper.jar
+
+# Archivos de Proguard
+/proguard/
+
+# Archivos generados por el sistema
+.navigation/
+gen/
+bin/
+out/
+
+# Archivos de configuración local
+local.properties
+keystore.properties
+app/keystore/
+
+# Archivos de Android Studio Signing
+*.jks
+*.keystore
+
+# Google Services
+google-services.json
+GoogleService-Info.plist
