@@ -10,50 +10,24 @@
         android:id="@+id/tv_fruver_porvenir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:text="@string/fruver_porvenir"
         android:textColor="@color/black"
         android:textSize="34sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_divisor"
-        app:layout_constraintVertical_bias="0.206" />
-
-    <TextView
-        android:id="@+id/tv_fruver_slogan"
-        android:layout_width="227dp"
-        android:layout_height="82dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/fruver_slogan"
-        android:textAlignment="center"
-        android:textColor="@color/gray"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_fruver_porvenir"
-        tools:ignore="TextSizeCheck" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_app_logo" />
 
     <ImageView
         android:id="@+id/iv_app_logo"
         android:layout_width="357dp"
         android:layout_height="390dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="156dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/app_logo" />
-
-    <ImageView
-        android:id="@+id/iv_divisor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_app_logo"
-        app:srcCompat="@drawable/divisor" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
