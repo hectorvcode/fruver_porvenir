@@ -36,13 +36,13 @@
         android:id="@+id/tv_fruver_slogan"
         android:layout_width="295dp"
         android:layout_height="95dp"
-        android:layout_marginTop="88dp"
+        android:layout_marginTop="56dp"
         android:text="@string/fruver_slogan"
         android:textAlignment="center"
         android:textColor="@color/gray"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.54"
+        app:layout_constraintHorizontal_bias="0.543"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_fruver_porvenir" />
 

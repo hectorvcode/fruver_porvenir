@@ -118,7 +118,7 @@
         android:layout_height="48dp"
         android:layout_marginTop="68dp"
         android:backgroundTint="@color/green_mint"
-        android:text="@string/comienza"
+        android:text="@string/pagar"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
