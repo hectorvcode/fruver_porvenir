@@ -10,4 +10,22 @@
     <string name="usuario">Usuario</string>
     <string name="ingresar">Ingresar</string>
     <string name="recuperar_contrasena">Recuperar Contraseña</string>
+    <string name="nuestros_productos">Nuestros Productos</string>
+    <string name="frutas">Frutas</string>
+    <string name="verduras">Verduras</string>
+    <string name="bebidas">Bebidas</string>
+    <string name="calidad_precio">La mejor calidad al mejor precio</string>
+    <string name="banano">Banano</string>
+    <string name="pesos_1500_lb">$1500/lb</string>
+    <string name="naranja">Naranja</string>
+    <string name="pesos_2500_lb">$2500/lb</string>
+    <string name="pina">Piña</string>
+    <string name="pesos_3500_lb">$3500/lb</string>
+    <string name="limon">Limón</string>
+    <string name="pesos_1200_lb">$1200/lb</string>
+    <string name="search_content_icon">Search Content Icon</string>
+    <string name="tarjeta_bananos">Tarjeta Bananos</string>
+    <string name="tarjeta_naranjas">Tarjeta Naranjas</string>
+    <string name="tarjeta_pinas">Tarjeta Piñas</string>
+    <string name="tarjeta_limones">Tarjeta Limones</string>
 </resources>

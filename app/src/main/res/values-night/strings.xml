@@ -3,4 +3,15 @@
     <string name="usuario">Usuario</string>
     <string name="ingresar">Ingresar</string>
     <string name="recuperar_contrasena">Recuperar Contrasena</string>
+    <string name="frutas">Frutas</string>
+    <string name="verduras">Verduras</string>
+    <string name="bebidas">Bebidas</string>
+    <string name="calidad_precio">La mejor calidad al mejor precio</string>
+    <string name="pesos_1500_lb">$1500/lb</string>
+    <string name="naranja">Naranja</string>
+    <string name="pina">Piña</string>
+    <string name="pesos_3500_lb">$3500/lb</string>
+    <string name="limon">Limón</string>
+    <string name="tarjeta_naranjas">Tarjeta Naranjas</string>
+    <string name="tarjeta_pinas">Tarjeta Piñas</string>
 </resources>

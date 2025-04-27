@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradient">
+
+    <TextView
+        android:id="@+id/tv_nuestros_productos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
+        android:text="@string/nuestros_productos"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_ic_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:contentDescription="@string/search_content_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintStart_toEndOf="@+id/tv_nuestros_productos"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_search" />
+
+    <Button
+        android:id="@+id/btn_frutas"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginTop="44dp"
+        android:backgroundTint="@color/fae61e"
+        android:text="@string/frutas"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.052"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_nuestros_productos" />
+
+    <Button
+        android:id="@+id/btn_bebidas"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="44dp"
+        android:backgroundTint="@color/gray"
+        android:text="@string/bebidas"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/btn_verduras"
+        app:layout_constraintTop_toBottomOf="@+id/tv_nuestros_productos" />
+
+    <Button
+        android:id="@+id/btn_verduras"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="44dp"
+        android:backgroundTint="@color/gray"
+        android:text="@string/verduras"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/btn_frutas"
+        app:layout_constraintTop_toBottomOf="@+id/tv_nuestros_productos" />
+
+    <TextView
+        android:id="@+id/tv_calidad_precio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/calidad_precio"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_verduras" />
+
+    <ImageView
+        android:id="@+id/banano"
+        android:layout_width="140dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="56dp"
+        android:contentDescription="@string/tarjeta_bananos"
+        app:layout_constraintEnd_toStartOf="@+id/naranja"
+        app:layout_constraintHorizontal_bias="0.471"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_calidad_precio"
+        app:srcCompat="@drawable/banano" />
+
+    <TextView
+        android:id="@+id/tv_banano"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="164dp"
+        android:text="@string/banano"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.156"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_calidad_precio" />
+
+    <TextView
+        android:id="@+id/tv_precio_banano"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pesos_1500_lb"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.154"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_banano" />
+
+    <ImageView
+        android:id="@+id/naranja"
+        android:layout_width="140dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="44dp"
+        android:contentDescription="@string/tarjeta_naranjas"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_calidad_precio"
+        app:srcCompat="@drawable/naranja" />
+
+    <TextView
+        android:id="@+id/tv_naranja"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="140dp"
+        android:text="@string/naranja"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.684"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_calidad_precio" />
+
+    <TextView
+        android:id="@+id/tv_precio_naranja"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pesos_2500_lb"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.671"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_naranja" />
+
+    <ImageView
+        android:id="@+id/pina"
+        android:layout_width="140dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="12dp"
+        android:contentDescription="@string/tarjeta_pinas"
+        app:layout_constraintEnd_toStartOf="@+id/limon"
+        app:layout_constraintHorizontal_bias="0.471"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/banano"
+        app:srcCompat="@drawable/pina" />
+
+    <TextView
+        android:id="@+id/tv_pina"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="116dp"
+        android:text="@string/pina"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.147"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/banano" />
+
+    <TextView
+        android:id="@+id/tv_precio_pina"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pesos_3500_lb"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.154"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_pina" />
+
+    <ImageView
+        android:id="@+id/limon"
+        android:layout_width="140dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="44dp"
+        android:contentDescription="@string/tarjeta_limones"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/naranja"
+        app:srcCompat="@drawable/limon" />
+
+    <TextView
+        android:id="@+id/tv_limon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:text="@string/limon"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.663"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/naranja" />
+
+    <TextView
+        android:id="@+id/tv_precio_limon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pesos_1200_lb"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.671"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_limon" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
