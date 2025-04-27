@@ -40,4 +40,14 @@
     <string name="profile">Profile</string>
     <string name="mi_carrito">Mi Carrito</string>
     <string name="back_icon">Back Icon</string>
+    <string name="banana_card">Banana Card</string>
+    <string name="pineaple_card">Pineaple Card</string>
+    <string name="tomatoe_card">Tomatoe Card</string>
+    <string name="cantidad_total">Cantidad Total</string>
+    <string name="pesos_25000">$25000</string>
+    <string name="frutas_frescas">Frutas Frescas</string>
+    <string name="plus">+</string>
+    <string name="minus">--</string>
+    <string name="dos">2</string>
+    <string name="tomatoe">Tomatoe</string>
 </resources>

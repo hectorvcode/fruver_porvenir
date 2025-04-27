@@ -15,4 +15,6 @@
     <string name="tarjeta_naranjas">Tarjeta Naranjas</string>
     <string name="tarjeta_pinas">Tarjeta Piñas</string>
     <string name="back_icon">Back Icon</string>
+    <string name="tomatoe_card">Tomatoe Card</string>
+    <string name="cantidad_total">Cantidad Total</string>
 </resources>
