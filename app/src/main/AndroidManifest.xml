@@ -25,6 +25,11 @@
             android:exported="false" />
         <activity android:name=".Activities.HomeActivity"
             android:exported="false" />
+        <activity android:name=".Activities.LoginActivity"
+            android:exported="false" />
+        <activity android:name=".Activities.ListActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
