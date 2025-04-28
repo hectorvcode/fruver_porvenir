@@ -35,7 +35,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="36dp"
         android:text="@string/nuestros_productos"
-        android:textSize="34sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -104,12 +104,12 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_verduras" />
 
     <ImageView
-        android:id="@+id/banano"
+        android:id="@+id/iv_banano"
         android:layout_width="140dp"
         android:layout_height="160dp"
         android:layout_marginTop="56dp"
         android:contentDescription="@string/tarjeta_bananos"
-        app:layout_constraintEnd_toStartOf="@+id/naranja"
+        app:layout_constraintEnd_toStartOf="@+id/iv_naranja"
         app:layout_constraintHorizontal_bias="0.471"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_calidad_precio"
@@ -140,7 +140,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_banano" />
 
     <ImageView
-        android:id="@+id/naranja"
+        android:id="@+id/iv_naranja"
         android:layout_width="140dp"
         android:layout_height="160dp"
         android:layout_marginTop="28dp"
@@ -175,15 +175,15 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_naranja" />
 
     <ImageView
-        android:id="@+id/pina"
+        android:id="@+id/iv_pina"
         android:layout_width="140dp"
         android:layout_height="160dp"
         android:layout_marginTop="12dp"
         android:contentDescription="@string/tarjeta_pinas"
-        app:layout_constraintEnd_toStartOf="@+id/limon"
+        app:layout_constraintEnd_toStartOf="@+id/iv_limon"
         app:layout_constraintHorizontal_bias="0.471"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/banano"
+        app:layout_constraintTop_toBottomOf="@+id/iv_banano"
         app:srcCompat="@drawable/pina" />
 
     <TextView
@@ -197,7 +197,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.147"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/banano" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_banano" />
 
     <TextView
         android:id="@+id/tv_precio_pina"
@@ -211,14 +211,14 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_pina" />
 
     <ImageView
-        android:id="@+id/limon"
+        android:id="@+id/iv_limon"
         android:layout_width="140dp"
         android:layout_height="160dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="44dp"
         android:contentDescription="@string/tarjeta_limones"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/naranja"
+        app:layout_constraintTop_toBottomOf="@+id/iv_naranja"
         app:srcCompat="@drawable/limon" />
 
     <TextView
@@ -232,7 +232,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.663"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/naranja" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_naranja" />
 
     <TextView
         android:id="@+id/tv_precio_limon"

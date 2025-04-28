@@ -21,14 +21,12 @@
         android:id="@+id/tv_mi_carrito"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="128dp"
         android:layout_marginTop="32dp"
         android:text="@string/mi_carrito"
         android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/iv_ic_search"
-        app:layout_constraintHorizontal_bias="0.013"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_ic_back"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
