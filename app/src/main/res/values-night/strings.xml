@@ -1,20 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Online_store</string>
+    <string name="fruver_porvenir">Fruver Porvenir</string>
+    <string name="fruver_slogan">La forma más fácil de obtener la mejor calidad a domicilio</string>
+    <string name="comienza">Comienza</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="app_logo">App logo</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="continuar_con_google">Continuar con Google</string>
     <string name="usuario">Usuario</string>
     <string name="ingresar">Ingresar</string>
-    <string name="recuperar_contrasena">Recuperar Contrasena</string>
+    <string name="recuperar_contrasena">Recuperar Contraseña</string>
+    <string name="nuestros_productos">Nuestros Productos</string>
     <string name="frutas">Frutas</string>
     <string name="verduras">Verduras</string>
     <string name="bebidas">Bebidas</string>
     <string name="calidad_precio">La mejor calidad al mejor precio</string>
+    <string name="banano">Banano</string>
     <string name="pesos_1500_lb">$1500/lb</string>
     <string name="naranja">Naranja</string>
+    <string name="pesos_2500_lb">$2500/lb</string>
     <string name="pina">Piña</string>
     <string name="pesos_3500_lb">$3500/lb</string>
     <string name="limon">Limón</string>
+    <string name="pesos_1200_lb">$1200/lb</string>
+    <string name="search_content_icon">Search Content Icon</string>
+    <string name="tarjeta_bananos">Tarjeta Bananos</string>
     <string name="tarjeta_naranjas">Tarjeta Naranjas</string>
     <string name="tarjeta_pinas">Tarjeta Piñas</string>
+    <string name="tarjeta_limones">Tarjeta Limones</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home_fragment">Home Fragment</string>
+    <string name="profile_fragment">Profile Fragment</string>
+    <string name="fragment_favorites">Favorites Fragment</string>
+    <string name="cart_fragment">Cart Fragment</string>
+    <string name="home">Home</string>
+    <string name="favorites">Favorites</string>
+    <string name="cart">Cart</string>
+    <string name="profile">Profile</string>
+    <string name="mi_carrito">Mi Carrito</string>
     <string name="back_icon">Back Icon</string>
+    <string name="banana_card">Banana Card</string>
+    <string name="pineaple_card">Pineaple Card</string>
     <string name="tomatoe_card">Tomatoe Card</string>
     <string name="cantidad_total">Cantidad Total</string>
+    <string name="pesos_25000">$25000</string>
+    <string name="frutas_frescas">Frutas Frescas</string>
+    <string name="plus">+</string>
+    <string name="minus">--</string>
+    <string name="dos">2</string>
+    <string name="tomatoe">Tomatoe</string>
+    <string name="pagar">Pagar</string>
+    <string name="nombre_completo">Nombre Completo</string>
 </resources>
