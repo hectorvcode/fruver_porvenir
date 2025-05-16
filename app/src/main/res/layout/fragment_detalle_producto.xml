@@ -20,4 +20,31 @@
         android:text="@string/nombre_del_producto"
         app:layout_constraintTop_toBottomOf="@+id/detalle_imagen_producto" />
 
+    <TextView
+        android:id="@+id/detalle_precio_producto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/precio_0_00"
+        app:layout_constraintTop_toBottomOf="@+id/detalle_nombre_producto" />
+
+    <TextView
+        android:id="@+id/detalle_descripcion_producto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/detalle_descripcion_del_producto"
+        app:layout_constraintTop_toBottomOf="@+id/detalle_precio_producto" />
+
+    <Button
+        android:id="@+id/btn_comprar"
+        android:layout_width="294dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/green_mint"
+        android:text="@string/comprar"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.544"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detalle_descripcion_producto" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

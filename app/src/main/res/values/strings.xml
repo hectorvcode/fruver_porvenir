@@ -53,4 +53,7 @@
     <string name="pagar">Pagar</string>
     <string name="nombre_completo">Nombre Completo</string>
     <string name="nombre_del_producto">Nombre del producto</string>
+    <string name="precio_0_00">$0.00</string>
+    <string name="detalle_descripcion_del_producto">Detalle Descripcion del Producto</string>
+    <string name="comprar">Comprar</string>
 </resources>
