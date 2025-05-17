@@ -21,28 +21,27 @@ class DetalleProductoFragment : Fragment() {
         fun newInstance(producto: Producto): DetalleProductoFragment {
             val fragment = DetalleProductoFragment()
             val args = Bundle()
-            //Usamos un putParceable para serializar el objeto Producto
             args.putParcelable(ARG_PRODUCTO, producto)
-            fragment.producto = args
+            fragment.arguments = args
             return fragment
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreateView(savedInstanceState)
+        super.onCreate(savedInstanceState)
         //Verificar si los argumentos no son nulos
         if(arguments != null){
             //A partir de Android 13 (API 33) hay que usar getParcelable()
             producto = if (android.os.Build.VERSION.SDK_INT >= 33){
                 arguments?.getParcelable(ARG_PRODUCTO, Producto::class.java)
-                    ?: Producto(0;"Sin nombre", "Sin descripción", 0.0, R.drawable.placeholder)
+                    ?: Producto(0,"Sin nombre", "Sin descripción", 0.0, R.drawable.placeholder)
             } else {
                 @Suppress("DEPRECATION")
-                arguments?.getParcelable(ARG_PRODUCTO) ?: Producto(0;"Sin nombre", "Sin descripción", 0.0, R.drawable.placeholder)
+                arguments?.getParcelable(ARG_PRODUCTO) ?: Producto(0,"Sin nombre", "Sin descripción", 0.0, R.drawable.placeholder)
             }
         } else {
             //Si no hay argumentos, crear un objeto Producto vacío
-            producto = Producto(0;"Sin nombre", "Sin descripción", 0.0, R.drawable.placeholder)
+            producto = Producto(0,"Sin nombre", "Sin descripción", 0.0, R.drawable.placeholder)
         }
     }
 
