@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:name=".OnlineStoreApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -32,6 +33,10 @@
         <activity android:name=".Activities.CartActivity"
             android:exported="false" />
         <activity android:name=".Activities.RegisterActivity"
+            android:exported="false" />
+        <activity android:name=".Activities.ProductFormActivity"
+            android:exported="false" />
+        <activity android:name=".Activities.ProductAdminActivity"
             android:exported="false" />
 
     </application>
