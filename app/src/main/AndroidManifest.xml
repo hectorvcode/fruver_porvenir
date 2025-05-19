@@ -44,6 +44,8 @@
             android:exported="false" />
         <activity android:name=".Activities.UserFormActivity"
             android:exported="false" />
+        <activity android:name=".Activities.MainContainerActivity"
+            android:exported="false" />
 
     </application>
 

@@ -163,13 +163,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun redirectBasedOnRole() {
-        if (sessionManager.isAdmin()) {
-            // Si es administrador, ir a la pantalla de administración
-            startActivity(Intent(this, ProductAdminActivity::class.java))
-        } else {
-            // Si es usuario regular, ir a la lista de productos
-            startActivity(Intent(this, ListActivity::class.java))
-        }
+        // Independientemente del rol, ahora redirigimos al contenedor principal
+        startActivity(Intent(this, MainContainerActivity::class.java))
         finish()
     }
 }
