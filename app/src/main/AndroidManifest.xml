@@ -40,6 +40,10 @@
             android:exported="false" />
         <activity android:name=".Activities.ProfileActivity"
             android:exported="false" />
+        <activity android:name=".Activities.UserAdminActivity"
+            android:exported="false" />
+        <activity android:name=".Activities.UserFormActivity"
+            android:exported="false" />
 
     </application>
 

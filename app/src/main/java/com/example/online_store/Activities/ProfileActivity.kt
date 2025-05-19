@@ -26,6 +26,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var bottomNavigationView: BottomNavigationView
     private lateinit var sessionManager: SessionManager
     private lateinit var userDao: UserDao
+    private lateinit var btnAdminUsers: Button
 
     private var isAdmin = false
     private var canBecomeAdmin = false
@@ -55,6 +56,8 @@ class ProfileActivity : AppCompatActivity() {
         btnAdminProducts = findViewById(R.id.btn_admin_products)  // Inicializar el nuevo botón
         btnLogout = findViewById(R.id.btn_logout)
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
+        btnAdminUsers = findViewById(R.id.btn_admin_users)
+
 
         // Configurar navegación inferior
         setupBottomNavigation()
@@ -67,6 +70,10 @@ class ProfileActivity : AppCompatActivity() {
 
         // Configurar botón de administración de productos
         setupAdminProductsButton()
+
+        btnAdminUsers.setOnClickListener {
+            startActivity(Intent(this, UserAdminActivity::class.java))
+        }
 
         // Configurar botón de cierre de sesión
         btnLogout.setOnClickListener {
@@ -114,8 +121,9 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun updateAdminFeaturesVisibility() {
-        // Mostrar u ocultar el botón de administración según el rol
+        // Mostrar u ocultar los botones de administración según el rol
         btnAdminProducts.visibility = if (isAdmin) View.VISIBLE else View.GONE
+        btnAdminUsers.visibility = if (isAdmin) View.VISIBLE else View.GONE
     }
 
     private fun setupAdminModeSwitch() {

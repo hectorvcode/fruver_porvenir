@@ -78,4 +78,13 @@
     <string name="carrito_vacio">Tu carrito está vacío</string>
     <string name="subtotal">Subtotal</string>
     <string name="total">Total</string>
+    <string name="administrar_usuarios">Administrar Usuarios</string>
+    <string name="agregar_usuario">Agregar Usuario</string>
+    <string name="rol_usuario">Rol del usuario</string>
+    <string name="email_example_com">email@example.com</string>
+    <string name="nombre_de_usuario">Nombre de Usuario</string>
+    <string name="avatar_usuario">Avatar Usuario</string>
+    <string name="administrador">Administrador</string>
+    <string name="gestion_de_usuario">Gestion de Usuario</string>
+    <string name="correo_electronico">Correo Electrónico</string>
 </resources>

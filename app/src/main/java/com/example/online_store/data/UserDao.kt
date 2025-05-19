@@ -94,6 +94,26 @@ class UserDao(context: Context) {
     }
 
     /**
+     * Actualiza el nombre y el rol de un usuario
+     * @return Número de filas afectadas
+     */
+    fun updateUserNameAndRole(email: String, newName: String, newRole: String): Int {
+        val db = dbHelper.writableDatabase
+
+        val values = ContentValues().apply {
+            put(DatabaseHelper.COLUMN_USER_NAME, newName)
+            put(DatabaseHelper.COLUMN_USER_ROLE, newRole)
+        }
+
+        val selection = "${DatabaseHelper.COLUMN_USER_EMAIL} = ?"
+        val selectionArgs = arrayOf(email)
+
+        val count = db.update(DatabaseHelper.TABLE_USERS, values, selection, selectionArgs)
+        // No cerramos la base de datos aquí
+        return count
+    }
+
+    /**
      * Obtiene todos los usuarios
      */
     fun getAllUsers(): List<User> {
@@ -138,7 +158,7 @@ class UserDao(context: Context) {
     }
 
     /**
-     * Método para cerrar la base de datos explícitamente cuando sea necesario
+     * Metodo para cerrar la base de datos explícitamente cuando sea necesario
      */
     fun closeDatabase() {
         dbHelper.close()
