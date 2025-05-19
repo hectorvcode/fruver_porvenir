@@ -16,4 +16,10 @@
         <item name="android:textStyle">bold</item>
         <item name="android:backgroundTint">@color/green_mint</item>
     </style>
+
+    <style name="CategoryButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:backgroundTint">@null</item>
+        <item name="backgroundTint">@null</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 </resources>

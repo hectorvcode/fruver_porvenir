@@ -4,34 +4,18 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.online_store.R
-import com.example.online_store.adapter.ProductListAdapter
-import com.example.online_store.data.ProductDao
-import com.example.online_store.model.Product
+import com.example.online_store.fragments.ProductsFragment
 import com.example.online_store.utils.RoleHelper
 import com.example.online_store.utils.SessionManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.example.online_store.utils.CartManager
 
 class ListActivity : AppCompatActivity() {
 
-    private lateinit var productDao: ProductDao
     private lateinit var sessionManager: SessionManager
-    private lateinit var btnFrutas: Button
-    private lateinit var btnVerduras: Button
-    private lateinit var btnBebidas: Button
     private lateinit var bottomNavigationView: BottomNavigationView
-    private lateinit var rvProductsList: RecyclerView
-    private lateinit var productListAdapter: ProductListAdapter
-    private lateinit var cartManager: CartManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,37 +29,23 @@ class ListActivity : AppCompatActivity() {
         // Inicializar SessionManager
         sessionManager = SessionManager(this)
 
-        //Inicializar CartManager
-        cartManager = CartManager(this)
-
         // Mostrar información del usuario en la barra de acción
         val userDetails = sessionManager.getUserDetails()
         supportActionBar?.title = "Productos - ${userDetails["name"]}"
-
-        // Inicializar el DAO
-        productDao = ProductDao(this)
-
-        // Inicializar botones
-        btnFrutas = findViewById(R.id.btn_frutas)
-        btnVerduras = findViewById(R.id.btn_verduras)
-        btnBebidas = findViewById(R.id.btn_bebidas)
-
-        // Inicializar RecyclerView
-        rvProductsList = findViewById(R.id.rv_products_list)
-        setupRecyclerView()
 
         // Inicializar BottomNavigationView
         bottomNavigationView = findViewById(R.id.bottomNavigationView2)
         setupBottomNavigation()
 
-        // Configurar listeners para los botones de categoría
-        setupCategoryButtons()
+        // Load the ProductsFragment
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.frame_layout, ProductsFragment())
+                .commit()
+        }
 
         // Mostrar botón de administración solo para administradores
         setupAdminAccess()
-
-        // Cargar productos de la categoría por defecto (Frutas)
-        loadProductsByCategory("Frutas")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -100,24 +70,6 @@ class ListActivity : AppCompatActivity() {
                 true
             }
             else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    private fun setupRecyclerView() {
-        // Crear el adaptador
-        productListAdapter = ProductListAdapter(
-            products = emptyList(),
-            onProductClickListener = { product ->
-                // Mostrar detalles del producto (implementar en el futuro)
-                Toast.makeText(this, "Seleccionado: ${product.name}", Toast.LENGTH_SHORT).show()
-            },
-            cartManager = cartManager // Pasar CartManager
-        )
-
-        // Configurar el RecyclerView con un GridLayoutManager para mostrar 2 columnas
-        rvProductsList.apply {
-            layoutManager = GridLayoutManager(this@ListActivity, 1) // 1 columna (puedes cambiar a 2 si deseas)
-            adapter = productListAdapter
         }
     }
 
@@ -154,42 +106,6 @@ class ListActivity : AppCompatActivity() {
             if (sessionManager.isAdmin()) {
                 actionBar.subtitle = "Acceso de Administrador"
             }
-        }
-    }
-
-    private fun setupCategoryButtons() {
-        btnFrutas.setOnClickListener {
-            btnFrutas.setBackgroundResource(R.color.fae61e)
-            btnVerduras.setBackgroundResource(R.color.gray)
-            btnBebidas.setBackgroundResource(R.color.gray)
-            loadProductsByCategory("Frutas")
-        }
-
-        btnVerduras.setOnClickListener {
-            btnFrutas.setBackgroundResource(R.color.gray)
-            btnVerduras.setBackgroundResource(R.color.fae61e)
-            btnBebidas.setBackgroundResource(R.color.gray)
-            loadProductsByCategory("Verduras")
-        }
-
-        btnBebidas.setOnClickListener {
-            btnFrutas.setBackgroundResource(R.color.gray)
-            btnVerduras.setBackgroundResource(R.color.gray)
-            btnBebidas.setBackgroundResource(R.color.fae61e)
-            loadProductsByCategory("Bebidas")
-        }
-    }
-
-    private fun loadProductsByCategory(category: String) {
-        // Obtener productos de la categoría seleccionada
-        val products = productDao.getProductsByCategory(category)
-
-        // Actualizar el adaptador con los productos filtrados
-        productListAdapter.updateProducts(products)
-
-        // Si no hay productos en esta categoría, mostrar mensaje
-        if (products.isEmpty()) {
-            Toast.makeText(this, "No hay productos en la categoría $category", Toast.LENGTH_SHORT).show()
         }
     }
 }

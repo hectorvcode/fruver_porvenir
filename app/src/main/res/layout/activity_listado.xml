@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_gradient">
 
+    <!-- This frame layout will hold our ProductsFragment -->
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="0dp"
@@ -13,109 +14,17 @@
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </FrameLayout>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/green_mint"
+        app:itemIconTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav"
-        app:itemIconTint="@color/white"/>
-
-    <TextView
-        android:id="@+id/tv_nuestros_productos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="36dp"
-        android:text="@string/nuestros_productos"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/iv_ic_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:contentDescription="@string/search_content_icon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.515"
-        app:layout_constraintStart_toEndOf="@+id/tv_nuestros_productos"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_search" />
-
-    <Button
-        android:id="@+id/btn_frutas"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:layout_marginTop="44dp"
-        android:backgroundTint="@color/fae61e"
-        android:text="@string/frutas"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.052"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_nuestros_productos" />
-
-    <Button
-        android:id="@+id/btn_bebidas"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="44dp"
-        android:backgroundTint="@color/gray"
-        android:text="@string/bebidas"
-        android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/btn_verduras"
-        app:layout_constraintTop_toBottomOf="@+id/tv_nuestros_productos" />
-
-    <Button
-        android:id="@+id/btn_verduras"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="44dp"
-        android:backgroundTint="@color/gray"
-        android:text="@string/verduras"
-        android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/btn_frutas"
-        app:layout_constraintTop_toBottomOf="@+id/tv_nuestros_productos" />
-
-    <TextView
-        android:id="@+id/tv_calidad_precio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/calidad_precio"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_verduras" />
-
-    <!-- Reemplazamos los ImageView y TextViews estáticos por un RecyclerView -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_products_list"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_calidad_precio"
-        tools:listitem="@layout/item_product_list" />
+        app:menu="@menu/bottom_nav" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
