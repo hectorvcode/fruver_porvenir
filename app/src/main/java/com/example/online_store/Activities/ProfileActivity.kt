@@ -21,6 +21,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var tvUserRole: TextView
     private lateinit var switchAdminMode: SwitchCompat
     private lateinit var tvAdminModeExplanation: TextView
+    private lateinit var btnAdminProducts: Button  // Nuevo botón para administrar productos
     private lateinit var btnLogout: Button
     private lateinit var bottomNavigationView: BottomNavigationView
     private lateinit var sessionManager: SessionManager
@@ -51,6 +52,7 @@ class ProfileActivity : AppCompatActivity() {
         tvUserRole = findViewById(R.id.tv_user_role)
         switchAdminMode = findViewById(R.id.switch_admin_mode)
         tvAdminModeExplanation = findViewById(R.id.tv_admin_mode_explanation)
+        btnAdminProducts = findViewById(R.id.btn_admin_products)  // Inicializar el nuevo botón
         btnLogout = findViewById(R.id.btn_logout)
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
 
@@ -62,6 +64,9 @@ class ProfileActivity : AppCompatActivity() {
 
         // Configurar switch de modo administrador
         setupAdminModeSwitch()
+
+        // Configurar botón de administración de productos
+        setupAdminProductsButton()
 
         // Configurar botón de cierre de sesión
         btnLogout.setOnClickListener {
@@ -99,10 +104,18 @@ class ProfileActivity : AppCompatActivity() {
 
         // Configurar estado inicial del switch
         switchAdminMode.isChecked = isAdmin
+
+        // Actualizar visibilidad del botón de administración
+        updateAdminFeaturesVisibility()
     }
 
     private fun updateRoleText() {
         tvUserRole.text = if (isAdmin) "Rol: Administrador" else "Rol: Usuario"
+    }
+
+    private fun updateAdminFeaturesVisibility() {
+        // Mostrar u ocultar el botón de administración según el rol
+        btnAdminProducts.visibility = if (isAdmin) View.VISIBLE else View.GONE
     }
 
     private fun setupAdminModeSwitch() {
@@ -121,6 +134,7 @@ class ProfileActivity : AppCompatActivity() {
 
             // Actualizar la interfaz
             updateRoleText()
+            updateAdminFeaturesVisibility()
 
             // Mostrar mensaje
             val message = if (isChecked)
@@ -129,15 +143,13 @@ class ProfileActivity : AppCompatActivity() {
                 "Modo usuario regular activado"
 
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        }
+    }
 
-            // Si cambió a modo administrador, ofrecer ir a la pantalla de administración
-            if (isChecked) {
-                Toast.makeText(
-                    this,
-                    "Ahora puedes acceder a la administración de productos",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
+    private fun setupAdminProductsButton() {
+        btnAdminProducts.setOnClickListener {
+            // Navegar a la pantalla de administración de productos
+            startActivity(Intent(this, ProductAdminActivity::class.java))
         }
     }
 

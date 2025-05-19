@@ -90,17 +90,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/switch_admin_mode" />
 
+    <!-- Nuevo botón para acceder a la administración de productos -->
+    <Button
+        android:id="@+id/btn_admin_products"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/green_mint"
+        android:text="@string/administrar_productos"
+        android:textSize="18sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_admin_mode_explanation" />
+
+    <!-- Botón de logout (actualizar el constraint top) -->
     <Button
         android:id="@+id/btn_logout"
         android:layout_width="300dp"
         android:layout_height="48dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="@color/green_mint"
         android:text="@string/cerrar_sesion"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_admin_mode_explanation" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_admin_products" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
