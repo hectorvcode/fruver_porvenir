@@ -146,14 +146,12 @@ class ListActivity : AppCompatActivity() {
     }
 
     private fun setupAdminAccess() {
-        // Configurar el botón flotante para acceder a la administración de productos (solo para admin)
-        val fabAdmin: FloatingActionButton = findViewById(R.id.fab_admin_products)
-
-        // Mostrar u ocultar el botón dependiendo del rol del usuario
-        fabAdmin.visibility = if (sessionManager.isAdmin()) View.VISIBLE else View.GONE
-
-        fabAdmin.setOnClickListener {
-            startActivity(Intent(this, ProductAdminActivity::class.java))
+        // Actualizamos la ActionBar con una opción para administradores
+        supportActionBar?.let { actionBar ->
+            // Si el usuario es admin, podemos actualizar el título o añadir un subtítulo
+            if (sessionManager.isAdmin()) {
+                actionBar.subtitle = "Acceso de Administrador"
+            }
         }
     }
 

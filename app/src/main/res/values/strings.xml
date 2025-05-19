@@ -73,4 +73,6 @@
     <string name="cantidad_1">1</string>
     <string name="mas">+</string>
     <string name="agregar_al_carrito">Agregar al carrito</string>
+    <string name="modo_administrador">Modo Administrador</string>
+    <string name="admin_mode_explanation">Al activar el modo administrador, tendrás acceso a funciones avanzadas como la gestión de productos.</string>
 </resources>
