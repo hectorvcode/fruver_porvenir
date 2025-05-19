@@ -14,11 +14,12 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.online_store.R
 import com.example.online_store.model.Product
+import com.example.online_store.utils.CartManager
 
 class ProductListAdapter(
     private var products: List<Product>,
     private val onProductClickListener: (Product) -> Unit,
-    private val onAddToCartClickListener: (Product, Int) -> Unit
+    private val cartManager: CartManager
 ) : RecyclerView.Adapter<ProductListAdapter.ProductViewHolder>() {
 
     // Mapa para guardar las cantidades seleccionadas por producto
@@ -112,7 +113,13 @@ class ProductListAdapter(
 
         // Listener para añadir al carrito
         holder.ibAddToCart.setOnClickListener {
-            onAddToCartClickListener(product, quantityMap[product.id] ?: 1)
+            val quantity = quantityMap[product.id] ?: 1
+            cartManager.addToCart(product, quantity)
+            Toast.makeText(
+                holder.itemView.context,
+                "${quantity} ${product.name} añadido al carrito",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 

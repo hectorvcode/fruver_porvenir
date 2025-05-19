@@ -19,6 +19,7 @@ import com.example.online_store.utils.RoleHelper
 import com.example.online_store.utils.SessionManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.example.online_store.utils.CartManager
 
 class ListActivity : AppCompatActivity() {
 
@@ -30,6 +31,7 @@ class ListActivity : AppCompatActivity() {
     private lateinit var bottomNavigationView: BottomNavigationView
     private lateinit var rvProductsList: RecyclerView
     private lateinit var productListAdapter: ProductListAdapter
+    private lateinit var cartManager: CartManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +44,9 @@ class ListActivity : AppCompatActivity() {
 
         // Inicializar SessionManager
         sessionManager = SessionManager(this)
+
+        //Inicializar CartManager
+        cartManager = CartManager(this)
 
         // Mostrar información del usuario en la barra de acción
         val userDetails = sessionManager.getUserDetails()
@@ -106,10 +111,7 @@ class ListActivity : AppCompatActivity() {
                 // Mostrar detalles del producto (implementar en el futuro)
                 Toast.makeText(this, "Seleccionado: ${product.name}", Toast.LENGTH_SHORT).show()
             },
-            onAddToCartClickListener = { product, quantity ->
-                // Añadir al carrito con la cantidad seleccionada
-                Toast.makeText(this, "${quantity} ${product.name} añadido al carrito", Toast.LENGTH_SHORT).show()
-            }
+            cartManager = cartManager // Pasar CartManager
         )
 
         // Configurar el RecyclerView con un GridLayoutManager para mostrar 2 columnas
