@@ -103,146 +103,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_verduras" />
 
-    <ImageView
-        android:id="@+id/iv_banano"
-        android:layout_width="140dp"
-        android:layout_height="160dp"
-        android:layout_marginTop="56dp"
-        android:contentDescription="@string/tarjeta_bananos"
-        app:layout_constraintEnd_toStartOf="@+id/iv_naranja"
-        app:layout_constraintHorizontal_bias="0.471"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_calidad_precio"
-        app:srcCompat="@drawable/banano" />
-
-    <TextView
-        android:id="@+id/tv_banano"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="164dp"
-        android:text="@string/banano"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.156"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_calidad_precio" />
-
-    <TextView
-        android:id="@+id/tv_precio_banano"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/pesos_1500_lb"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.154"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_banano" />
-
-    <ImageView
-        android:id="@+id/iv_naranja"
-        android:layout_width="140dp"
-        android:layout_height="160dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="44dp"
-        android:contentDescription="@string/tarjeta_naranjas"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_calidad_precio"
-        app:srcCompat="@drawable/naranja" />
-
-    <TextView
-        android:id="@+id/tv_naranja"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="140dp"
-        android:text="@string/naranja"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.684"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_calidad_precio" />
-
-    <TextView
-        android:id="@+id/tv_precio_naranja"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/pesos_2500_lb"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.671"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_naranja" />
-
-    <ImageView
-        android:id="@+id/iv_pina"
-        android:layout_width="140dp"
-        android:layout_height="160dp"
-        android:layout_marginTop="12dp"
-        android:contentDescription="@string/tarjeta_pinas"
-        app:layout_constraintEnd_toStartOf="@+id/iv_limon"
-        app:layout_constraintHorizontal_bias="0.471"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_banano"
-        app:srcCompat="@drawable/pina" />
-
-    <TextView
-        android:id="@+id/tv_pina"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="116dp"
-        android:text="@string/pina"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.147"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_banano" />
-
-    <TextView
-        android:id="@+id/tv_precio_pina"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/pesos_3500_lb"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.154"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_pina" />
-
-    <ImageView
-        android:id="@+id/iv_limon"
-        android:layout_width="140dp"
-        android:layout_height="160dp"
+    <!-- Reemplazamos los ImageView y TextViews estáticos por un RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_products_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="44dp"
-        android:contentDescription="@string/tarjeta_limones"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_naranja"
-        app:srcCompat="@drawable/limon" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_calidad_precio"
+        tools:listitem="@layout/item_product_list" />
 
-    <TextView
-        android:id="@+id/tv_limon"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_admin_products"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
-        android:text="@string/limon"
-        android:textSize="16sp"
-        android:textStyle="bold"
+        android:layout_margin="16dp"
+        android:src="@android:drawable/ic_menu_manage"
+        app:backgroundTint="@color/green_mint"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.663"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_naranja" />
-
-    <TextView
-        android:id="@+id/tv_precio_limon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/pesos_1200_lb"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.671"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_limon" />
+        app:tint="@android:color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

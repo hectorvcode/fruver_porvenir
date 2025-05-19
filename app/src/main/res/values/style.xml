@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    --Style for EditTextRounded
+    <!-- Style for EditTextRounded -->
     <style name="EditTextRounded" parent="Widget.AppCompat.EditText">
         <item name="android:background">@drawable/edit_text_rounded</item>
         <item name="android:paddingLeft">15dp</item>
         <item name="android:paddingRight">15dp</item>
+    </style>
+
+    <!-- Style for Quantity Buttons -->
+    <style name="QuantityButton" parent="Widget.AppCompat.Button">
+        <item name="android:minWidth">40dp</item>
+        <item name="android:minHeight">40dp</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:backgroundTint">@color/green_mint</item>
     </style>
 </resources>

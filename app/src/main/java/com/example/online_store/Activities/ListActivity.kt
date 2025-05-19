@@ -4,11 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.online_store.R
+import com.example.online_store.adapter.ProductListAdapter
 import com.example.online_store.data.ProductDao
 import com.example.online_store.model.Product
 import com.example.online_store.utils.RoleHelper
@@ -24,17 +28,8 @@ class ListActivity : AppCompatActivity() {
     private lateinit var btnVerduras: Button
     private lateinit var btnBebidas: Button
     private lateinit var bottomNavigationView: BottomNavigationView
-    private lateinit var fabProfile: FloatingActionButton
-
-    // Referencias a los TextView para mostrar productos
-    private lateinit var tvBanano: TextView
-    private lateinit var tvPrecioBanano: TextView
-    private lateinit var tvNaranja: TextView
-    private lateinit var tvPrecioNaranja: TextView
-    private lateinit var tvPina: TextView
-    private lateinit var tvPrecioPina: TextView
-    private lateinit var tvLimon: TextView
-    private lateinit var tvPrecioLimon: TextView
+    private lateinit var rvProductsList: RecyclerView
+    private lateinit var productListAdapter: ProductListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,15 +55,9 @@ class ListActivity : AppCompatActivity() {
         btnVerduras = findViewById(R.id.btn_verduras)
         btnBebidas = findViewById(R.id.btn_bebidas)
 
-        // Inicializar TextViews
-        tvBanano = findViewById(R.id.tv_banano)
-        tvPrecioBanano = findViewById(R.id.tv_precio_banano)
-        tvNaranja = findViewById(R.id.tv_naranja)
-        tvPrecioNaranja = findViewById(R.id.tv_precio_naranja)
-        tvPina = findViewById(R.id.tv_pina)
-        tvPrecioPina = findViewById(R.id.tv_precio_pina)
-        tvLimon = findViewById(R.id.tv_limon)
-        tvPrecioLimon = findViewById(R.id.tv_precio_limon)
+        // Inicializar RecyclerView
+        rvProductsList = findViewById(R.id.rv_products_list)
+        setupRecyclerView()
 
         // Inicializar BottomNavigationView
         bottomNavigationView = findViewById(R.id.bottomNavigationView2)
@@ -109,6 +98,27 @@ class ListActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupRecyclerView() {
+        // Crear el adaptador
+        productListAdapter = ProductListAdapter(
+            products = emptyList(),
+            onProductClickListener = { product ->
+                // Mostrar detalles del producto (implementar en el futuro)
+                Toast.makeText(this, "Seleccionado: ${product.name}", Toast.LENGTH_SHORT).show()
+            },
+            onAddToCartClickListener = { product, quantity ->
+                // Añadir al carrito con la cantidad seleccionada
+                Toast.makeText(this, "${quantity} ${product.name} añadido al carrito", Toast.LENGTH_SHORT).show()
+            }
+        )
+
+        // Configurar el RecyclerView con un GridLayoutManager para mostrar 2 columnas
+        rvProductsList.apply {
+            layoutManager = GridLayoutManager(this@ListActivity, 1) // 1 columna (puedes cambiar a 2 si deseas)
+            adapter = productListAdapter
+        }
+    }
+
     private fun setupBottomNavigation() {
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
@@ -136,19 +146,14 @@ class ListActivity : AppCompatActivity() {
     }
 
     private fun setupAdminAccess() {
-        // Si el usuario es administrador, agregar un botón flotante para acceder a la administración
-        if (sessionManager.isAdmin()) {
-            val fabAdmin = FloatingActionButton(this).apply {
-                setImageResource(android.R.drawable.ic_menu_manage)
-                contentDescription = "Administrar productos"
-            }
+        // Configurar el botón flotante para acceder a la administración de productos (solo para admin)
+        val fabAdmin: FloatingActionButton = findViewById(R.id.fab_admin_products)
 
-            fabAdmin.setOnClickListener {
-                startActivity(Intent(this@ListActivity, ProductAdminActivity::class.java))
-            }
+        // Mostrar u ocultar el botón dependiendo del rol del usuario
+        fabAdmin.visibility = if (sessionManager.isAdmin()) View.VISIBLE else View.GONE
 
-            // Nota: Este código es ilustrativo. En una implementación real,
-            // deberías añadir el FAB al layout XML y referenciarlo aquí.
+        fabAdmin.setOnClickListener {
+            startActivity(Intent(this, ProductAdminActivity::class.java))
         }
     }
 
@@ -179,50 +184,12 @@ class ListActivity : AppCompatActivity() {
         // Obtener productos de la categoría seleccionada
         val products = productDao.getProductsByCategory(category)
 
+        // Actualizar el adaptador con los productos filtrados
+        productListAdapter.updateProducts(products)
+
         // Si no hay productos en esta categoría, mostrar mensaje
         if (products.isEmpty()) {
             Toast.makeText(this, "No hay productos en la categoría $category", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        // Para este ejemplo simple, solo actualizamos los TextViews existentes
-        // En una aplicación real, usarías un RecyclerView
-
-        // Para la categoría Frutas, actualizamos los TextViews existentes
-        if (category == "Frutas") {
-            // Buscar los productos específicos por nombre
-            val banano = products.find { it.name == "Banano" }
-            val naranja = products.find { it.name == "Naranja" }
-            val pina = products.find { it.name == "Piña" }
-            val limon = products.find { it.name == "Limón" }
-
-            // Actualizar los TextViews con la información de la base de datos
-            banano?.let {
-                tvBanano.text = it.name
-                tvPrecioBanano.text = "$${it.price}/lb"
-            }
-
-            naranja?.let {
-                tvNaranja.text = it.name
-                tvPrecioNaranja.text = "$${it.price}/lb"
-            }
-
-            pina?.let {
-                tvPina.text = it.name
-                tvPrecioPina.text = "$${it.price}/lb"
-            }
-
-            limon?.let {
-                tvLimon.text = it.name
-                tvPrecioLimon.text = "$${it.price}/lb"
-            }
-        } else {
-            // Para otras categorías, mostrar un mensaje indicando que necesitas implementar vistas para ellas
-            Toast.makeText(
-                this,
-                "Hay ${products.size} productos en la categoría $category. Implementa la vista para mostrarlos.",
-                Toast.LENGTH_LONG
-            ).show()
         }
     }
 }
