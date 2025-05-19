@@ -74,4 +74,10 @@ class SessionManager(context: Context) {
         editor.clear()
         editor.apply()
     }
+
+    // Añadir esta función a la clase SessionManager
+    fun updateSessionPassword(password: String) {
+        editor.putString("password", password)
+        editor.apply()
+    }
 }

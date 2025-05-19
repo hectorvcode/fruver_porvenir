@@ -30,6 +30,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:tint="@android:color/white" />
 
+    <!-- Nuevo botón flotante para perfil -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/profile"
+        android:src="@drawable/baseline_co_present_24"
+        app:backgroundTint="@color/green_mint"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:tint="@android:color/white" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_products"
         android:layout_width="0dp"

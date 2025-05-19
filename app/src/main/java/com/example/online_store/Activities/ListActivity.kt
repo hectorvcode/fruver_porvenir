@@ -24,6 +24,7 @@ class ListActivity : AppCompatActivity() {
     private lateinit var btnVerduras: Button
     private lateinit var btnBebidas: Button
     private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var fabProfile: FloatingActionButton
 
     // Referencias a los TextView para mostrar productos
     private lateinit var tvBanano: TextView

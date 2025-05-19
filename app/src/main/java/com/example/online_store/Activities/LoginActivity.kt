@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.online_store.R
@@ -20,6 +22,10 @@ import com.google.android.gms.tasks.Task
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var btnGoogle: Button
+    private lateinit var btnIngresar: Button
+    private lateinit var edtEmail: EditText
+    private lateinit var edtPassword: EditText
+    private lateinit var tvRegister: TextView
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var sessionManager: SessionManager
     private lateinit var userDao: UserDao
@@ -40,6 +46,13 @@ class LoginActivity : AppCompatActivity() {
             return
         }
 
+        // Inicializar vistas
+        btnIngresar = findViewById(R.id.btn_ingresar)
+        edtEmail = findViewById(R.id.edt_email_login)
+        edtPassword = findViewById(R.id.edt_password_login)
+        tvRegister = findViewById(R.id.tv_registrarse)
+        btnGoogle = findViewById(R.id.btn_continuar_google)
+
         // Configurar Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
@@ -49,10 +62,52 @@ class LoginActivity : AppCompatActivity() {
         // Crear el cliente de Google SignIn
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        btnGoogle = findViewById(R.id.btn_continuar_google)
-
+        // Configurar listeners
         btnGoogle.setOnClickListener {
             signIn()
+        }
+
+        btnIngresar.setOnClickListener {
+            loginWithCredentials()
+        }
+
+        tvRegister.setOnClickListener {
+            startActivity(Intent(this, RegisterActivity::class.java))
+        }
+    }
+
+    private fun loginWithCredentials() {
+        val email = edtEmail.text.toString().trim()
+        val password = edtPassword.text.toString().trim()
+
+        // Validación básica
+        if (email.isEmpty()) {
+            edtEmail.error = "Por favor ingrese su email"
+            return
+        }
+
+        if (password.isEmpty()) {
+            edtPassword.error = "Por favor ingrese su contraseña"
+            return
+        }
+
+        // Verificar si el usuario existe en la base de datos
+        val user = userDao.getUserByEmail(email)
+
+        if (user != null) {
+            // En una aplicación real, verificarías la contraseña con hash.
+            // Para este ejemplo, consideramos que cualquier contraseña es válida
+            // para el usuario "admin@example.com" para simplificar el proceso.
+
+            // Guardar sesión
+            sessionManager.createLoginSession(user)
+
+            Toast.makeText(this, "Bienvenido ${user.name}", Toast.LENGTH_SHORT).show()
+
+            // Redireccionar según el rol
+            redirectBasedOnRole()
+        } else {
+            Toast.makeText(this, "Usuario no encontrado", Toast.LENGTH_SHORT).show()
         }
     }
 
