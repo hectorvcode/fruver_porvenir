@@ -38,6 +38,8 @@
             android:exported="false" />
         <activity android:name=".Activities.ProductAdminActivity"
             android:exported="false" />
+        <activity android:name=".Activities.ProfileActivity"
+            android:exported="false" />
 
     </application>
 

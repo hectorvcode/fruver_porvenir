@@ -2,6 +2,7 @@ package com.example.online_store.Activities
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.RadioButton
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.online_store.R
 import com.example.online_store.data.ProductDao
 import com.example.online_store.model.Product
+import com.example.online_store.utils.RoleHelper
 import com.google.android.material.textfield.TextInputEditText
 
 class ProductFormActivity : AppCompatActivity() {
@@ -46,6 +48,14 @@ class ProductFormActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_form)
 
+        // Verificar permisos de administrador
+        if (!RoleHelper.checkAdminPermission(this)) {
+            return
+        }
+
+        // Configurar la ActionBar
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         // Inicializar el DAO
         productDao = ProductDao(this)
 
@@ -63,11 +73,24 @@ class ProductFormActivity : AppCompatActivity() {
         if (intent.hasExtra("PRODUCT_ID")) {
             productId = intent.getIntExtra("PRODUCT_ID", 0)
             isEditMode = true
+            supportActionBar?.title = "Editar Producto"
             loadProductData(productId)
+        } else {
+            supportActionBar?.title = "Nuevo Producto"
         }
 
         // Configurar listeners
         setupListeners()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun setupListeners() {

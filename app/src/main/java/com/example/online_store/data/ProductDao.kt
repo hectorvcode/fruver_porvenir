@@ -29,7 +29,7 @@ class ProductDao(context: Context) {
         }
 
         val id = db.insert(DatabaseHelper.TABLE_PRODUCTS, null, values)
-        db.close()
+        // No cerramos la base de datos aquí
         return id
     }
 
@@ -58,7 +58,7 @@ class ProductDao(context: Context) {
         }
 
         cursor.close()
-        db.close()
+        // No cerramos la base de datos aquí
         return productsList
     }
 
@@ -90,7 +90,7 @@ class ProductDao(context: Context) {
         }
 
         cursor.close()
-        db.close()
+        // No cerramos la base de datos aquí
         return productsList
     }
 
@@ -120,7 +120,7 @@ class ProductDao(context: Context) {
         }
 
         cursor.close()
-        db.close()
+        // No cerramos la base de datos aquí
         return product
     }
 
@@ -149,7 +149,7 @@ class ProductDao(context: Context) {
             selectionArgs
         )
 
-        db.close()
+        // No cerramos la base de datos aquí
         return count
     }
 
@@ -169,7 +169,7 @@ class ProductDao(context: Context) {
             selectionArgs
         )
 
-        db.close()
+        // No cerramos la base de datos aquí
         return count
     }
 
@@ -180,8 +180,15 @@ class ProductDao(context: Context) {
     fun deleteAllProducts(): Int {
         val db = dbHelper.writableDatabase
         val count = db.delete(DatabaseHelper.TABLE_PRODUCTS, null, null)
-        db.close()
+        // No cerramos la base de datos aquí
         return count
+    }
+
+    /**
+     * Método para cerrar la base de datos explícitamente cuando sea necesario
+     */
+    fun closeDatabase() {
+        dbHelper.close()
     }
 
     /**

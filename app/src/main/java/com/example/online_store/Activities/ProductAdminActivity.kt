@@ -2,6 +2,8 @@ package com.example.online_store.Activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -15,6 +17,8 @@ import com.example.online_store.R
 import com.example.online_store.adapter.ProductAdapter
 import com.example.online_store.data.ProductDao
 import com.example.online_store.model.Product
+import com.example.online_store.utils.RoleHelper
+import com.example.online_store.utils.SessionManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ProductAdminActivity : AppCompatActivity() {
@@ -24,6 +28,7 @@ class ProductAdminActivity : AppCompatActivity() {
     private lateinit var productAdapter: ProductAdapter
     private lateinit var fabAdd: FloatingActionButton
     private lateinit var spCategoryFilter: Spinner
+    private lateinit var sessionManager: SessionManager
 
     private val categories = listOf("Todos", "Frutas", "Verduras", "Bebidas")
 
@@ -31,8 +36,20 @@ class ProductAdminActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_admin)
 
+        // Verificar permisos de administrador
+        if (!RoleHelper.checkAdminPermission(this)) {
+            return
+        }
+
+        // Inicializar SessionManager
+        sessionManager = SessionManager(this)
+
         // Inicializar el DAO
         productDao = ProductDao(this)
+
+        // Configurar la ActionBar
+        supportActionBar?.title = "Administración de Productos"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // Inicializar vistas
         rvProducts = findViewById(R.id.rv_products)
@@ -52,8 +69,34 @@ class ProductAdminActivity : AppCompatActivity() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_admin, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            R.id.action_logout -> {
+                sessionManager.logout()
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     override fun onResume() {
         super.onResume()
+        // Verificar permisos de administrador cada vez que se vuelve a la actividad
+        if (!RoleHelper.checkAdminPermission(this)) {
+            return
+        }
+
         // Actualizar la lista de productos al volver a la actividad
         if (::productAdapter.isInitialized) {
             loadProducts()
@@ -113,7 +156,7 @@ class ProductAdminActivity : AppCompatActivity() {
     }
 
     private fun loadProducts() {
-        // CORREGIDO: Verificar si el spinner está inicializado y tiene un elemento seleccionado
+        // Verificar si el spinner está inicializado y tiene un elemento seleccionado
         val selectedCategory = if (::spCategoryFilter.isInitialized && spCategoryFilter.selectedItem != null) {
             spCategoryFilter.selectedItem.toString()
         } else {

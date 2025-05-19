@@ -2,6 +2,8 @@ package com.example.online_store.Activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -9,15 +11,19 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.online_store.R
 import com.example.online_store.data.ProductDao
 import com.example.online_store.model.Product
+import com.example.online_store.utils.RoleHelper
+import com.example.online_store.utils.SessionManager
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.example.online_store.Activities.ProductAdminActivity
 
 class ListActivity : AppCompatActivity() {
 
     private lateinit var productDao: ProductDao
+    private lateinit var sessionManager: SessionManager
     private lateinit var btnFrutas: Button
     private lateinit var btnVerduras: Button
     private lateinit var btnBebidas: Button
+    private lateinit var bottomNavigationView: BottomNavigationView
 
     // Referencias a los TextView para mostrar productos
     private lateinit var tvBanano: TextView
@@ -32,6 +38,18 @@ class ListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_listado)
+
+        // Verificar si el usuario está logueado
+        if (!RoleHelper.checkUserLoggedIn(this)) {
+            return
+        }
+
+        // Inicializar SessionManager
+        sessionManager = SessionManager(this)
+
+        // Mostrar información del usuario en la barra de acción
+        val userDetails = sessionManager.getUserDetails()
+        supportActionBar?.title = "Productos - ${userDetails["name"]}"
 
         // Inicializar el DAO
         productDao = ProductDao(this)
@@ -51,19 +69,85 @@ class ListActivity : AppCompatActivity() {
         tvLimon = findViewById(R.id.tv_limon)
         tvPrecioLimon = findViewById(R.id.tv_precio_limon)
 
+        // Inicializar BottomNavigationView
+        bottomNavigationView = findViewById(R.id.bottomNavigationView2)
+        setupBottomNavigation()
+
         // Configurar listeners para los botones de categoría
         setupCategoryButtons()
 
-        // Inicializar la base de datos con algunos productos si está vacía
-        checkAndInitializeDatabase()
+        // Mostrar botón de administración solo para administradores
+        setupAdminAccess()
 
         // Cargar productos de la categoría por defecto (Frutas)
         loadProductsByCategory("Frutas")
+    }
 
-        val fabAdminProducts = findViewById<FloatingActionButton>(R.id.fab_admin_products)
-        fabAdminProducts.setOnClickListener {
-            val intent = Intent(this, ProductAdminActivity::class.java)
-            startActivity(intent)
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_list, menu)
+
+        // Mostrar opción de administrador solo si el usuario es admin
+        menu.findItem(R.id.action_admin)?.isVisible = sessionManager.isAdmin()
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_admin -> {
+                startActivity(Intent(this, ProductAdminActivity::class.java))
+                true
+            }
+            R.id.action_logout -> {
+                sessionManager.logout()
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun setupBottomNavigation() {
+        bottomNavigationView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.ic_home -> {
+                    // Ya estamos en la pantalla de inicio
+                    true
+                }
+                R.id.ic_favorites -> {
+                    Toast.makeText(this, "Favoritos - Funcionalidad pendiente", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.ic_cart -> {
+                    // Ir a la pantalla del carrito
+                    startActivity(Intent(this, CartActivity::class.java))
+                    true
+                }
+                R.id.ic_profile -> {
+                    // Navegar a la pantalla de perfil
+                    startActivity(Intent(this, ProfileActivity::class.java))
+                    true
+                }
+                else -> false
+            }
+        }
+    }
+
+    private fun setupAdminAccess() {
+        // Si el usuario es administrador, agregar un botón flotante para acceder a la administración
+        if (sessionManager.isAdmin()) {
+            val fabAdmin = FloatingActionButton(this).apply {
+                setImageResource(android.R.drawable.ic_menu_manage)
+                contentDescription = "Administrar productos"
+            }
+
+            fabAdmin.setOnClickListener {
+                startActivity(Intent(this@ListActivity, ProductAdminActivity::class.java))
+            }
+
+            // Nota: Este código es ilustrativo. En una implementación real,
+            // deberías añadir el FAB al layout XML y referenciarlo aquí.
         }
     }
 
@@ -88,44 +172,6 @@ class ListActivity : AppCompatActivity() {
             btnBebidas.setBackgroundResource(R.color.fae61e)
             loadProductsByCategory("Bebidas")
         }
-    }
-
-    private fun checkAndInitializeDatabase() {
-        // Verificar si ya hay productos en la base de datos
-        val products = productDao.getAllProducts()
-
-        if (products.isEmpty()) {
-            // Si no hay productos, inicializar con datos predeterminados
-            initializeDefaultProducts()
-        }
-    }
-
-    private fun initializeDefaultProducts() {
-        // Crear productos predeterminados
-        val defaultProducts = listOf(
-            // Frutas
-            Product(
-                name = "Banano",
-                price = 1500.0,
-                category = "Frutas",
-                imageResource = R.drawable.banano,
-                description = "Banano fresco por libra"
-            ),
-            Product(
-                name = "Naranja",
-                price = 2500.0,
-                category = "Frutas",
-                imageResource = R.drawable.naranja,
-                description = "Naranja dulce por libra"
-            )
-        )
-
-        // Insertar los productos en la base de datos
-        for (product in defaultProducts) {
-            productDao.insertProduct(product)
-        }
-
-        Toast.makeText(this, "Base de datos inicializada con productos", Toast.LENGTH_SHORT).show()
     }
 
     private fun loadProductsByCategory(category: String) {
@@ -176,68 +222,6 @@ class ListActivity : AppCompatActivity() {
                 "Hay ${products.size} productos en la categoría $category. Implementa la vista para mostrarlos.",
                 Toast.LENGTH_LONG
             ).show()
-        }
-    }
-
-    // Métodos de ejemplo para operaciones CRUD que podrías utilizar en tu aplicación
-
-    /**
-     * Ejemplo de cómo añadir un nuevo producto
-     */
-    private fun addProduct(name: String, price: Double, category: String, imageResource: Int? = null) {
-        val newProduct = Product(
-            name = name,
-            price = price,
-            category = category,
-            imageResource = imageResource
-        )
-
-        val id = productDao.insertProduct(newProduct)
-
-        if (id > 0) {
-            Toast.makeText(this, "Producto agregado correctamente", Toast.LENGTH_SHORT).show()
-            // Recargar los productos de la categoría actual
-            loadProductsByCategory(category)
-        } else {
-            Toast.makeText(this, "Error al agregar el producto", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    /**
-     * Ejemplo de cómo actualizar un producto existente
-     */
-    private fun updateProduct(id: Int, name: String, price: Double, category: String, imageResource: Int? = null) {
-        val product = Product(
-            id = id,
-            name = name,
-            price = price,
-            category = category,
-            imageResource = imageResource
-        )
-
-        val rowsAffected = productDao.updateProduct(product)
-
-        if (rowsAffected > 0) {
-            Toast.makeText(this, "Producto actualizado correctamente", Toast.LENGTH_SHORT).show()
-            // Recargar los productos de la categoría actual
-            loadProductsByCategory(category)
-        } else {
-            Toast.makeText(this, "Error al actualizar el producto", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    /**
-     * Ejemplo de cómo eliminar un producto
-     */
-    private fun deleteProduct(id: Int, category: String) {
-        val rowsAffected = productDao.deleteProduct(id)
-
-        if (rowsAffected > 0) {
-            Toast.makeText(this, "Producto eliminado correctamente", Toast.LENGTH_SHORT).show()
-            // Recargar los productos de la categoría actual
-            loadProductsByCategory(category)
-        } else {
-            Toast.makeText(this, "Error al eliminar el producto", Toast.LENGTH_SHORT).show()
         }
     }
 }

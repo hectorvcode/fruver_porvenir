@@ -66,4 +66,7 @@
     <string name="editar">Editar</string>
     <string name="eliminar">Eliminar</string>
     <string name="seleccionar_imagen">Seleccionar Imagen</string>
+    <string name="cerrar_sesion">Cerrar Sesión</string>
+    <string name="administrar">Administrar</string>
+    <string name="foto_de_perfil">Foto de Perfil</string>
 </resources>

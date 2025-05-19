@@ -53,4 +53,20 @@
     <string name="tomatoe">Tomatoe</string>
     <string name="pagar">Pagar</string>
     <string name="nombre_completo">Nombre Completo</string>
+    <string name="gestion_de_producto">Gestión de Producto</string>
+    <string name="nombre_del_producto">Nombre del producto</string>
+    <string name="precio_por_libra">Precio por libra</string>
+    <string name="categor_a">Categoría:</string>
+    <string name="descripcion_opcional">Descripción (opcional)</string>
+    <string name="guardar">Guardar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="administrar_productos">Administrar Productos</string>
+    <string name="agregar_producto">Agregar producto</string>
+    <string name="imagen_del_producto">Imagen del producto</string>
+    <string name="precio_0_00">$0.00</string>
+    <string name="editar">Editar</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="seleccionar_imagen">Seleccionar Imagen</string>
+    <string name="cerrar_sesion">Cerrar Sesión</string>
+    <string name="administrar">Administrar</string>
 </resources>

@@ -7,6 +7,9 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.online_store.R
+import com.example.online_store.data.UserDao
+import com.example.online_store.model.User
+import com.example.online_store.utils.SessionManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -18,12 +21,24 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var btnGoogle: Button
     private lateinit var mGoogleSignInClient: GoogleSignInClient
+    private lateinit var sessionManager: SessionManager
+    private lateinit var userDao: UserDao
     private val RC_SIGN_IN = 123
     private val TAG = "GoogleSignIn"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        // Inicializar SessionManager y UserDao
+        sessionManager = SessionManager(this)
+        userDao = UserDao(this)
+
+        // Verificar si el usuario ya está logueado
+        if (sessionManager.isLoggedIn()) {
+            redirectBasedOnRole()
+            return
+        }
 
         // Configurar Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -45,6 +60,7 @@ class LoginActivity : AppCompatActivity() {
         val signInIntent = mGoogleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -60,19 +76,45 @@ class LoginActivity : AppCompatActivity() {
 
             // Inicio de sesión exitoso
             Log.d(TAG, "signInSuccess: ${account.email}")
-            Toast.makeText(this, "Bienvenido ${account.displayName}", Toast.LENGTH_SHORT).show()
 
-            // Ir a MainActivity
-            intent = Intent(this, ListActivity::class.java)
-            intent.putExtra("USER_EMAIL", account.email)
-            intent.putExtra("USER_NAME", account.displayName)
-            startActivity(intent)
+            // Verificar si el usuario existe en la BD
+            val email = account.email ?: ""
+            var user = userDao.getUserByEmail(email)
+
+            if (user == null) {
+                // Crear nuevo usuario con rol USER por defecto
+                user = User(
+                    email = email,
+                    name = account.displayName ?: "Usuario",
+                    role = User.ROLE_USER,
+                    profilePicUrl = account.photoUrl?.toString()
+                )
+                userDao.insertUser(user)
+            }
+
+            // Guardar sesión
+            sessionManager.createLoginSession(user)
+
+            Toast.makeText(this, "Bienvenido ${user.name}", Toast.LENGTH_SHORT).show()
+
+            // Redireccionar según el rol
+            redirectBasedOnRole()
 
         } catch (e: ApiException) {
             // Error en el inicio de sesión
-
-
-            Toast.makeText(this, "mensaje", Toast.LENGTH_SHORT).show()
+            Log.w(TAG, "signInFailure:code=" + e.statusCode)
+            Toast.makeText(this, "Error al iniciar sesión", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun redirectBasedOnRole() {
+        if (sessionManager.isAdmin()) {
+            // Si es administrador, ir a la pantalla de administración
+            startActivity(Intent(this, ProductAdminActivity::class.java))
+        } else {
+            // Si es usuario regular, ir a la lista de productos
+            startActivity(Intent(this, ListActivity::class.java))
+        }
+        finish()
     }
 }
