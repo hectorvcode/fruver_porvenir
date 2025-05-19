@@ -69,4 +69,23 @@
     <string name="seleccionar_imagen">Seleccionar Imagen</string>
     <string name="cerrar_sesion">Cerrar Sesión</string>
     <string name="administrar">Administrar</string>
+    <string name="foto_de_perfil">Foto de Perfil</string>
+    <string name="menos">-</string>
+    <string name="cantidad_1">1</string>
+    <string name="mas">+</string>
+    <string name="agregar_al_carrito">Agregar al carrito</string>
+    <string name="modo_administrador">Modo Administrador</string>
+    <string name="admin_mode_explanation">Al activar el modo administrador, tendrás acceso a funciones avanzadas como la gestión de productos.</string>
+    <string name="carrito_vacio">Tu carrito está vacío</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="total">Total</string>
+    <string name="administrar_usuarios">Administrar Usuarios</string>
+    <string name="agregar_usuario">Agregar Usuario</string>
+    <string name="rol_usuario">Rol del usuario</string>
+    <string name="email_example_com">email@example.com</string>
+    <string name="nombre_de_usuario">Nombre de Usuario</string>
+    <string name="avatar_usuario">Avatar Usuario</string>
+    <string name="administrador">Administrador</string>
+    <string name="gestion_de_usuario">Gestion de Usuario</string>
+    <string name="correo_electronico">Correo Electrónico</string>
 </resources>
