@@ -77,8 +77,12 @@ class ProductCategoryFragment : Fragment() {
         productListAdapter = ProductListAdapter(
             products = emptyList(),
             onProductClickListener = { product ->
-                // Show product details (can be implemented later)
-                Toast.makeText(requireContext(), "Seleccionado: ${product.name}", Toast.LENGTH_SHORT).show()
+                // Abrir el fragmento de detalles del producto
+                val detailFragment = ProductDetailFragment.newInstance(product.id)
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, detailFragment)
+                    .addToBackStack(null)
+                    .commit()
             },
             cartManager = cartManager
         )

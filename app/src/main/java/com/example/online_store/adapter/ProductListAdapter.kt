@@ -67,11 +67,12 @@ class ProductListAdapter(
             holder.ivProductImage.setImageResource(R.drawable.ic_search)
         }
 
-        // Configurar listeners para el producto
+        // Configurar clickListener para el producto (para abrir detalles)
         holder.itemView.setOnClickListener {
             onProductClickListener(product)
         }
 
+        // El resto del código del adaptador permanece igual...
         // Configurar listeners para los controles de cantidad
         holder.btnDecrease.setOnClickListener {
             updateQuantity(product.id, holder, -1)

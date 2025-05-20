@@ -89,4 +89,8 @@
     <string name="gestion_de_usuario">Gestion de Usuario</string>
     <string name="correo_electronico">Correo Electrónico</string>
     <string name="no_products_in_category">No hay productos en esta categoría</string>
+    <string name="coming_soon">Funcionalidad en desarrollo</string>
+    <string name="back_to_products">Volver a productos</string>
+    <string name="product_details">Detalles del producto</string>
+    <string name="add_to_cart_with_quantity">Agregar %1$d al carrito</string>
 </resources>
