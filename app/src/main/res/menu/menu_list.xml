@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_stores"
+        android:title="@string/stores"
+        android:icon="@android:drawable/ic_dialog_map"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_admin"
         android:title="@string/administrar"
         android:icon="@android:drawable/ic_menu_manage"

@@ -13,6 +13,10 @@
         android:id="@+id/ic_cart"
         android:icon="@drawable/baseline_shopping_cart_24"/>
 
+    <item android:title="@string/stores"
+        android:id="@+id/ic_stores"
+        android:icon="@drawable/baseline_store_24"/>
+
     <item android:title="@string/profile"
         android:id="@+id/ic_profile"
         android:icon="@drawable/baseline_co_present_24"/>

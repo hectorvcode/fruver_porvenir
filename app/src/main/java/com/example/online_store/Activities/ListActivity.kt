@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.online_store.R
 import com.example.online_store.fragments.ProductsFragment
+import com.example.online_store.fragments.StoresMapFragment
 import com.example.online_store.utils.RoleHelper
 import com.example.online_store.utils.SessionManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -59,6 +60,14 @@ class ListActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.action_stores -> {
+                // Cargar el fragmento del mapa
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.frame_layout, StoresMapFragment.newInstance())
+                    .addToBackStack(null)
+                    .commit()
+                true
+            }
             R.id.action_admin -> {
                 startActivity(Intent(this, ProductAdminActivity::class.java))
                 true

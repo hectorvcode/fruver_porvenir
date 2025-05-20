@@ -1,0 +1,8 @@
+## Este archivo es una plantilla para local.properties
+## Copia este archivo como local.properties y agrega tus propias claves
+
+# SDK location (será autogenerado por Android Studio)
+sdk.dir=/path/to/your/android/sdk
+
+# API Keys - Reemplaza con tus propias claves
+maps.api.key=YOUR_GOOGLE_MAPS_API_KEY_HERE

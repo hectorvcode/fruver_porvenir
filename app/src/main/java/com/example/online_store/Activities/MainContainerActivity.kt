@@ -8,6 +8,7 @@ import com.example.online_store.fragments.CartFragment
 import com.example.online_store.fragments.FavoritesFragment
 import com.example.online_store.fragments.HomeFragment
 import com.example.online_store.fragments.ProfileFragment
+import com.example.online_store.fragments.StoresMapFragment
 import com.example.online_store.utils.RoleHelper
 import com.example.online_store.utils.SessionManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -21,6 +22,7 @@ class MainContainerActivity : AppCompatActivity() {
     private val homeFragment by lazy { HomeFragment.newInstance() }
     private val favoritesFragment by lazy { FavoritesFragment.newInstance() }
     private val cartFragment by lazy { CartFragment.newInstance() }
+    private val storesMapFragment by lazy { StoresMapFragment.newInstance() }
     private val profileFragment by lazy { ProfileFragment.newInstance() }
 
     // Fragmento actualmente mostrado
@@ -75,19 +77,23 @@ class MainContainerActivity : AppCompatActivity() {
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.ic_home -> {
-                    loadFragment(homeFragment)
+                    loadFragment(HomeFragment.newInstance())
                     true
                 }
                 R.id.ic_favorites -> {
-                    loadFragment(favoritesFragment)
+                    loadFragment(FavoritesFragment.newInstance())
                     true
                 }
                 R.id.ic_cart -> {
-                    loadFragment(cartFragment)
+                    loadFragment(CartFragment.newInstance())
+                    true
+                }
+                R.id.ic_stores -> {
+                    loadFragment(StoresMapFragment.newInstance())
                     true
                 }
                 R.id.ic_profile -> {
-                    loadFragment(profileFragment)
+                    loadFragment(ProfileFragment.newInstance())
                     true
                 }
                 else -> false
