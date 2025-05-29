@@ -157,8 +157,88 @@ object ImageUtils {
     }
 
     /**
-     * Verifica si un archivo de imagen existe
+     * Copia una imagen desde URI a un archivo local
      */
+    fun copyImageFromUri(context: Context, sourceUri: Uri): File? {
+        return try {
+            // Crear archivo temporal para la imagen
+            val imageFile = createImageFile(context)
+
+            // Copiar contenido desde URI al archivo
+            context.contentResolver.openInputStream(sourceUri)?.use { inputStream ->
+                FileOutputStream(imageFile).use { outputStream ->
+                    inputStream.copyTo(outputStream)
+                }
+            }
+
+            imageFile
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    /**
+     * Procesa una imagen desde URI: la copia, comprime y rota si es necesario
+     */
+    fun processImageFromUri(context: Context, sourceUri: Uri, maxWidth: Int = 800, maxHeight: Int = 600): String? {
+        return try {
+            // Copiar imagen desde URI a archivo local
+            val imageFile = copyImageFromUri(context, sourceUri)
+
+            if (imageFile != null && imageFile.exists()) {
+                // Comprimir y rotar la imagen
+                val bitmap = compressAndRotateImage(imageFile.absolutePath, maxWidth, maxHeight)
+
+                if (bitmap != null) {
+                    // Guardar la imagen comprimida
+                    if (saveBitmapToFile(bitmap, imageFile)) {
+                        imageFile.absolutePath
+                    } else {
+                        null
+                    }
+                } else {
+                    // Si no se pudo procesar, devolver la ruta original
+                    imageFile.absolutePath
+                }
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    /**
+     * Obtiene el nombre del archivo desde una URI
+     */
+    fun getFileNameFromUri(context: Context, uri: Uri): String? {
+        return try {
+            context.contentResolver.query(uri, null, null, null, null)?.use { cursor ->
+                val nameIndex = cursor.getColumnIndex(android.provider.OpenableColumns.DISPLAY_NAME)
+                if (cursor.moveToFirst() && nameIndex >= 0) {
+                    cursor.getString(nameIndex)
+                } else {
+                    null
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    /**
+     * Verifica si una URI es accesible
+     */
+    fun isUriAccessible(context: Context, uri: Uri): Boolean {
+        return try {
+            context.contentResolver.openInputStream(uri)?.use { true } ?: false
+        } catch (e: Exception) {
+            false
+        }
+    }
     fun imageFileExists(imagePath: String?): Boolean {
         return if (!imagePath.isNullOrEmpty()) {
             File(imagePath).exists()

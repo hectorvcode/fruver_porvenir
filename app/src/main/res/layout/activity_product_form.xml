@@ -65,7 +65,7 @@
                 android:backgroundTint="@color/green_mint"
                 android:drawableStart="@android:drawable/ic_menu_gallery"
                 android:drawablePadding="8dp"
-                android:text="@string/seleccionar_imagen"
+                android:text="@string/seleccionar_galeria"
                 android:textSize="12sp"
                 app:cornerRadius="20dp" />
 

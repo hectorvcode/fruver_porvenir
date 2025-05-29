@@ -2,15 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Permisos para ubicación -->
+    <!-- Permisos existentes -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Nuevos permisos para cámara y galería -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+
+    <!-- Declarar que la app usa cámara -->
     <uses-feature android:name="android.hardware.camera"
         android:required="false" />
     <uses-feature android:name="android.hardware.camera.autofocus"
@@ -32,6 +37,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
 
+        <!-- FileProvider para compartir archivos de manera segura -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -42,40 +48,27 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <!-- Resto de actividades... -->
         <activity
             android:name=".Activities.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"
-            android:exported="false" />
-        <activity android:name=".Activities.HomeActivity"
-            android:exported="false" />
-        <activity android:name=".Activities.LoginActivity"
-            android:exported="false" />
-        <activity android:name=".Activities.ListActivity"
-            android:exported="false" />
-        <activity android:name=".Activities.CartActivity"
-            android:exported="false" />
-        <activity android:name=".Activities.RegisterActivity"
-            android:exported="false" />
-        <activity android:name=".Activities.ProductFormActivity"
-            android:exported="false" />
-        <activity android:name=".Activities.ProductAdminActivity"
-            android:exported="false" />
-        <activity android:name=".Activities.ProfileActivity"
-            android:exported="false" />
-        <activity android:name=".Activities.UserAdminActivity"
-            android:exported="false" />
-        <activity android:name=".Activities.UserFormActivity"
-            android:exported="false" />
-        <activity android:name=".Activities.MainContainerActivity"
-            android:exported="false" />
-
+        <activity android:name=".MainActivity" android:exported="false" />
+        <activity android:name=".Activities.HomeActivity" android:exported="false" />
+        <activity android:name=".Activities.LoginActivity" android:exported="false" />
+        <activity android:name=".Activities.ListActivity" android:exported="false" />
+        <activity android:name=".Activities.CartActivity" android:exported="false" />
+        <activity android:name=".Activities.RegisterActivity" android:exported="false" />
+        <activity android:name=".Activities.ProductFormActivity" android:exported="false" />
+        <activity android:name=".Activities.ProductAdminActivity" android:exported="false" />
+        <activity android:name=".Activities.ProfileActivity" android:exported="false" />
+        <activity android:name=".Activities.UserAdminActivity" android:exported="false" />
+        <activity android:name=".Activities.UserFormActivity" android:exported="false" />
+        <activity android:name=".Activities.MainContainerActivity" android:exported="false" />
     </application>
 
 </manifest>

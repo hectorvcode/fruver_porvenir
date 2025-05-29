@@ -98,15 +98,22 @@
     <string name="call_store">Llamar</string>
     <string name="stores">Tiendas</string>
 
-    <!-- Nuevos strings para la cámara -->
+    <!-- Strings para manejo de imágenes -->
     <string name="tomar_foto">Tomar Foto</string>
+    <string name="seleccionar_galeria">Desde Galería</string>
+    <string name="imagenes_predeterminadas">Predeterminadas</string>
     <string name="seleccionar_origen_imagen">Seleccionar origen de imagen</string>
     <string name="camara">Cámara</string>
     <string name="galeria">Galería</string>
     <string name="imagen_personalizada">Imagen personalizada</string>
     <string name="imagen_predeterminada">Imagen predeterminada</string>
     <string name="error_camara">Error al acceder a la cámara</string>
+    <string name="error_galeria">Error al acceder a la galería</string>
     <string name="permiso_camara_requerido">Se requiere permiso de cámara</string>
+    <string name="permiso_galeria_requerido">Se requiere permiso para acceder a las imágenes</string>
     <string name="foto_guardada">Foto guardada exitosamente</string>
+    <string name="imagen_seleccionada">Imagen seleccionada exitosamente</string>
     <string name="error_guardar_foto">Error al guardar la foto</string>
+    <string name="error_procesar_imagen">Error al procesar la imagen</string>
+    <string name="imagen_no_accesible">No se puede acceder a la imagen seleccionada</string>
 </resources>

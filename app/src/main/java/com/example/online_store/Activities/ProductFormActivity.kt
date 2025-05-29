@@ -43,24 +43,12 @@ class ProductFormActivity : AppCompatActivity() {
 
     private var productId = 0 // 0 indica nuevo producto, otro valor indica edición
     private var isEditMode = false
-    private var selectedImageResource: Int? = null
     private var currentImagePath: String? = null
 
     // Activity Result Launchers
     private lateinit var cameraLauncher: ActivityResultLauncher<Intent>
+    private lateinit var galleryLauncher: ActivityResultLauncher<Intent>
     private lateinit var permissionLauncher: ActivityResultLauncher<String>
-
-    // Lista de imágenes disponibles predeterminadas
-    private val availableImages = mapOf(
-        "Banano" to R.drawable.banano,
-        "Naranja" to R.drawable.naranja,
-        "Piña" to R.drawable.pina,
-        "Limón" to R.drawable.limon,
-        "Tomate" to R.drawable.ic_search, // Reemplazar con recurso real cuando exista
-        "Cebolla" to R.drawable.ic_search, // Reemplazar con recurso real cuando exista
-        "Agua" to R.drawable.ic_search,    // Reemplazar con recurso real cuando exista
-        "Jugo" to R.drawable.ic_search     // Reemplazar con recurso real cuando exista
-    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -112,6 +100,17 @@ class ProductFormActivity : AppCompatActivity() {
             }
         }
 
+        // Launcher para la galería
+        galleryLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == RESULT_OK) {
+                result.data?.data?.let { uri ->
+                    handleGalleryResult(uri)
+                }
+            }
+        }
+
         // Launcher para permisos
         permissionLauncher = registerForActivityResult(
             ActivityResultContracts.RequestPermission()
@@ -137,7 +136,7 @@ class ProductFormActivity : AppCompatActivity() {
 
     private fun setupListeners() {
         btnSelectImage.setOnClickListener {
-            showImageSelectionDialog()
+            openGallery()
         }
 
         btnTakePhoto.setOnClickListener {
@@ -150,6 +149,64 @@ class ProductFormActivity : AppCompatActivity() {
 
         btnCancelar.setOnClickListener {
             finish() // Volver a la actividad anterior
+        }
+    }
+
+    private fun openGallery() {
+        try {
+            val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            galleryIntent.type = "image/*"
+
+            // Verificar que hay una app de galería disponible
+            if (galleryIntent.resolveActivity(packageManager) != null) {
+                galleryLauncher.launch(galleryIntent)
+            } else {
+                // Intentar con otro método si el primero falla
+                val alternativeIntent = Intent(Intent.ACTION_GET_CONTENT)
+                alternativeIntent.type = "image/*"
+
+                if (alternativeIntent.resolveActivity(packageManager) != null) {
+                    galleryLauncher.launch(alternativeIntent)
+                } else {
+                    Toast.makeText(this, "No se encontró una aplicación de galería", Toast.LENGTH_SHORT).show()
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(this, "Error al abrir la galería: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun handleGalleryResult(imageUri: Uri) {
+        try {
+            // Verificar que la URI es accesible
+            if (!ImageUtils.isUriAccessible(this, imageUri)) {
+                Toast.makeText(this, "No se puede acceder a la imagen seleccionada", Toast.LENGTH_SHORT).show()
+                return
+            }
+
+            // Procesar la imagen desde URI
+            val processedImagePath = ImageUtils.processImageFromUri(this, imageUri)
+
+            if (processedImagePath != null) {
+                currentImagePath = processedImagePath
+
+                // Mostrar la imagen en el ImageView
+                val bitmap = ImageUtils.compressAndRotateImage(processedImagePath)
+                if (bitmap != null) {
+                    ivProductImage.setImageBitmap(bitmap)
+
+                    Toast.makeText(this, "Imagen seleccionada exitosamente", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Error al procesar la imagen", Toast.LENGTH_SHORT).show()
+                    currentImagePath = null
+                }
+            } else {
+                Toast.makeText(this, "Error al copiar la imagen", Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(this, "Error al procesar la imagen: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -205,9 +262,6 @@ class ProductFormActivity : AppCompatActivity() {
                         // Mostrar la imagen en el ImageView
                         ivProductImage.setImageBitmap(bitmap)
 
-                        // Limpiar imagen predeterminada si había una seleccionada
-                        selectedImageResource = null
-
                         Toast.makeText(this, "Foto capturada exitosamente", Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(this, "Error al guardar la imagen", Toast.LENGTH_SHORT).show()
@@ -223,31 +277,6 @@ class ProductFormActivity : AppCompatActivity() {
                 currentImagePath = null
             }
         }
-    }
-
-    private fun showImageSelectionDialog() {
-        // Obtener los nombres de las imágenes disponibles
-        val imageNames = availableImages.keys.toTypedArray()
-
-        // Crear y mostrar el diálogo de selección
-        AlertDialog.Builder(this)
-            .setTitle("Seleccionar Imagen Predeterminada")
-            .setItems(imageNames) { _, which ->
-                // Obtener el nombre de la imagen seleccionada
-                val selectedImageName = imageNames[which]
-
-                // Obtener el ID del recurso asociado
-                selectedImageResource = availableImages[selectedImageName]
-
-                // Actualizar la ImageView con la imagen seleccionada
-                selectedImageResource?.let {
-                    ivProductImage.setImageResource(it)
-                    // Limpiar imagen personalizada
-                    currentImagePath = null
-                }
-            }
-            .setNegativeButton("Cancelar", null)
-            .show()
     }
 
     private fun loadProductData(productId: Int) {
@@ -272,8 +301,11 @@ class ProductFormActivity : AppCompatActivity() {
                 }
                 // Imagen predeterminada como respaldo
                 it.imageResource != null -> {
-                    selectedImageResource = it.imageResource
                     ivProductImage.setImageResource(it.imageResource)
+                }
+                // Imagen por defecto
+                else -> {
+                    ivProductImage.setImageResource(R.drawable.ic_search)
                 }
             }
 
@@ -312,8 +344,8 @@ class ProductFormActivity : AppCompatActivity() {
             name = nombre,
             price = precio,
             category = categoria,
-            imageResource = selectedImageResource,
-            imagePath = currentImagePath, // Nueva propiedad
+            imageResource = null, // Ya no usamos imágenes predeterminadas
+            imagePath = currentImagePath, // Solo imágenes personalizadas
             description = descripcion
         )
 
@@ -378,10 +410,7 @@ class ProductFormActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        // Si se cancela la actividad y hay una imagen temporal, eliminarla
-        if (!isEditMode && currentImagePath != null) {
-            // Solo eliminar si es una imagen nueva y no se guardó
-            // ImageUtils.deleteImageFile(currentImagePath)
-        }
+        // Si se cancela la actividad y hay una imagen temporal, no la eliminamos
+        // porque podría estar siendo usada
     }
 }
