@@ -64,3 +64,7 @@ app/keystore/
 # Google Services
 google-services.json
 GoogleService-Info.plist
+
+GenerarArbol.ps1
+estructura.txt
+online_store_structure.txt
