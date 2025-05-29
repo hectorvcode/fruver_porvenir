@@ -25,11 +25,11 @@ class ProductDao(context: Context) {
             put(DatabaseHelper.COLUMN_PRICE, product.price)
             put(DatabaseHelper.COLUMN_CATEGORY, product.category)
             product.imageResource?.let { put(DatabaseHelper.COLUMN_IMAGE_RESOURCE, it) }
+            put(DatabaseHelper.COLUMN_IMAGE_PATH, product.imagePath) // Nueva columna
             put(DatabaseHelper.COLUMN_DESCRIPTION, product.description)
         }
 
         val id = db.insert(DatabaseHelper.TABLE_PRODUCTS, null, values)
-        // No cerramos la base de datos aquí
         return id
     }
 
@@ -58,7 +58,6 @@ class ProductDao(context: Context) {
         }
 
         cursor.close()
-        // No cerramos la base de datos aquí
         return productsList
     }
 
@@ -90,7 +89,6 @@ class ProductDao(context: Context) {
         }
 
         cursor.close()
-        // No cerramos la base de datos aquí
         return productsList
     }
 
@@ -120,7 +118,6 @@ class ProductDao(context: Context) {
         }
 
         cursor.close()
-        // No cerramos la base de datos aquí
         return product
     }
 
@@ -136,6 +133,7 @@ class ProductDao(context: Context) {
             put(DatabaseHelper.COLUMN_PRICE, product.price)
             put(DatabaseHelper.COLUMN_CATEGORY, product.category)
             product.imageResource?.let { put(DatabaseHelper.COLUMN_IMAGE_RESOURCE, it) }
+            put(DatabaseHelper.COLUMN_IMAGE_PATH, product.imagePath) // Nueva columna
             put(DatabaseHelper.COLUMN_DESCRIPTION, product.description)
         }
 
@@ -149,7 +147,6 @@ class ProductDao(context: Context) {
             selectionArgs
         )
 
-        // No cerramos la base de datos aquí
         return count
     }
 
@@ -169,7 +166,6 @@ class ProductDao(context: Context) {
             selectionArgs
         )
 
-        // No cerramos la base de datos aquí
         return count
     }
 
@@ -180,7 +176,6 @@ class ProductDao(context: Context) {
     fun deleteAllProducts(): Int {
         val db = dbHelper.writableDatabase
         val count = db.delete(DatabaseHelper.TABLE_PRODUCTS, null, null)
-        // No cerramos la base de datos aquí
         return count
     }
 
@@ -200,6 +195,7 @@ class ProductDao(context: Context) {
         val priceIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_PRICE)
         val categoryIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_CATEGORY)
         val imageResourceIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_IMAGE_RESOURCE)
+        val imagePathIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_IMAGE_PATH) // Nueva columna
         val descriptionIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_DESCRIPTION)
 
         val id = if (idIndex >= 0) cursor.getInt(idIndex) else 0
@@ -208,6 +204,8 @@ class ProductDao(context: Context) {
         val category = if (categoryIndex >= 0) cursor.getString(categoryIndex) else ""
         val imageResource = if (imageResourceIndex >= 0 && !cursor.isNull(imageResourceIndex))
             cursor.getInt(imageResourceIndex) else null
+        val imagePath = if (imagePathIndex >= 0 && !cursor.isNull(imagePathIndex))
+            cursor.getString(imagePathIndex) else null
         val description = if (descriptionIndex >= 0) cursor.getString(descriptionIndex) else ""
 
         return Product(
@@ -216,6 +214,7 @@ class ProductDao(context: Context) {
             price = price,
             category = category,
             imageResource = imageResource,
+            imagePath = imagePath, // Nueva propiedad
             description = description
         )
     }

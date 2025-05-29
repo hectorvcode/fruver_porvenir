@@ -1,5 +1,6 @@
 package com.example.online_store.adapter
 
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.online_store.R
 import com.example.online_store.model.Product
+import com.example.online_store.utils.ImageUtils
 
 class ProductAdapter(
     private var products: List<Product>,
@@ -38,13 +40,8 @@ class ProductAdapter(
         holder.tvProductPrice.text = "$${product.price}/lb"
         holder.tvProductCategory.text = "Categoría: ${product.category}"
 
-        // Configurar la imagen del producto si existe
-        product.imageResource?.let {
-            holder.ivProduct.setImageResource(it)
-        } ?: run {
-            // Imagen por defecto si no hay recurso
-            holder.ivProduct.setImageResource(R.drawable.ic_search) // Cambiar por una imagen por defecto
-        }
+        // Configurar la imagen del producto
+        loadProductImage(product, holder.ivProduct)
 
         // Configurar listeners para los botones de editar y eliminar
         holder.ivEdit.setOnClickListener {
@@ -53,6 +50,42 @@ class ProductAdapter(
 
         holder.ivDelete.setOnClickListener {
             onDeleteClickListener(product)
+        }
+    }
+
+    private fun loadProductImage(product: Product, imageView: ImageView) {
+        when {
+            // Priorizar imagen personalizada (tomada con cámara)
+            !product.imagePath.isNullOrEmpty() && ImageUtils.imageFileExists(product.imagePath) -> {
+                try {
+                    val bitmap = BitmapFactory.decodeFile(product.imagePath)
+                    if (bitmap != null) {
+                        imageView.setImageBitmap(bitmap)
+                    } else {
+                        // Si falla la carga del archivo, usar imagen predeterminada como respaldo
+                        loadFallbackImage(product, imageView)
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    loadFallbackImage(product, imageView)
+                }
+            }
+            // Imagen predeterminada (de recursos)
+            product.imageResource != null -> {
+                imageView.setImageResource(product.imageResource)
+            }
+            // Imagen por defecto si no hay ninguna
+            else -> {
+                imageView.setImageResource(R.drawable.ic_search)
+            }
+        }
+    }
+
+    private fun loadFallbackImage(product: Product, imageView: ImageView) {
+        if (product.imageResource != null) {
+            imageView.setImageResource(product.imageResource)
+        } else {
+            imageView.setImageResource(R.drawable.ic_search)
         }
     }
 

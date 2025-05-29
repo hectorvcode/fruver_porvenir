@@ -1,5 +1,6 @@
 package com.example.online_store.adapter
 
+import android.graphics.BitmapFactory
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -15,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.online_store.R
 import com.example.online_store.model.Product
 import com.example.online_store.utils.CartManager
+import com.example.online_store.utils.ImageUtils
+import java.io.File
 
 class ProductListAdapter(
     private var products: List<Product>,
@@ -59,20 +62,14 @@ class ProductListAdapter(
         holder.tvProductCategory.text = "Categoría: ${product.category}"
         holder.etQuantity.setText(quantity.toString())
 
-        // Configurar la imagen del producto si existe
-        product.imageResource?.let {
-            holder.ivProductImage.setImageResource(it)
-        } ?: run {
-            // Imagen por defecto si no hay recurso
-            holder.ivProductImage.setImageResource(R.drawable.ic_search)
-        }
+        // Configurar la imagen del producto
+        loadProductImage(product, holder.ivProductImage)
 
         // Configurar clickListener para el producto (para abrir detalles)
         holder.itemView.setOnClickListener {
             onProductClickListener(product)
         }
 
-        // El resto del código del adaptador permanece igual...
         // Configurar listeners para los controles de cantidad
         holder.btnDecrease.setOnClickListener {
             updateQuantity(product.id, holder, -1)
@@ -121,6 +118,42 @@ class ProductListAdapter(
                 "${quantity} ${product.name} añadido al carrito",
                 Toast.LENGTH_SHORT
             ).show()
+        }
+    }
+
+    private fun loadProductImage(product: Product, imageView: ImageView) {
+        when {
+            // Priorizar imagen personalizada
+            !product.imagePath.isNullOrEmpty() && ImageUtils.imageFileExists(product.imagePath) -> {
+                try {
+                    val bitmap = BitmapFactory.decodeFile(product.imagePath)
+                    if (bitmap != null) {
+                        imageView.setImageBitmap(bitmap)
+                    } else {
+                        // Si falla la carga, usar imagen predeterminada como respaldo
+                        loadFallbackImage(product, imageView)
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    loadFallbackImage(product, imageView)
+                }
+            }
+            // Imagen predeterminada
+            product.imageResource != null -> {
+                imageView.setImageResource(product.imageResource)
+            }
+            // Imagen por defecto si no hay ninguna
+            else -> {
+                imageView.setImageResource(R.drawable.ic_search)
+            }
+        }
+    }
+
+    private fun loadFallbackImage(product: Product, imageView: ImageView) {
+        if (product.imageResource != null) {
+            imageView.setImageResource(product.imageResource)
+        } else {
+            imageView.setImageResource(R.drawable.ic_search)
         }
     }
 
