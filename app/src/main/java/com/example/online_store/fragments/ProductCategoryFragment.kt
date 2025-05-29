@@ -14,6 +14,7 @@ import com.example.online_store.adapter.ProductListAdapter
 import com.example.online_store.data.ProductDao
 import com.example.online_store.model.Product
 import com.example.online_store.utils.CartManager
+import com.example.online_store.utils.FavoritesManager
 
 class ProductCategoryFragment : Fragment() {
 
@@ -23,6 +24,7 @@ class ProductCategoryFragment : Fragment() {
     private lateinit var productListAdapter: ProductListAdapter
     private lateinit var productDao: ProductDao
     private lateinit var cartManager: CartManager
+    private lateinit var favoritesManager: FavoritesManager
     private var category: String = "Frutas" // Default category
 
     companion object {
@@ -46,6 +48,7 @@ class ProductCategoryFragment : Fragment() {
         // Initialize DAOs and managers
         productDao = ProductDao(requireContext())
         cartManager = CartManager(requireContext())
+        favoritesManager = FavoritesManager(requireContext())
     }
 
     override fun onCreateView(
@@ -84,7 +87,8 @@ class ProductCategoryFragment : Fragment() {
                     .addToBackStack(null)
                     .commit()
             },
-            cartManager = cartManager
+            cartManager = cartManager,
+            favoritesManager = favoritesManager
         )
 
         rvCategoryProducts.apply {

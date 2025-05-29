@@ -115,5 +115,12 @@
     <string name="imagen_seleccionada">Imagen seleccionada exitosamente</string>
     <string name="error_guardar_foto">Error al guardar la foto</string>
     <string name="error_procesar_imagen">Error al procesar la imagen</string>
-    <string name="imagen_no_accesible">No se puede acceder a la imagen seleccionada</string>
+    <!-- Strings para favoritos -->
+    <string name="favorito">Favorito</string>
+    <string name="mis_favoritos">Mis Favoritos</string>
+    <string name="no_tienes_favoritos">No tienes productos favoritos aún.\n¡Agrega algunos desde la lista de productos!</string>
+    <string name="agregado_a_favoritos">Agregado a favoritos</string>
+    <string name="eliminado_de_favoritos">Eliminado de favoritos</string>
+    <string name="limpiar_favoritos">Limpiar favoritos</string>
+    <string name="confirmar_limpiar_favoritos">¿Estás seguro de que quieres eliminar todos tus productos favoritos?</string>
 </resources>

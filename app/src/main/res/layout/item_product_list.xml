@@ -32,10 +32,25 @@
             android:layout_marginEnd="8dp"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ib_favorite"
             app:layout_constraintStart_toEndOf="@+id/iv_product_image"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Banano" />
+
+        <!-- Botón de favorito reposicionado al lado derecho, a la altura del nombre -->
+        <ImageButton
+            android:id="@+id/ib_favorite"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/favorite_button_background"
+            android:contentDescription="@string/favorito"
+            android:padding="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_product_name"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_product_name"
+            app:srcCompat="@drawable/baseline_favorite_border_24"
+            app:tint="@android:color/darker_gray" />
 
         <TextView
             android:id="@+id/tv_product_price"
@@ -44,6 +59,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:textSize="16sp"
+            android:textColor="@color/green_mint"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_product_image"
             app:layout_constraintTop_toBottomOf="@+id/tv_product_name"
@@ -54,7 +71,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:textSize="14sp"
             android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="parent"

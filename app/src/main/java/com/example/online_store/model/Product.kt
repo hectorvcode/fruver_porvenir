@@ -7,7 +7,8 @@ data class Product(
     val category: String,            // Categoría (Frutas, Verduras, Bebidas, etc.)
     val imageResource: Int? = null,  // Recurso de imagen predeterminada (opcional)
     val imagePath: String? = null,   // Ruta de imagen personalizada tomada con cámara
-    val description: String = ""     // Descripción del producto (opcional)
+    val description: String = "",    // Descripción del producto (opcional)
+    var isFavorite: Boolean = false  // Estado de favorito (no se guarda en BD de productos)
 ) {
     /**
      * Función para determinar qué imagen usar

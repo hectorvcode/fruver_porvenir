@@ -16,13 +16,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.online_store.R
 import com.example.online_store.model.Product
 import com.example.online_store.utils.CartManager
+import com.example.online_store.utils.FavoritesManager
 import com.example.online_store.utils.ImageUtils
-import java.io.File
 
 class ProductListAdapter(
     private var products: List<Product>,
     private val onProductClickListener: (Product) -> Unit,
-    private val cartManager: CartManager
+    private val cartManager: CartManager,
+    private val favoritesManager: FavoritesManager
 ) : RecyclerView.Adapter<ProductListAdapter.ProductViewHolder>() {
 
     // Mapa para guardar las cantidades seleccionadas por producto
@@ -44,6 +45,7 @@ class ProductListAdapter(
         val etQuantity: EditText = itemView.findViewById(R.id.et_quantity)
         val btnIncrease: Button = itemView.findViewById(R.id.btn_increase)
         val ibAddToCart: ImageButton = itemView.findViewById(R.id.ib_add_to_cart)
+        val ibFavorite: ImageButton = itemView.findViewById(R.id.ib_favorite)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
@@ -64,6 +66,11 @@ class ProductListAdapter(
 
         // Configurar la imagen del producto
         loadProductImage(product, holder.ivProductImage)
+
+        // Configurar el estado del botón de favorito
+        val isFavorite = favoritesManager.isFavorite(product.id)
+        product.isFavorite = isFavorite
+        updateFavoriteButton(holder.ibFavorite, isFavorite)
 
         // Configurar clickListener para el producto (para abrir detalles)
         holder.itemView.setOnClickListener {
@@ -109,6 +116,19 @@ class ProductListAdapter(
             }
         })
 
+        // Listener para el botón de favoritos
+        holder.ibFavorite.setOnClickListener {
+            val newFavoriteState = favoritesManager.toggleFavorite(product)
+            updateFavoriteButton(holder.ibFavorite, newFavoriteState)
+
+            val message = if (newFavoriteState) {
+                "${product.name} agregado a favoritos"
+            } else {
+                "${product.name} eliminado de favoritos"
+            }
+            Toast.makeText(holder.itemView.context, message, Toast.LENGTH_SHORT).show()
+        }
+
         // Listener para añadir al carrito
         holder.ibAddToCart.setOnClickListener {
             val quantity = quantityMap[product.id] ?: 1
@@ -118,6 +138,20 @@ class ProductListAdapter(
                 "${quantity} ${product.name} añadido al carrito",
                 Toast.LENGTH_SHORT
             ).show()
+        }
+    }
+
+    private fun updateFavoriteButton(favoriteButton: ImageButton, isFavorite: Boolean) {
+        if (isFavorite) {
+            favoriteButton.setImageResource(R.drawable.baseline_favorite_24)
+            favoriteButton.setColorFilter(
+                favoriteButton.context.getColor(R.color.red_heart)
+            )
+        } else {
+            favoriteButton.setImageResource(R.drawable.baseline_favorite_border_24)
+            favoriteButton.setColorFilter(
+                favoriteButton.context.getColor(android.R.color.darker_gray)
+            )
         }
     }
 
