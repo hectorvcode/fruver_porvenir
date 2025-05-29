@@ -1,5 +1,6 @@
 package com.example.online_store.adapter
 
+import android.graphics.BitmapFactory
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.online_store.R
 import com.example.online_store.model.CartItem
+import com.example.online_store.utils.ImageUtils
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -51,12 +53,8 @@ class CartAdapter(
         holder.etQuantity.setText(cartItem.quantity.toString())
         holder.tvSubtotal.text = currencyFormat.format(cartItem.getSubtotal())
 
-        // Establecer imagen del producto
-        product.imageResource?.let {
-            holder.ivProductImage.setImageResource(it)
-        } ?: run {
-            holder.ivProductImage.setImageResource(R.drawable.ic_search) // Imagen por defecto
-        }
+        // Establecer imagen del producto (aquí está el cambio importante)
+        loadProductImage(product, holder.ivProductImage)
 
         // Configurar listeners para controles de cantidad
         holder.btnDecrease.setOnClickListener {
@@ -107,6 +105,48 @@ class CartAdapter(
         // Listener para eliminar ítem
         holder.ibDeleteItem.setOnClickListener {
             onItemRemovedListener(cartItem)
+        }
+    }
+
+    /**
+     * Carga la imagen del producto, priorizando imágenes personalizadas
+     */
+    private fun loadProductImage(product: com.example.online_store.model.Product, imageView: ImageView) {
+        when {
+            // Priorizar imagen personalizada (tomada con cámara)
+            !product.imagePath.isNullOrEmpty() && ImageUtils.imageFileExists(product.imagePath) -> {
+                try {
+                    val bitmap = BitmapFactory.decodeFile(product.imagePath)
+                    if (bitmap != null) {
+                        imageView.setImageBitmap(bitmap)
+                    } else {
+                        // Si falla la carga del archivo, usar imagen predeterminada como respaldo
+                        loadFallbackImage(product, imageView)
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    loadFallbackImage(product, imageView)
+                }
+            }
+            // Imagen predeterminada (de recursos)
+            product.imageResource != null -> {
+                imageView.setImageResource(product.imageResource)
+            }
+            // Imagen por defecto si no hay ninguna
+            else -> {
+                imageView.setImageResource(R.drawable.ic_search)
+            }
+        }
+    }
+
+    /**
+     * Carga imagen de respaldo en caso de error
+     */
+    private fun loadFallbackImage(product: com.example.online_store.model.Product, imageView: ImageView) {
+        if (product.imageResource != null) {
+            imageView.setImageResource(product.imageResource)
+        } else {
+            imageView.setImageResource(R.drawable.ic_search)
         }
     }
 

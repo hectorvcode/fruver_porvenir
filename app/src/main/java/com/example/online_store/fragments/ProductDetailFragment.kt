@@ -1,5 +1,6 @@
 package com.example.online_store.fragments
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -17,6 +18,7 @@ import com.example.online_store.R
 import com.example.online_store.data.ProductDao
 import com.example.online_store.model.Product
 import com.example.online_store.utils.CartManager
+import com.example.online_store.utils.ImageUtils
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -79,6 +81,16 @@ class ProductDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Inicializar vistas
+        initializeViews(view)
+
+        // Configurar eventos
+        setupListeners()
+
+        // Cargar datos del producto
+        loadProductData()
+    }
+
+    private fun initializeViews(view: View) {
         cvBack = view.findViewById(R.id.cv_back)
         ivBack = view.findViewById(R.id.iv_back)
         tvProductTitle = view.findViewById(R.id.tv_product_title)
@@ -93,12 +105,6 @@ class ProductDetailFragment : Fragment() {
         etQuantity = view.findViewById(R.id.et_quantity)
         btnAddToCart = view.findViewById(R.id.btn_add_to_cart)
         cvProductDescription = view.findViewById(R.id.cv_product_description)
-
-        // Configurar eventos
-        setupListeners()
-
-        // Cargar datos del producto
-        loadProductData()
     }
 
     private fun setupListeners() {
@@ -174,13 +180,8 @@ class ProductDetailFragment : Fragment() {
                 cvProductDescription.visibility = View.GONE
             }
 
-            // Mostrar imagen del producto
-            it.imageResource?.let { imageResource ->
-                ivProductImage.setImageResource(imageResource)
-            } ?: run {
-                // Imagen por defecto
-                ivProductImage.setImageResource(R.drawable.ic_search)
-            }
+            // Mostrar imagen del producto (aquí está el cambio importante)
+            loadProductImage(it)
         } ?: run {
             // Si el producto no existe, mostrar un mensaje y cerrar el fragmento
             Toast.makeText(
@@ -189,6 +190,48 @@ class ProductDetailFragment : Fragment() {
                 Toast.LENGTH_SHORT
             ).show()
             requireActivity().supportFragmentManager.popBackStack()
+        }
+    }
+
+    /**
+     * Carga la imagen del producto, priorizando imágenes personalizadas
+     */
+    private fun loadProductImage(product: Product) {
+        when {
+            // Priorizar imagen personalizada (tomada con cámara)
+            !product.imagePath.isNullOrEmpty() && ImageUtils.imageFileExists(product.imagePath) -> {
+                try {
+                    val bitmap = BitmapFactory.decodeFile(product.imagePath)
+                    if (bitmap != null) {
+                        ivProductImage.setImageBitmap(bitmap)
+                    } else {
+                        // Si falla la carga del archivo, usar imagen predeterminada como respaldo
+                        loadFallbackImage(product)
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    loadFallbackImage(product)
+                }
+            }
+            // Imagen predeterminada (de recursos)
+            product.imageResource != null -> {
+                ivProductImage.setImageResource(product.imageResource)
+            }
+            // Imagen por defecto si no hay ninguna
+            else -> {
+                ivProductImage.setImageResource(R.drawable.ic_search)
+            }
+        }
+    }
+
+    /**
+     * Carga imagen de respaldo en caso de error
+     */
+    private fun loadFallbackImage(product: Product) {
+        if (product.imageResource != null) {
+            ivProductImage.setImageResource(product.imageResource)
+        } else {
+            ivProductImage.setImageResource(R.drawable.ic_search)
         }
     }
 
