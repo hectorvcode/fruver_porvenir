@@ -11,4 +11,8 @@
     <color name="orange">#FF9800</color>
     <color name="light_purple">#8365B4</color>
     <color name="light_orange">#FFAF95</color>
+
+    <!-- Colores adicionales para mejorar contraste -->
+    <color name="light_gray">#E0E0E0</color>
+    <color name="yellow_selected">#FFD700</color>
 </resources>

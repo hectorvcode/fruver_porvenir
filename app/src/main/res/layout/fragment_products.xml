@@ -19,84 +19,83 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Primera fila de botones -->
-    <LinearLayout
-        android:id="@+id/ll_category_buttons_row1"
+    <!-- HorizontalScrollView para botones de categorías en una sola línea -->
+    <HorizontalScrollView
+        android:id="@+id/hsv_category_buttons"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:orientation="horizontal"
+        android:scrollbars="none"
+        android:fadingEdge="horizontal"
+        android:fadingEdgeLength="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_nuestros_productos">
 
-        <Button
-            android:id="@+id/btn_todos"
-            style="@style/CategoryButton"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="4dp"
-            android:background="@drawable/btn_category_yellow"
-            android:textColor="@color/black"
-            android:text="@string/todos"
-            android:textSize="12sp" />
+        <LinearLayout
+            android:id="@+id/ll_category_buttons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
 
-        <Button
-            android:id="@+id/btn_frutas"
-            style="@style/CategoryButton"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            android:background="@drawable/btn_category_gray"
-            android:textColor="@color/black"
-            android:text="@string/frutas"
-            android:textSize="12sp" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_todos"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginEnd="8dp"
+                android:minWidth="100dp"
+                android:text="@string/todos"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:backgroundTint="@color/amarillo"
+                app:cornerRadius="25dp"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton" />
 
-    </LinearLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_frutas"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginEnd="8dp"
+                android:minWidth="100dp"
+                android:text="@string/frutas"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:backgroundTint="@color/gray"
+                app:cornerRadius="25dp"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton" />
 
-    <!-- Segunda fila de botones -->
-    <LinearLayout
-        android:id="@+id/ll_category_buttons_row2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_category_buttons_row1">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_verduras"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginEnd="8dp"
+                android:minWidth="100dp"
+                android:text="@string/verduras"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:backgroundTint="@color/gray"
+                app:cornerRadius="25dp"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton" />
 
-        <Button
-            android:id="@+id/btn_verduras"
-            style="@style/CategoryButton"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="4dp"
-            android:background="@drawable/btn_category_gray"
-            android:textColor="@color/black"
-            android:text="@string/verduras"
-            android:textSize="12sp" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_bebidas"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginEnd="8dp"
+                android:minWidth="100dp"
+                android:text="@string/bebidas"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:backgroundTint="@color/gray"
+                app:cornerRadius="25dp"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton" />
 
-        <Button
-            android:id="@+id/btn_bebidas"
-            style="@style/CategoryButton"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:layout_marginStart="4dp"
-            android:background="@drawable/btn_category_gray"
-            android:textColor="@color/black"
-            android:text="@string/bebidas"
-            android:textSize="12sp" />
-
-    </LinearLayout>
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <TextView
         android:id="@+id/tv_calidad_precio"
@@ -108,7 +107,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_category_buttons_row2" />
+        app:layout_constraintTop_toBottomOf="@+id/hsv_category_buttons" />
 
     <FrameLayout
         android:id="@+id/fragment_category_container"

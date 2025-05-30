@@ -1,25 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Style for EditTextRounded -->
+
+    <!-- Estilo para EditText redondeado -->
     <style name="EditTextRounded" parent="Widget.AppCompat.EditText">
         <item name="android:background">@drawable/edit_text_rounded</item>
-        <item name="android:paddingLeft">15dp</item>
-        <item name="android:paddingRight">15dp</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorHint">@color/gray</item>
     </style>
 
-    <!-- Style for Quantity Buttons -->
+    <!-- Estilo base para botones de categoría -->
+    <style name="CategoryButton" parent="Widget.AppCompat.Button">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:elevation">2dp</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
+    <!-- Nuevo estilo para botones de categoría horizontales -->
+    <style name="CategoryButtonHorizontal" parent="Widget.AppCompat.Button">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:elevation">2dp</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:layout_marginStart">4dp</item>
+        <item name="android:layout_marginEnd">4dp</item>
+        <item name="android:backgroundTint">@null</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Estilo para botones de cantidad -->
     <style name="QuantityButton" parent="Widget.AppCompat.Button">
-        <item name="android:minWidth">40dp</item>
-        <item name="android:minHeight">40dp</item>
-        <item name="android:padding">0dp</item>
+        <item name="android:backgroundTint">@color/green_mint</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:backgroundTint">@color/green_mint</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:padding">8dp</item>
     </style>
 
-    <style name="CategoryButton" parent="Widget.MaterialComponents.Button">
-        <item name="android:backgroundTint">@null</item>
-        <item name="backgroundTint">@null</item>
-        <item name="android:textColor">@color/white</item>
-    </style>
 </resources>
