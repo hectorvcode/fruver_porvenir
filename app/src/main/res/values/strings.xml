@@ -126,7 +126,6 @@
     <string name="confirmar_limpiar_favoritos">¿Estás seguro de que quieres eliminar todos tus productos favoritos?</string>
     <string name="contrasena_opcional">Contraseña (opcional)</string>
     <string name="password_help_text">Deje en blanco para mantener la contraseña actual</string>
-    <!-- Agregar estos strings al archivo strings.xml existente -->
 
     <!-- Strings para imagen de perfil de usuario -->
     <string name="seleccionar_imagen_perfil">Seleccionar imagen de perfil</string>
@@ -134,4 +133,19 @@
     <string name="imagen_perfil_actualizada">Imagen de perfil actualizada</string>
     <string name="error_actualizar_imagen_perfil">Error al actualizar imagen de perfil</string>
     <string name="sin_imagen_perfil">Sin imagen de perfil</string>
+
+    <!-- Strings para imagen de perfil en registro -->
+    <string name="agregar_foto_perfil">Agregar foto de perfil</string>
+    <string name="foto_perfil_opcional">Foto de perfil (opcional)</string>
+    <string name="registro_con_foto">Registro con foto</string>
+    <string name="perfil_creado_exitoso">Perfil creado exitosamente</string>
+
+    <!-- Validaciones de registro -->
+    <string name="email_invalido">Por favor ingrese un email válido</string>
+    <string name="contrasena_minima">La contraseña debe tener al menos 6 caracteres</string>
+    <string name="email_ya_registrado">El email ya está registrado</string>
+
+    <!-- Instrucciones para foto de perfil -->
+    <string name="opcional_foto_perfil">Puedes agregar una foto de perfil ahora o después</string>
+    <string name="tap_para_cambiar_foto">Toca para cambiar tu foto de perfil</string>
 </resources>

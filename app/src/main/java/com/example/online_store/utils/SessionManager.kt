@@ -18,6 +18,7 @@ class SessionManager(context: Context) {
         private const val KEY_NAME = "name"
         private const val KEY_ROLE = "role"
         private const val KEY_PROFILE_PIC = "profilePic"
+        private const val KEY_PROFILE_PIC_PATH = "profilePicPath" // Nueva clave
     }
 
     /**
@@ -29,6 +30,7 @@ class SessionManager(context: Context) {
         editor.putString(KEY_NAME, user.name)
         editor.putString(KEY_ROLE, user.role)
         user.profilePicUrl?.let { editor.putString(KEY_PROFILE_PIC, it) }
+        user.profilePicPath?.let { editor.putString(KEY_PROFILE_PIC_PATH, it) } // Guardar imagen personalizada
         editor.apply()
     }
 
@@ -41,6 +43,7 @@ class SessionManager(context: Context) {
         user[KEY_NAME] = pref.getString(KEY_NAME, null)
         user[KEY_ROLE] = pref.getString(KEY_ROLE, null)
         user[KEY_PROFILE_PIC] = pref.getString(KEY_PROFILE_PIC, null)
+        user[KEY_PROFILE_PIC_PATH] = pref.getString(KEY_PROFILE_PIC_PATH, null) // Obtener imagen personalizada
         return user
     }
 
@@ -68,6 +71,29 @@ class SessionManager(context: Context) {
     }
 
     /**
+     * Actualiza la imagen de perfil personalizada en la sesión
+     */
+    fun updateUserProfilePicPath(profilePicPath: String?) {
+        if (profilePicPath != null) {
+            editor.putString(KEY_PROFILE_PIC_PATH, profilePicPath)
+        } else {
+            editor.remove(KEY_PROFILE_PIC_PATH)
+        }
+        editor.apply()
+    }
+
+    /**
+     * Obtiene la imagen de perfil a usar (prioriza imagen personalizada)
+     */
+    fun getUserProfileImage(): String? {
+        val profilePicPath = pref.getString(KEY_PROFILE_PIC_PATH, null)
+        val profilePicUrl = pref.getString(KEY_PROFILE_PIC, null)
+
+        // Priorizar imagen personalizada sobre URL de Google
+        return profilePicPath ?: profilePicUrl
+    }
+
+    /**
      * Cierra la sesión
      */
     fun logout() {
@@ -75,7 +101,9 @@ class SessionManager(context: Context) {
         editor.apply()
     }
 
-    // Añadir esta función a la clase SessionManager
+    /**
+     * Actualiza la contraseña en la sesión
+     */
     fun updateSessionPassword(password: String) {
         editor.putString("password", password)
         editor.apply()

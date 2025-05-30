@@ -1,9 +1,11 @@
 package com.example.online_store.Activities
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -11,17 +13,19 @@ import androidx.appcompat.widget.SwitchCompat
 import com.example.online_store.R
 import com.example.online_store.data.UserDao
 import com.example.online_store.model.User
+import com.example.online_store.utils.ImageUtils
 import com.example.online_store.utils.SessionManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class ProfileActivity : AppCompatActivity() {
 
+    private lateinit var ivProfilePhoto: ImageView
     private lateinit var tvUserName: TextView
     private lateinit var tvUserEmail: TextView
     private lateinit var tvUserRole: TextView
     private lateinit var switchAdminMode: SwitchCompat
     private lateinit var tvAdminModeExplanation: TextView
-    private lateinit var btnAdminProducts: Button  // Nuevo botón para administrar productos
+    private lateinit var btnAdminProducts: Button
     private lateinit var btnLogout: Button
     private lateinit var bottomNavigationView: BottomNavigationView
     private lateinit var sessionManager: SessionManager
@@ -48,16 +52,16 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         // Inicializar vistas
+        ivProfilePhoto = findViewById(R.id.iv_profile_photo)
         tvUserName = findViewById(R.id.tv_user_name)
         tvUserEmail = findViewById(R.id.tv_user_email)
         tvUserRole = findViewById(R.id.tv_user_role)
         switchAdminMode = findViewById(R.id.switch_admin_mode)
         tvAdminModeExplanation = findViewById(R.id.tv_admin_mode_explanation)
-        btnAdminProducts = findViewById(R.id.btn_admin_products)  // Inicializar el nuevo botón
+        btnAdminProducts = findViewById(R.id.btn_admin_products)
         btnLogout = findViewById(R.id.btn_logout)
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
         btnAdminUsers = findViewById(R.id.btn_admin_users)
-
 
         // Configurar navegación inferior
         setupBottomNavigation()
@@ -94,12 +98,12 @@ class ProfileActivity : AppCompatActivity() {
         tvUserName.text = userDetails["name"] ?: "Usuario"
         tvUserEmail.text = userEmail
 
+        // Cargar imagen de perfil
+        loadUserProfileImage(userDetails)
+
         // Verificar si el usuario puede ser administrador
         val user = userDao.getUserByEmail(userEmail)
         isAdmin = sessionManager.isAdmin()
-
-        // Un usuario puede ser administrador si en la base de datos está marcado como tal
-        // pero está funcionando en modo usuario regular
         canBecomeAdmin = user?.role == User.ROLE_ADMIN
 
         // Mostrar rol del usuario
@@ -116,6 +120,36 @@ class ProfileActivity : AppCompatActivity() {
         updateAdminFeaturesVisibility()
     }
 
+    private fun loadUserProfileImage(userDetails: HashMap<String, String?>) {
+        val profilePicPath = userDetails["profilePicPath"]
+
+        when {
+            // Priorizar imagen personalizada
+            !profilePicPath.isNullOrEmpty() && ImageUtils.imageFileExists(profilePicPath) -> {
+                try {
+                    val bitmap = BitmapFactory.decodeFile(profilePicPath)
+                    if (bitmap != null) {
+                        ivProfilePhoto.setImageBitmap(bitmap)
+                        ivProfilePhoto.scaleType = ImageView.ScaleType.CENTER_CROP
+                    } else {
+                        // Imagen por defecto si falla la carga
+                        ivProfilePhoto.setImageResource(R.drawable.ic_usuario)
+                        ivProfilePhoto.scaleType = ImageView.ScaleType.CENTER_INSIDE
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    ivProfilePhoto.setImageResource(R.drawable.ic_usuario)
+                    ivProfilePhoto.scaleType = ImageView.ScaleType.CENTER_INSIDE
+                }
+            }
+            // Imagen por defecto
+            else -> {
+                ivProfilePhoto.setImageResource(R.drawable.ic_usuario)
+                ivProfilePhoto.scaleType = ImageView.ScaleType.CENTER_INSIDE
+            }
+        }
+    }
+
     private fun updateRoleText() {
         tvUserRole.text = if (isAdmin) "Rol: Administrador" else "Rol: Usuario"
     }
@@ -129,22 +163,16 @@ class ProfileActivity : AppCompatActivity() {
     private fun setupAdminModeSwitch() {
         switchAdminMode.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked == isAdmin) {
-                // No ha cambiado realmente, evitamos trabajo innecesario
                 return@setOnCheckedChangeListener
             }
 
-            // Cambiar el rol en la sesión
             val newRole = if (isChecked) User.ROLE_ADMIN else User.ROLE_USER
             sessionManager.updateUserRole(newRole)
 
-            // Actualizar variable local
             isAdmin = isChecked
-
-            // Actualizar la interfaz
             updateRoleText()
             updateAdminFeaturesVisibility()
 
-            // Mostrar mensaje
             val message = if (isChecked)
                 "Modo administrador activado"
             else
@@ -156,16 +184,13 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun setupAdminProductsButton() {
         btnAdminProducts.setOnClickListener {
-            // Navegar a la pantalla de administración de productos
             startActivity(Intent(this, ProductAdminActivity::class.java))
         }
     }
 
     private fun setupBottomNavigation() {
-        // Marcar el item de perfil como seleccionado
         bottomNavigationView.selectedItemId = R.id.ic_profile
 
-        // Configurar el listener para la navegación
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.ic_home -> {
@@ -181,7 +206,6 @@ class ProfileActivity : AppCompatActivity() {
                     true
                 }
                 R.id.ic_profile -> {
-                    // Ya estamos en Profile
                     true
                 }
                 else -> false

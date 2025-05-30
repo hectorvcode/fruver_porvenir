@@ -17,9 +17,9 @@
 
         <ImageView
             android:id="@+id/iv_app_logo"
-            android:layout_width="180dp"
-            android:layout_height="190dp"
-            android:layout_marginTop="32dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="16dp"
             android:contentDescription="@string/app_logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,108 +30,205 @@
             android:id="@+id/tv_fruver_porvenir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:text="@string/fruver_porvenir"
             android:textColor="@color/black"
-            android:textSize="28sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_app_logo" />
 
-        <ImageView
-            android:id="@+id/iv_ic_user"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginTop="32dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.194"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_fruver_porvenir"
-            app:srcCompat="@drawable/ic_usuario" />
-
-        <ImageView
-            android:id="@+id/iv_ic_email"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            app:layout_constraintBottom_toTopOf="@+id/edt_password_login"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.198"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edt_full_name"
-            app:srcCompat="@drawable/ic_usuario" />
-
-        <ImageView
-            android:id="@+id/iv_ic_contrasena"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            app:layout_constraintBottom_toBottomOf="@+id/edt_password_login"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.204"
-            app:layout_constraintStart_toStartOf="parent"
-
-            app:layout_constraintTop_toBottomOf="@+id/edt_email_login"
-            app:layout_constraintVertical_bias="1.0"
-            app:srcCompat="@drawable/ic_contrasena" />
-
-        <EditText
-            android:id="@+id/edt_full_name"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="32dp"
-            android:hint="@string/nombre_completo"
-            android:inputType="textPersonName|textCapWords"
-            android:paddingStart="70dp"
-            android:paddingEnd="16dp"
-            android:imeOptions="actionNext"
-            style="@style/EditTextRounded"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_fruver_porvenir" />
-
-        <EditText
-            android:id="@+id/edt_email_login"
-            style="@style/EditTextRounded"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
+        <!-- Imagen de perfil -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_profile_image"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_marginTop="16dp"
-            android:hint="@string/usuario"
-            android:inputType="textEmailAddress"
-            android:paddingStart="70dp"
-            android:paddingEnd="16dp"
-            android:imeOptions="actionNext"
+            app:cardCornerRadius="40dp"
+            app:cardElevation="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edt_full_name" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_fruver_porvenir">
 
-        <EditText
-            android:id="@+id/edt_password_login"
-            style="@style/EditTextRounded"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="16dp"
-            android:hint="@string/contrasena"
-            android:inputType="textPassword"
-            android:paddingStart="70dp"
-            android:paddingEnd="16dp"
-            android:imeOptions="actionDone"
+            <ImageView
+                android:id="@+id/iv_profile_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#EFEFEF"
+                android:contentDescription="@string/foto_de_perfil"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/ic_usuario" />
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Botones para seleccionar imagen de perfil -->
+        <LinearLayout
+            android:id="@+id/ll_profile_image_buttons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edt_email_login" />
+            app:layout_constraintTop_toBottomOf="@+id/cv_profile_image">
+
+            <Button
+                android:id="@+id/btn_select_profile_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:backgroundTint="@color/green_mint"
+                android:drawableStart="@android:drawable/ic_menu_gallery"
+                android:drawablePadding="4dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/galeria"
+                android:textSize="9sp"
+                app:cornerRadius="16dp" />
+
+            <Button
+                android:id="@+id/btn_take_profile_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:backgroundTint="@color/green_mint"
+                android:drawableStart="@android:drawable/ic_menu_camera"
+                android:drawablePadding="4dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/camara"
+                android:textSize="9sp"
+                app:cornerRadius="16dp" />
+
+        </LinearLayout>
+
+        <!-- Campos de texto con íconos -->
+        <LinearLayout
+            android:id="@+id/ll_form_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_profile_image_buttons">
+
+            <!-- Campo Nombre Completo -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp">
+
+                <ImageView
+                    android:id="@+id/iv_ic_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:contentDescription="@string/usuario"
+                    app:layout_constraintBottom_toBottomOf="@+id/edt_full_name"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/edt_full_name"
+                    app:srcCompat="@drawable/ic_usuario" />
+
+                <EditText
+                    android:id="@+id/edt_full_name"
+                    style="@style/EditTextRounded"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="16dp"
+                    android:hint="@string/nombre_completo"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPersonName|textCapWords"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/iv_ic_user"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Campo Email -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp">
+
+                <ImageView
+                    android:id="@+id/iv_ic_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:contentDescription="@string/usuario"
+                    app:layout_constraintBottom_toBottomOf="@+id/edt_email_login"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/edt_email_login"
+                    app:srcCompat="@drawable/ic_usuario" />
+
+                <EditText
+                    android:id="@+id/edt_email_login"
+                    style="@style/EditTextRounded"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="16dp"
+                    android:hint="@string/usuario"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/iv_ic_email"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Campo Contraseña -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_ic_contrasena"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:contentDescription="@string/contrasena"
+                    app:layout_constraintBottom_toBottomOf="@+id/edt_password_login"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/edt_password_login"
+                    app:srcCompat="@drawable/ic_contrasena" />
+
+                <EditText
+                    android:id="@+id/edt_password_login"
+                    style="@style/EditTextRounded"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="16dp"
+                    android:hint="@string/contrasena"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/iv_ic_contrasena"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/btn_registrarse"
-            android:layout_width="300dp"
+            android:layout_width="0dp"
             android:layout_height="48dp"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="32dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="24dp"
             android:backgroundTint="@color/green_mint"
             android:text="@string/registrarse"
-            android:textSize="20sp"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edt_password_login"
+            app:layout_constraintTop_toBottomOf="@+id/ll_form_container"
             app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

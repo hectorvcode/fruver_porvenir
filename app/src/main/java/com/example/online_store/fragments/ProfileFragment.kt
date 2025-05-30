@@ -1,11 +1,13 @@
 package com.example.online_store.fragments
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
@@ -14,10 +16,12 @@ import com.example.online_store.Activities.LoginActivity
 import com.example.online_store.Activities.ProductAdminActivity
 import com.example.online_store.Activities.UserAdminActivity
 import com.example.online_store.R
+import com.example.online_store.utils.ImageUtils
 import com.example.online_store.utils.SessionManager
 
 class ProfileFragment : Fragment() {
 
+    private lateinit var ivProfilePhoto: ImageView
     private lateinit var tvUserName: TextView
     private lateinit var tvUserEmail: TextView
     private lateinit var tvUserRole: TextView
@@ -46,6 +50,7 @@ class ProfileFragment : Fragment() {
         sessionManager = SessionManager(requireContext())
 
         // Inicializar vistas
+        ivProfilePhoto = view.findViewById(R.id.iv_profile_photo)
         tvUserName = view.findViewById(R.id.tv_user_name)
         tvUserEmail = view.findViewById(R.id.tv_user_email)
         tvUserRole = view.findViewById(R.id.tv_user_role)
@@ -86,6 +91,9 @@ class ProfileFragment : Fragment() {
         tvUserName.text = userDetails["name"] ?: "Usuario"
         tvUserEmail.text = userDetails["email"] ?: ""
 
+        // Cargar imagen de perfil
+        loadUserProfileImage(userDetails)
+
         // Verificar si el usuario puede ser administrador
         isAdmin = sessionManager.isAdmin()
         canBecomeAdmin = sessionManager.isAdmin() // Simplificado para este ejemplo
@@ -102,6 +110,36 @@ class ProfileFragment : Fragment() {
 
         // Actualizar visibilidad del botón de administración
         updateAdminFeaturesVisibility()
+    }
+
+    private fun loadUserProfileImage(userDetails: HashMap<String, String?>) {
+        val profilePicPath = userDetails["profilePicPath"]
+
+        when {
+            // Priorizar imagen personalizada
+            !profilePicPath.isNullOrEmpty() && ImageUtils.imageFileExists(profilePicPath) -> {
+                try {
+                    val bitmap = BitmapFactory.decodeFile(profilePicPath)
+                    if (bitmap != null) {
+                        ivProfilePhoto.setImageBitmap(bitmap)
+                        ivProfilePhoto.scaleType = ImageView.ScaleType.CENTER_CROP
+                    } else {
+                        // Imagen por defecto si falla la carga
+                        ivProfilePhoto.setImageResource(R.drawable.ic_usuario)
+                        ivProfilePhoto.scaleType = ImageView.ScaleType.CENTER_INSIDE
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    ivProfilePhoto.setImageResource(R.drawable.ic_usuario)
+                    ivProfilePhoto.scaleType = ImageView.ScaleType.CENTER_INSIDE
+                }
+            }
+            // Imagen por defecto
+            else -> {
+                ivProfilePhoto.setImageResource(R.drawable.ic_usuario)
+                ivProfilePhoto.scaleType = ImageView.ScaleType.CENTER_INSIDE
+            }
+        }
     }
 
     private fun updateRoleText() {
