@@ -51,16 +51,45 @@ class MainContainerActivity : AppCompatActivity() {
         bottomNavigationView = findViewById(R.id.bottom_navigation)
         setupBottomNavigation()
 
-        // Restaurar el estado si existe, de lo contrario cargar el fragmento inicial
+        // Verificar si hay un fragmento específico solicitado desde los extras
+        val requestedFragment = intent.getStringExtra("fragment")
+
+        // Restaurar el estado si existe, de lo contrario cargar el fragmento inicial o solicitado
         if (savedInstanceState != null) {
             // Recuperar el ítem seleccionado
             val selectedItemId = savedInstanceState.getInt(SELECTED_ITEM, R.id.ic_home)
             // Seleccionar ese ítem en la barra de navegación
             bottomNavigationView.selectedItemId = selectedItemId
         } else {
-            // Cargar el fragmento inicial (Home)
-            loadFragment(homeFragment)
-            currentFragment = homeFragment
+            // Cargar fragmento según solicitud o fragmento inicial (Home)
+            when (requestedFragment) {
+                "favorites" -> {
+                    loadFragment(favoritesFragment)
+                    currentFragment = favoritesFragment
+                    bottomNavigationView.selectedItemId = R.id.ic_favorites
+                }
+                "cart" -> {
+                    loadFragment(cartFragment)
+                    currentFragment = cartFragment
+                    bottomNavigationView.selectedItemId = R.id.ic_cart
+                }
+                "stores" -> {
+                    loadFragment(storesMapFragment)
+                    currentFragment = storesMapFragment
+                    bottomNavigationView.selectedItemId = R.id.ic_stores
+                }
+                "profile" -> {
+                    loadFragment(profileFragment)
+                    currentFragment = profileFragment
+                    bottomNavigationView.selectedItemId = R.id.ic_profile
+                }
+                else -> {
+                    // Cargar fragmento inicial (Home)
+                    loadFragment(homeFragment)
+                    currentFragment = homeFragment
+                    bottomNavigationView.selectedItemId = R.id.ic_home
+                }
+            }
         }
 
         // Configurar acceso de administrador si es necesario

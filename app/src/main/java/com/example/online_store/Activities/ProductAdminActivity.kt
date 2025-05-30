@@ -19,6 +19,7 @@ import com.example.online_store.data.ProductDao
 import com.example.online_store.model.Product
 import com.example.online_store.utils.RoleHelper
 import com.example.online_store.utils.SessionManager
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ProductAdminActivity : AppCompatActivity() {
@@ -29,6 +30,7 @@ class ProductAdminActivity : AppCompatActivity() {
     private lateinit var fabAdd: FloatingActionButton
     private lateinit var spCategoryFilter: Spinner
     private lateinit var sessionManager: SessionManager
+    private lateinit var bottomNavigationView: BottomNavigationView
 
     private val categories = listOf("Todos", "Frutas", "Verduras", "Bebidas")
 
@@ -55,6 +57,10 @@ class ProductAdminActivity : AppCompatActivity() {
         rvProducts = findViewById(R.id.rv_products)
         fabAdd = findViewById(R.id.fab_add)
         spCategoryFilter = findViewById(R.id.sp_category_filter)
+        bottomNavigationView = findViewById(R.id.bottomNavigationView)
+
+        // Configurar BottomNavigationView
+        setupBottomNavigation()
 
         // Configurar spinner de categorías primero
         setupCategorySpinner()
@@ -67,7 +73,6 @@ class ProductAdminActivity : AppCompatActivity() {
             val intent = Intent(this, ProductFormActivity::class.java)
             startActivity(intent)
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -101,6 +106,46 @@ class ProductAdminActivity : AppCompatActivity() {
         // Actualizar la lista de productos al volver a la actividad
         if (::productAdapter.isInitialized) {
             loadProducts()
+        }
+    }
+
+    private fun setupBottomNavigation() {
+        // Configurar el listener para la navegación
+        bottomNavigationView.setOnItemSelectedListener { item ->
+            val intent = Intent(this, MainContainerActivity::class.java)
+            when (item.itemId) {
+                R.id.ic_home -> {
+                    // No necesita extra, va al home por defecto
+                    startActivity(intent)
+                    finish()
+                    true
+                }
+                R.id.ic_favorites -> {
+                    intent.putExtra("fragment", "favorites")
+                    startActivity(intent)
+                    finish()
+                    true
+                }
+                R.id.ic_cart -> {
+                    intent.putExtra("fragment", "cart")
+                    startActivity(intent)
+                    finish()
+                    true
+                }
+                R.id.ic_stores -> {
+                    intent.putExtra("fragment", "stores")
+                    startActivity(intent)
+                    finish()
+                    true
+                }
+                R.id.ic_profile -> {
+                    intent.putExtra("fragment", "profile")
+                    startActivity(intent)
+                    finish()
+                    true
+                }
+                else -> false
+            }
         }
     }
 

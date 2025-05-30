@@ -2,6 +2,7 @@ package com.example.online_store.Activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -13,6 +14,8 @@ import com.example.online_store.adapter.UserAdapter
 import com.example.online_store.data.UserDao
 import com.example.online_store.model.User
 import com.example.online_store.utils.RoleHelper
+import com.example.online_store.utils.SessionManager
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class UserAdminActivity : AppCompatActivity() {
@@ -21,6 +24,8 @@ class UserAdminActivity : AppCompatActivity() {
     private lateinit var rvUsers: RecyclerView
     private lateinit var userAdapter: UserAdapter
     private lateinit var fabAddUser: FloatingActionButton
+    private lateinit var sessionManager: SessionManager
+    private lateinit var bottomNavigationView: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +35,9 @@ class UserAdminActivity : AppCompatActivity() {
         if (!RoleHelper.checkAdminPermission(this)) {
             return
         }
+
+        // Inicializar SessionManager
+        sessionManager = SessionManager(this)
 
         // Inicializar el DAO
         userDao = UserDao(this)
@@ -41,6 +49,10 @@ class UserAdminActivity : AppCompatActivity() {
         // Inicializar vistas
         rvUsers = findViewById(R.id.rv_users)
         fabAddUser = findViewById(R.id.fab_add_user)
+        bottomNavigationView = findViewById(R.id.bottomNavigationView)
+
+        // Configurar BottomNavigationView
+        setupBottomNavigation()
 
         // Configurar RecyclerView
         setupRecyclerView()
@@ -52,10 +64,21 @@ class UserAdminActivity : AppCompatActivity() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_admin, menu)
+        return true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
                 onBackPressed()
+                true
+            }
+            R.id.action_logout -> {
+                sessionManager.logout()
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -67,6 +90,46 @@ class UserAdminActivity : AppCompatActivity() {
         // Actualizar la lista de usuarios al volver a la actividad
         if (::userAdapter.isInitialized) {
             loadUsers()
+        }
+    }
+
+    private fun setupBottomNavigation() {
+        // Configurar el listener para la navegación
+        bottomNavigationView.setOnItemSelectedListener { item ->
+            val intent = Intent(this, MainContainerActivity::class.java)
+            when (item.itemId) {
+                R.id.ic_home -> {
+                    // No necesita extra, va al home por defecto
+                    startActivity(intent)
+                    finish()
+                    true
+                }
+                R.id.ic_favorites -> {
+                    intent.putExtra("fragment", "favorites")
+                    startActivity(intent)
+                    finish()
+                    true
+                }
+                R.id.ic_cart -> {
+                    intent.putExtra("fragment", "cart")
+                    startActivity(intent)
+                    finish()
+                    true
+                }
+                R.id.ic_stores -> {
+                    intent.putExtra("fragment", "stores")
+                    startActivity(intent)
+                    finish()
+                    true
+                }
+                R.id.ic_profile -> {
+                    intent.putExtra("fragment", "profile")
+                    startActivity(intent)
+                    finish()
+                    true
+                }
+                else -> false
+            }
         }
     }
 
