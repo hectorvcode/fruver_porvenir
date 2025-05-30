@@ -27,7 +27,6 @@ class ProductAdminActivity : AppCompatActivity() {
     private lateinit var rvProducts: RecyclerView
     private lateinit var productAdapter: ProductAdapter
     private lateinit var fabAdd: FloatingActionButton
-    private lateinit var fabProfile: FloatingActionButton
     private lateinit var spCategoryFilter: Spinner
     private lateinit var sessionManager: SessionManager
 
@@ -55,7 +54,6 @@ class ProductAdminActivity : AppCompatActivity() {
         // Inicializar vistas
         rvProducts = findViewById(R.id.rv_products)
         fabAdd = findViewById(R.id.fab_add)
-        fabProfile = findViewById(R.id.fab_profile)
         spCategoryFilter = findViewById(R.id.sp_category_filter)
 
         // Configurar spinner de categorías primero
@@ -70,11 +68,6 @@ class ProductAdminActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // Configurar FAB para perfil
-        fabProfile.setOnClickListener {
-            val intent = Intent(this, ProfileActivity::class.java)
-            startActivity(intent)
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
