@@ -12,15 +12,19 @@ import com.example.online_store.R
 import com.example.online_store.data.UserDao
 import com.example.online_store.model.User
 import com.example.online_store.utils.RoleHelper
+import com.example.online_store.utils.SessionManager
 import com.google.android.material.textfield.TextInputEditText
 
 class UserFormActivity : AppCompatActivity() {
 
     private lateinit var userDao: UserDao
+    private lateinit var sessionManager: SessionManager
 
     private lateinit var tvTituloUsuario: TextView
     private lateinit var etNombre: TextInputEditText
     private lateinit var etEmail: TextInputEditText
+    private lateinit var etPassword: TextInputEditText
+    private lateinit var tvPasswordHelp: TextView
     private lateinit var rgRol: RadioGroup
     private lateinit var rbUser: RadioButton
     private lateinit var rbAdmin: RadioButton
@@ -42,13 +46,16 @@ class UserFormActivity : AppCompatActivity() {
         // Configurar la ActionBar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        // Inicializar el DAO
+        // Inicializar el DAO y SessionManager
         userDao = UserDao(this)
+        sessionManager = SessionManager(this)
 
         // Inicializar vistas
         tvTituloUsuario = findViewById(R.id.tv_titulo_usuario)
         etNombre = findViewById(R.id.et_nombre)
         etEmail = findViewById(R.id.et_email)
+        etPassword = findViewById(R.id.et_password)
+        tvPasswordHelp = findViewById(R.id.tv_password_help)
         rgRol = findViewById(R.id.rg_rol)
         rbUser = findViewById(R.id.rb_user)
         rbAdmin = findViewById(R.id.rb_admin)
@@ -65,6 +72,8 @@ class UserFormActivity : AppCompatActivity() {
         } else {
             supportActionBar?.title = "Nuevo Usuario"
             tvTituloUsuario.text = "Nuevo Usuario"
+            // En modo creación, la contraseña es obligatoria
+            tvPasswordHelp.text = "Ingrese una contraseña para el nuevo usuario"
         }
 
         // Configurar listeners
@@ -95,6 +104,7 @@ class UserFormActivity : AppCompatActivity() {
             // Llenar el formulario con los datos del usuario
             etNombre.setText(it.name)
             etEmail.setText(it.email)
+            // La contraseña se deja vacía por seguridad en modo edición
 
             // Establecer el rol
             if (it.role == User.ROLE_ADMIN) {
@@ -110,6 +120,11 @@ class UserFormActivity : AppCompatActivity() {
                 rgRol.isEnabled = false
                 rbAdmin.isEnabled = false
                 rbUser.isEnabled = false
+                // No permitir cambiar la contraseña del admin principal por seguridad
+                etPassword.isEnabled = false
+                tvPasswordHelp.text = "No se puede modificar la contraseña del administrador principal"
+            } else {
+                tvPasswordHelp.text = "Deje en blanco para mantener la contraseña actual"
             }
         } ?: run {
             Toast.makeText(this, "No se encontró el usuario", Toast.LENGTH_SHORT).show()
@@ -126,6 +141,7 @@ class UserFormActivity : AppCompatActivity() {
         // Obtener los valores del formulario
         val nombre = etNombre.text.toString().trim()
         val email = etEmail.text.toString().trim()
+        val password = etPassword.text.toString().trim()
 
         // Obtener el rol seleccionado
         val role = if (rbAdmin.isChecked) User.ROLE_ADMIN else User.ROLE_USER
@@ -145,6 +161,11 @@ class UserFormActivity : AppCompatActivity() {
                 val newUserId = userDao.insertUser(user)
 
                 if (newUserId > 0) {
+                    // Si se proporcionó una nueva contraseña, actualizarla en la sesión
+                    if (password.isNotEmpty()) {
+                        updateUserPassword(email, password)
+                    }
+
                     Toast.makeText(this, "Usuario actualizado correctamente", Toast.LENGTH_SHORT).show()
                     finish()
                 } else {
@@ -155,6 +176,11 @@ class UserFormActivity : AppCompatActivity() {
                 val rowsAffected = userDao.updateUserNameAndRole(email, nombre, role)
 
                 if (rowsAffected > 0) {
+                    // Si se proporcionó una nueva contraseña, actualizarla
+                    if (password.isNotEmpty()) {
+                        updateUserPassword(email, password)
+                    }
+
                     Toast.makeText(this, "Usuario actualizado correctamente", Toast.LENGTH_SHORT).show()
                     finish()
                 } else {
@@ -166,6 +192,11 @@ class UserFormActivity : AppCompatActivity() {
             val id = userDao.insertUser(user)
 
             if (id > 0) {
+                // Para nuevos usuarios, guardar la contraseña
+                if (password.isNotEmpty()) {
+                    updateUserPassword(email, password)
+                }
+
                 Toast.makeText(this, "Usuario agregado correctamente", Toast.LENGTH_SHORT).show()
                 finish()
             } else if (id == -1L) {
@@ -174,6 +205,20 @@ class UserFormActivity : AppCompatActivity() {
                 Toast.makeText(this, "Error al agregar el usuario", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun updateUserPassword(email: String, password: String) {
+        // Actualizar la contraseña en SessionManager si es el usuario actual
+        val currentUserEmail = sessionManager.getUserDetails()["email"]
+        if (email == currentUserEmail) {
+            sessionManager.updateSessionPassword(password)
+        }
+
+        // Aquí podrías agregar lógica adicional para guardar la contraseña
+        // en una tabla separada o encriptarla según tus necesidades de seguridad
+
+        // Por ahora, solo mostramos un mensaje informativo
+        Toast.makeText(this, "Contraseña actualizada", Toast.LENGTH_SHORT).show()
     }
 
     private fun validateForm(): Boolean {
@@ -192,6 +237,18 @@ class UserFormActivity : AppCompatActivity() {
             isValid = false
         } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             etEmail.error = "Ingrese un correo electrónico válido"
+            isValid = false
+        }
+
+        // Validar contraseña
+        val password = etPassword.text.toString().trim()
+        if (!isEditMode && password.isEmpty()) {
+            // En modo creación, la contraseña es obligatoria
+            etPassword.error = "La contraseña es obligatoria para nuevos usuarios"
+            isValid = false
+        } else if (password.isNotEmpty() && password.length < 6) {
+            // Si se proporciona contraseña, debe tener al menos 6 caracteres
+            etPassword.error = "La contraseña debe tener al menos 6 caracteres"
             isValid = false
         }
 

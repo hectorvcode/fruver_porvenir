@@ -123,4 +123,6 @@
     <string name="eliminado_de_favoritos">Eliminado de favoritos</string>
     <string name="limpiar_favoritos">Limpiar favoritos</string>
     <string name="confirmar_limpiar_favoritos">¿Estás seguro de que quieres eliminar todos tus productos favoritos?</string>
+    <string name="contrasena_opcional">Contraseña (opcional)</string>
+    <string name="password_help_text">Deje en blanco para mantener la contraseña actual</string>
 </resources>
