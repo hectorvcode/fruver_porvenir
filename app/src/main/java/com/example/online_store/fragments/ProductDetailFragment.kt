@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
@@ -21,11 +20,10 @@ import com.example.online_store.utils.CartManager
 import com.example.online_store.utils.ImageUtils
 import java.text.NumberFormat
 import java.util.Locale
+import android.widget.ImageView
 
 class ProductDetailFragment : Fragment() {
 
-    private lateinit var cvBack: CardView
-    private lateinit var ivBack: ImageView
     private lateinit var tvProductTitle: TextView
     private lateinit var ivProductImage: ImageView
     private lateinit var tvProductPrice: TextView
@@ -91,8 +89,6 @@ class ProductDetailFragment : Fragment() {
     }
 
     private fun initializeViews(view: View) {
-        cvBack = view.findViewById(R.id.cv_back)
-        ivBack = view.findViewById(R.id.iv_back)
         tvProductTitle = view.findViewById(R.id.tv_product_title)
         ivProductImage = view.findViewById(R.id.iv_product_image)
         tvProductPrice = view.findViewById(R.id.tv_product_price)
@@ -108,11 +104,6 @@ class ProductDetailFragment : Fragment() {
     }
 
     private fun setupListeners() {
-        // Botón de retroceso
-        cvBack.setOnClickListener {
-            requireActivity().supportFragmentManager.popBackStack()
-        }
-
         // Control de cantidad
         cvDecrease.setOnClickListener {
             if (quantity > 1) {
@@ -180,7 +171,7 @@ class ProductDetailFragment : Fragment() {
                 cvProductDescription.visibility = View.GONE
             }
 
-            // Mostrar imagen del producto (aquí está el cambio importante)
+            // Mostrar imagen del producto
             loadProductImage(it)
         } ?: run {
             // Si el producto no existe, mostrar un mensaje y cerrar el fragmento
@@ -243,7 +234,7 @@ class ProductDetailFragment : Fragment() {
                 "${quantity} ${it.name}(s) añadido al carrito",
                 Toast.LENGTH_SHORT
             ).show()
-            // Opcionalmente, volver a la lista de productos
+            // Volver a la lista de productos
             requireActivity().supportFragmentManager.popBackStack()
         }
     }

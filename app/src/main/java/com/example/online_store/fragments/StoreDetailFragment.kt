@@ -8,9 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import com.example.online_store.R
 import com.example.online_store.data.StoreRepository
@@ -28,8 +26,6 @@ class StoreDetailFragment : Fragment(), OnMapReadyCallback {
     private lateinit var storeRepository: StoreRepository
     private lateinit var store: Store
 
-    private lateinit var cvBack: CardView
-    private lateinit var ivBack: ImageView
     private lateinit var tvStoreName: TextView
     private lateinit var tvAddress: TextView
     private lateinit var tvPhone: TextView
@@ -73,8 +69,6 @@ class StoreDetailFragment : Fragment(), OnMapReadyCallback {
         }
 
         // Inicializar vistas
-        cvBack = view.findViewById(R.id.cv_back)
-        ivBack = view.findViewById(R.id.iv_back)
         tvStoreName = view.findViewById(R.id.tv_store_name)
         tvAddress = view.findViewById(R.id.tv_address)
         tvPhone = view.findViewById(R.id.tv_phone)
@@ -102,11 +96,6 @@ class StoreDetailFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun setupButtons() {
-        // Botón de retroceso
-        cvBack.setOnClickListener {
-            requireActivity().supportFragmentManager.popBackStack()
-        }
-
         // Botón de llamada
         btnCall.setOnClickListener {
             callStore(store)
@@ -123,7 +112,6 @@ class StoreDetailFragment : Fragment(), OnMapReadyCallback {
 
         // Log para depuración
         Log.d("StoreDetailFragment", "onMapReady - Store location: ${store.location.latitude}, ${store.location.longitude}")
-
 
         // Configurar el tipo de mapa (NORMAL muestra calles y edificios)
         mMap.mapType = GoogleMap.MAP_TYPE_NORMAL

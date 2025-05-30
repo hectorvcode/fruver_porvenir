@@ -6,33 +6,12 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_gradient">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_back"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:cardBackgroundColor="#80FFFFFF"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="2dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/back_icon"
-            android:padding="8dp"
-            app:srcCompat="@drawable/ic_back" />
-    </androidx.cardview.widget.CardView>
-
     <TextView
         android:id="@+id/tv_product_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
         android:textAlignment="center"
         android:textSize="24sp"

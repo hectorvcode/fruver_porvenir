@@ -49,9 +49,8 @@ class ProductAdminActivity : AppCompatActivity() {
         // Inicializar el DAO
         productDao = ProductDao(this)
 
-        // Configurar la ActionBar
+        // Configurar la ActionBar sin botón de retroceso
         supportActionBar?.title = "Administración de Productos"
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // Inicializar vistas
         rvProducts = findViewById(R.id.rv_products)
@@ -82,10 +81,6 @@ class ProductAdminActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressed()
-                true
-            }
             R.id.action_logout -> {
                 sessionManager.logout()
                 startActivity(Intent(this, LoginActivity::class.java))
@@ -94,6 +89,14 @@ class ProductAdminActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onBackPressed() {
+        // Navegar al MainContainerActivity con el fragmento de profile
+        val intent = Intent(this, MainContainerActivity::class.java)
+        intent.putExtra("fragment", "profile")
+        startActivity(intent)
+        finish()
     }
 
     override fun onResume() {

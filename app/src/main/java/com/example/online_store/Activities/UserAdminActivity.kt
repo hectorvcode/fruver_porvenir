@@ -42,9 +42,8 @@ class UserAdminActivity : AppCompatActivity() {
         // Inicializar el DAO
         userDao = UserDao(this)
 
-        // Configurar la ActionBar
+        // Configurar la ActionBar sin botón de retroceso
         supportActionBar?.title = "Administración de Usuarios"
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // Inicializar vistas
         rvUsers = findViewById(R.id.rv_users)
@@ -71,10 +70,6 @@ class UserAdminActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressed()
-                true
-            }
             R.id.action_logout -> {
                 sessionManager.logout()
                 startActivity(Intent(this, LoginActivity::class.java))
@@ -83,6 +78,14 @@ class UserAdminActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onBackPressed() {
+        // Navegar al MainContainerActivity con el fragmento de profile
+        val intent = Intent(this, MainContainerActivity::class.java)
+        intent.putExtra("fragment", "profile")
+        startActivity(intent)
+        finish()
     }
 
     override fun onResume() {

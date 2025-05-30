@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -46,12 +45,6 @@ class CartActivity : AppCompatActivity() {
         btnPagar = findViewById(R.id.btn_pagar)
         bottomNavigationView = findViewById(R.id.bottomNavigationView2)
 
-        // Configurar botón de retroceso
-        val ivBack: ImageView = findViewById(R.id.iv_ic_back)
-        ivBack.setOnClickListener {
-            onBackPressed()
-        }
-
         // Configurar RecyclerView
         setupRecyclerView()
 
@@ -80,6 +73,14 @@ class CartActivity : AppCompatActivity() {
         super.onResume()
         // Actualizar datos del carrito cuando se vuelve a la actividad
         loadCartData()
+    }
+
+    override fun onBackPressed() {
+        // Navegar al MainContainerActivity con el fragmento de carrito
+        val intent = Intent(this, MainContainerActivity::class.java)
+        intent.putExtra("fragment", "home")
+        startActivity(intent)
+        finish()
     }
 
     private fun setupRecyclerView() {
@@ -117,19 +118,34 @@ class CartActivity : AppCompatActivity() {
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.ic_home -> {
-                    startActivity(Intent(this, ListActivity::class.java))
+                    val intent = Intent(this, MainContainerActivity::class.java)
+                    startActivity(intent)
+                    finish()
                     true
                 }
                 R.id.ic_favorites -> {
-                    Toast.makeText(this, "Favoritos - Funcionalidad pendiente", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, MainContainerActivity::class.java)
+                    intent.putExtra("fragment", "favorites")
+                    startActivity(intent)
+                    finish()
                     true
                 }
                 R.id.ic_cart -> {
                     // Ya estamos en el carrito
                     true
                 }
+                R.id.ic_stores -> {
+                    val intent = Intent(this, MainContainerActivity::class.java)
+                    intent.putExtra("fragment", "stores")
+                    startActivity(intent)
+                    finish()
+                    true
+                }
                 R.id.ic_profile -> {
-                    startActivity(Intent(this, ProfileActivity::class.java))
+                    val intent = Intent(this, MainContainerActivity::class.java)
+                    intent.putExtra("fragment", "profile")
+                    startActivity(intent)
+                    finish()
                     true
                 }
                 else -> false
