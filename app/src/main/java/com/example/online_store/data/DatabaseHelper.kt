@@ -11,7 +11,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
 
     companion object {
         private const val DATABASE_NAME = "online_store.db"
-        private const val DATABASE_VERSION = 4 // Incrementado para incluir tabla de favoritos
+        private const val DATABASE_VERSION = 6 // Incrementado para la nueva columna de imagen de perfil
 
         // Tabla Productos
         const val TABLE_PRODUCTS = "products"
@@ -30,6 +30,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         const val COLUMN_USER_NAME = "name"
         const val COLUMN_USER_ROLE = "role"
         const val COLUMN_USER_PROFILE_PIC = "profile_pic_url"
+        const val COLUMN_USER_PROFILE_PIC_PATH = "profile_pic_path" // Nueva columna
 
         // Tabla Favoritos
         const val TABLE_FAVORITES = "favorites"
@@ -38,7 +39,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         const val COLUMN_FAVORITE_PRODUCT_ID = "product_id"
         const val COLUMN_FAVORITE_DATE_ADDED = "date_added"
 
-        // Script para crear la tabla de productos (actualizado)
+        // Script para crear la tabla de productos
         private const val SQL_CREATE_PRODUCTS_TABLE = """
             CREATE TABLE $TABLE_PRODUCTS (
                 $COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -51,14 +52,15 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
             )
         """
 
-        // Script para crear la tabla de usuarios
+        // Script para crear la tabla de usuarios (actualizado)
         private const val SQL_CREATE_USERS_TABLE = """
             CREATE TABLE $TABLE_USERS (
                 $COLUMN_USER_ID INTEGER PRIMARY KEY AUTOINCREMENT,
                 $COLUMN_USER_EMAIL TEXT NOT NULL UNIQUE,
                 $COLUMN_USER_NAME TEXT NOT NULL,
                 $COLUMN_USER_ROLE TEXT NOT NULL,
-                $COLUMN_USER_PROFILE_PIC TEXT
+                $COLUMN_USER_PROFILE_PIC TEXT,
+                $COLUMN_USER_PROFILE_PIC_PATH TEXT
             )
         """
 
@@ -78,8 +80,9 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         private const val SQL_DELETE_USERS_TABLE = "DROP TABLE IF EXISTS $TABLE_USERS"
         private const val SQL_DELETE_FAVORITES_TABLE = "DROP TABLE IF EXISTS $TABLE_FAVORITES"
 
-        // Script para agregar la nueva columna a la tabla existente
+        // Scripts para agregar nuevas columnas
         private const val SQL_ADD_IMAGE_PATH_COLUMN = "ALTER TABLE $TABLE_PRODUCTS ADD COLUMN $COLUMN_IMAGE_PATH TEXT"
+        private const val SQL_ADD_PROFILE_PIC_PATH_COLUMN = "ALTER TABLE $TABLE_USERS ADD COLUMN $COLUMN_USER_PROFILE_PIC_PATH TEXT"
     }
 
     override fun onCreate(db: SQLiteDatabase) {
@@ -112,6 +115,19 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
                 // Actualización de versión 3 a 4: crear tabla de favoritos
                 db.execSQL(SQL_CREATE_FAVORITES_TABLE)
             }
+            oldVersion < 5 -> {
+                // Actualización de versión 4 a 5: mantener tablas existentes
+            }
+            oldVersion < 6 -> {
+                // Actualización de versión 5 a 6: agregar columna profile_pic_path
+                try {
+                    db.execSQL(SQL_ADD_PROFILE_PIC_PATH_COLUMN)
+                } catch (e: Exception) {
+                    // Si falla, recrear la tabla de usuarios
+                    db.execSQL(SQL_DELETE_USERS_TABLE)
+                    db.execSQL(SQL_CREATE_USERS_TABLE)
+                }
+            }
             else -> {
                 // Para versiones futuras, recrear todo
                 db.execSQL(SQL_DELETE_PRODUCTS_TABLE)
@@ -120,5 +136,13 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
                 onCreate(db)
             }
         }
+    }
+
+    override fun onDowngrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        // En lugar de fallar, recrear toda la base de datos
+        db.execSQL(SQL_DELETE_PRODUCTS_TABLE)
+        db.execSQL(SQL_DELETE_USERS_TABLE)
+        db.execSQL(SQL_DELETE_FAVORITES_TABLE)
+        onCreate(db)
     }
 }

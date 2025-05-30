@@ -126,4 +126,12 @@
     <string name="confirmar_limpiar_favoritos">¿Estás seguro de que quieres eliminar todos tus productos favoritos?</string>
     <string name="contrasena_opcional">Contraseña (opcional)</string>
     <string name="password_help_text">Deje en blanco para mantener la contraseña actual</string>
+    <!-- Agregar estos strings al archivo strings.xml existente -->
+
+    <!-- Strings para imagen de perfil de usuario -->
+    <string name="seleccionar_imagen_perfil">Seleccionar imagen de perfil</string>
+    <string name="cambiar_foto_perfil">Cambiar foto de perfil</string>
+    <string name="imagen_perfil_actualizada">Imagen de perfil actualizada</string>
+    <string name="error_actualizar_imagen_perfil">Error al actualizar imagen de perfil</string>
+    <string name="sin_imagen_perfil">Sin imagen de perfil</string>
 </resources>

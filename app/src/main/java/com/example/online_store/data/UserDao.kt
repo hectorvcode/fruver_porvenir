@@ -29,10 +29,10 @@ class UserDao(context: Context) {
             put(DatabaseHelper.COLUMN_USER_NAME, user.name)
             put(DatabaseHelper.COLUMN_USER_ROLE, user.role)
             put(DatabaseHelper.COLUMN_USER_PROFILE_PIC, user.profilePicUrl)
+            put(DatabaseHelper.COLUMN_USER_PROFILE_PIC_PATH, user.profilePicPath) // Nueva columna
         }
 
         val id = db.insert(DatabaseHelper.TABLE_USERS, null, values)
-        // No cerramos la base de datos aquí para evitar el error
         return id
     }
 
@@ -62,7 +62,6 @@ class UserDao(context: Context) {
         }
 
         cursor.close()
-        // No cerramos la base de datos aquí
         return user
     }
 
@@ -89,7 +88,6 @@ class UserDao(context: Context) {
         val selectionArgs = arrayOf(email)
 
         val count = db.update(DatabaseHelper.TABLE_USERS, values, selection, selectionArgs)
-        // No cerramos la base de datos aquí
         return count
     }
 
@@ -109,7 +107,44 @@ class UserDao(context: Context) {
         val selectionArgs = arrayOf(email)
 
         val count = db.update(DatabaseHelper.TABLE_USERS, values, selection, selectionArgs)
-        // No cerramos la base de datos aquí
+        return count
+    }
+
+    /**
+     * Actualiza la imagen de perfil personalizada de un usuario
+     * @return Número de filas afectadas
+     */
+    fun updateUserProfilePicPath(email: String, profilePicPath: String?): Int {
+        val db = dbHelper.writableDatabase
+
+        val values = ContentValues().apply {
+            put(DatabaseHelper.COLUMN_USER_PROFILE_PIC_PATH, profilePicPath)
+        }
+
+        val selection = "${DatabaseHelper.COLUMN_USER_EMAIL} = ?"
+        val selectionArgs = arrayOf(email)
+
+        val count = db.update(DatabaseHelper.TABLE_USERS, values, selection, selectionArgs)
+        return count
+    }
+
+    /**
+     * Actualiza toda la información del usuario incluyendo imagen de perfil
+     * @return Número de filas afectadas
+     */
+    fun updateUserComplete(email: String, newName: String, newRole: String, profilePicPath: String?): Int {
+        val db = dbHelper.writableDatabase
+
+        val values = ContentValues().apply {
+            put(DatabaseHelper.COLUMN_USER_NAME, newName)
+            put(DatabaseHelper.COLUMN_USER_ROLE, newRole)
+            put(DatabaseHelper.COLUMN_USER_PROFILE_PIC_PATH, profilePicPath)
+        }
+
+        val selection = "${DatabaseHelper.COLUMN_USER_EMAIL} = ?"
+        val selectionArgs = arrayOf(email)
+
+        val count = db.update(DatabaseHelper.TABLE_USERS, values, selection, selectionArgs)
         return count
     }
 
@@ -138,7 +173,6 @@ class UserDao(context: Context) {
         }
 
         cursor.close()
-        // No cerramos la base de datos aquí
         return usersList
     }
 
@@ -153,12 +187,11 @@ class UserDao(context: Context) {
         val selectionArgs = arrayOf(email)
 
         val count = db.delete(DatabaseHelper.TABLE_USERS, selection, selectionArgs)
-        // No cerramos la base de datos aquí
         return count
     }
 
     /**
-     * Metodo para cerrar la base de datos explícitamente cuando sea necesario
+     * Método para cerrar la base de datos explícitamente cuando sea necesario
      */
     fun closeDatabase() {
         dbHelper.close()
@@ -173,6 +206,7 @@ class UserDao(context: Context) {
         val nameIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_USER_NAME)
         val roleIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_USER_ROLE)
         val profilePicIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_USER_PROFILE_PIC)
+        val profilePicPathIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_USER_PROFILE_PIC_PATH)
 
         val id = if (idIndex >= 0) cursor.getInt(idIndex) else 0
         val email = if (emailIndex >= 0) cursor.getString(emailIndex) else ""
@@ -180,13 +214,16 @@ class UserDao(context: Context) {
         val role = if (roleIndex >= 0) cursor.getString(roleIndex) else User.ROLE_USER
         val profilePicUrl = if (profilePicIndex >= 0 && !cursor.isNull(profilePicIndex))
             cursor.getString(profilePicIndex) else null
+        val profilePicPath = if (profilePicPathIndex >= 0 && !cursor.isNull(profilePicPathIndex))
+            cursor.getString(profilePicPathIndex) else null
 
         return User(
             id = id,
             email = email,
             name = name,
             role = role,
-            profilePicUrl = profilePicUrl
+            profilePicUrl = profilePicUrl,
+            profilePicPath = profilePicPath
         )
     }
 }

@@ -23,6 +23,66 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- Imagen de perfil -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_profile_image"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="24dp"
+            app:cardCornerRadius="60dp"
+            app:cardElevation="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_titulo_usuario">
+
+            <ImageView
+                android:id="@+id/iv_profile_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#EFEFEF"
+                android:contentDescription="@string/foto_de_perfil"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/ic_usuario" />
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Botones para seleccionar imagen de perfil -->
+        <LinearLayout
+            android:id="@+id/ll_profile_image_buttons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cv_profile_image">
+
+            <Button
+                android:id="@+id/btn_select_profile_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:backgroundTint="@color/green_mint"
+                android:drawableStart="@android:drawable/ic_menu_gallery"
+                android:drawablePadding="8dp"
+                android:text="@string/galeria"
+                android:textSize="11sp"
+                app:cornerRadius="20dp" />
+
+            <Button
+                android:id="@+id/btn_take_profile_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:backgroundTint="@color/green_mint"
+                android:drawableStart="@android:drawable/ic_menu_camera"
+                android:drawablePadding="8dp"
+                android:text="@string/camara"
+                android:textSize="11sp"
+                app:cornerRadius="20dp" />
+
+        </LinearLayout>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_nombre"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -32,7 +92,7 @@
             android:hint="@string/nombre_completo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_titulo_usuario">
+            app:layout_constraintTop_toBottomOf="@+id/ll_profile_image_buttons">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_nombre"
