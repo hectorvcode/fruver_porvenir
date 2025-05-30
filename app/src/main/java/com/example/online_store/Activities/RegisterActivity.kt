@@ -2,6 +2,8 @@ package com.example.online_store.Activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -38,6 +40,35 @@ class RegisterActivity : AppCompatActivity() {
         btnRegistrarse.setOnClickListener {
             registerUser()
         }
+
+        // Configurar listeners para navegación con teclado
+        edtFullName.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                edtEmail.requestFocus()
+                true
+            } else {
+                false
+            }
+        }
+
+        edtEmail.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                edtPassword.requestFocus()
+                true
+            } else {
+                false
+            }
+        }
+
+        edtPassword.setOnEditorActionListener { _, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE ||
+                (event?.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN)) {
+                registerUser()
+                true
+            } else {
+                false
+            }
+        }
     }
 
     private fun registerUser() {
@@ -49,16 +80,19 @@ class RegisterActivity : AppCompatActivity() {
         // Validación básica
         if (fullName.isEmpty()) {
             edtFullName.error = "Por favor ingrese su nombre completo"
+            edtFullName.requestFocus()
             return
         }
 
         if (email.isEmpty()) {
             edtEmail.error = "Por favor ingrese su email"
+            edtEmail.requestFocus()
             return
         }
 
         if (password.isEmpty()) {
             edtPassword.error = "Por favor ingrese una contraseña"
+            edtPassword.requestFocus()
             return
         }
 
@@ -86,7 +120,7 @@ class RegisterActivity : AppCompatActivity() {
             sessionManager.createLoginSession(user)
 
             // Redireccionar a la lista de productos
-            startActivity(Intent(this, ListActivity::class.java))
+            startActivity(Intent(this, MainContainerActivity::class.java))
             finish()
         } else {
             Toast.makeText(this, "Error al registrar. Intente nuevamente", Toast.LENGTH_SHORT).show()

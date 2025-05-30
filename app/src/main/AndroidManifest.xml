@@ -48,27 +48,77 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <!-- Resto de actividades... -->
+        <!-- Actividades con configuración de teclado -->
         <activity
             android:name=".Activities.SplashActivity"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" android:exported="false" />
-        <activity android:name=".Activities.HomeActivity" android:exported="false" />
-        <activity android:name=".Activities.LoginActivity" android:exported="false" />
-        <activity android:name=".Activities.ListActivity" android:exported="false" />
-        <activity android:name=".Activities.CartActivity" android:exported="false" />
-        <activity android:name=".Activities.RegisterActivity" android:exported="false" />
-        <activity android:name=".Activities.ProductFormActivity" android:exported="false" />
-        <activity android:name=".Activities.ProductAdminActivity" android:exported="false" />
-        <activity android:name=".Activities.ProfileActivity" android:exported="false" />
-        <activity android:name=".Activities.UserAdminActivity" android:exported="false" />
-        <activity android:name=".Activities.UserFormActivity" android:exported="false" />
-        <activity android:name=".Activities.MainContainerActivity" android:exported="false" />
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".Activities.HomeActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".Activities.LoginActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".Activities.ListActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".Activities.CartActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".Activities.RegisterActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".Activities.ProductFormActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".Activities.ProductAdminActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".Activities.ProfileActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".Activities.UserAdminActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".Activities.UserFormActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".Activities.MainContainerActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
     </application>
 
 </manifest>

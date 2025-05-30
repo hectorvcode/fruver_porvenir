@@ -1,147 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_gradient">
+    android:background="@drawable/background_gradient"
+    android:fillViewport="true">
 
-    <ImageView
-        android:id="@+id/iv_app_logo"
-        android:layout_width="214dp"
-        android:layout_height="223dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="@string/app_logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/app_logo" />
-
-
-    <TextView
-        android:id="@+id/tv_fruver_porvenir"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/fruver_porvenir"
-        android:textColor="@color/black"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_app_logo" />
-
-    <ImageView
-        android:id="@+id/iv_ic_user"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.194"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_fruver_porvenir"
-        app:srcCompat="@drawable/ic_usuario" />
-
-    <ImageView
-        android:id="@+id/iv_ic_contrasena"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginTop="84dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.203"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_fruver_porvenir"
-        app:srcCompat="@drawable/ic_contrasena" />
-
-    <EditText
-        android:id="@+id/edt_email_login"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="24dp"
-        android:hint="@string/usuario"
-        android:paddingStart="70dp"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
         android:paddingEnd="16dp"
-        style="@style/EditTextRounded"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_fruver_porvenir" />
+        android:paddingBottom="32dp">
 
-    <EditText
-        android:id="@+id/edt_password_login"
-        style="@style/EditTextRounded"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="12dp"
-        android:hint="@string/contrasena"
-        android:inputType="textPassword"
-        android:paddingStart="70dp"
-        android:paddingEnd="16dp"
-        app:icon="@drawable/ic_contrasena"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_email_login" />
+        <ImageView
+            android:id="@+id/iv_app_logo"
+            android:layout_width="180dp"
+            android:layout_height="190dp"
+            android:layout_marginTop="32dp"
+            android:contentDescription="@string/app_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/app_logo" />
 
-    <TextView
-        android:id="@+id/tv_recuperar_contrasena"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="@string/recuperar_contrasena"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_ingresar" />
+        <TextView
+            android:id="@+id/tv_fruver_porvenir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/fruver_porvenir"
+            android:textColor="@color/black"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_app_logo" />
 
-    <Button
-        android:id="@+id/btn_ingresar"
-        android:layout_width="300dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="44dp"
-        android:backgroundTint="@color/green_mint"
-        android:text="@string/ingresar"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_password_login" />
+        <ImageView
+            android:id="@+id/iv_ic_user"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintBottom_toBottomOf="@+id/edt_email_login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.194"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_fruver_porvenir"
+            app:srcCompat="@drawable/ic_usuario" />
 
-    <Button
-        android:id="@+id/btn_continuar_google"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="40dp"
-        android:backgroundTint="@color/white"
-        android:text="@string/continuar_con_google"
-        android:textAlignment="viewEnd"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:cornerRadius="20dp"
-        app:icon="@drawable/ic_google"
-        app:iconSize="30dp"
-        app:iconTint="@null"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_recuperar_contrasena"
-        app:strokeColor="@color/black"
-        app:strokeWidth="3dp" />
+        <ImageView
+            android:id="@+id/iv_ic_contrasena"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="76dp"
+            app:layout_constraintBottom_toBottomOf="@+id/edt_password_login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.204"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_fruver_porvenir"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/ic_contrasena" />
 
-    <TextView
-        android:id="@+id/tv_registrarse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="@string/registrarse"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_continuar_google" />
+        <EditText
+            android:id="@+id/edt_email_login"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="32dp"
+            android:hint="@string/usuario"
+            android:inputType="textEmailAddress"
+            android:paddingStart="70dp"
+            android:paddingEnd="16dp"
+            style="@style/EditTextRounded"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_fruver_porvenir" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <EditText
+            android:id="@+id/edt_password_login"
+            style="@style/EditTextRounded"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="12dp"
+            android:hint="@string/contrasena"
+            android:inputType="textPassword"
+            android:paddingStart="70dp"
+            android:paddingEnd="16dp"
+            android:imeOptions="actionDone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edt_email_login" />
+
+        <Button
+            android:id="@+id/btn_ingresar"
+            android:layout_width="300dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="@color/green_mint"
+            android:text="@string/ingresar"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edt_password_login" />
+
+        <TextView
+            android:id="@+id/tv_recuperar_contrasena"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/recuperar_contrasena"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_ingresar" />
+
+        <Button
+            android:id="@+id/btn_continuar_google"
+            android:layout_width="300dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/white"
+            android:text="@string/continuar_con_google"
+            android:textAlignment="viewEnd"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:cornerRadius="20dp"
+            app:icon="@drawable/ic_google"
+            app:iconSize="30dp"
+            app:iconTint="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_recuperar_contrasena"
+            app:strokeColor="@color/black"
+            app:strokeWidth="2dp" />
+
+        <TextView
+            android:id="@+id/tv_registrarse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/registrarse"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_continuar_google"
+            app:layout_constraintVertical_bias="0.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

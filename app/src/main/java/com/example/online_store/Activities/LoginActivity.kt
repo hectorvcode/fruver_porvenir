@@ -3,6 +3,8 @@ package com.example.online_store.Activities
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -74,6 +76,27 @@ class LoginActivity : AppCompatActivity() {
         tvRegister.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
+
+        // Configurar listener para el botón "Done" del teclado en el campo de contraseña
+        edtPassword.setOnEditorActionListener { _, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE ||
+                (event?.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN)) {
+                loginWithCredentials()
+                true
+            } else {
+                false
+            }
+        }
+
+        // Configurar listener para el botón "Next" del teclado en el campo de email
+        edtEmail.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                edtPassword.requestFocus()
+                true
+            } else {
+                false
+            }
+        }
     }
 
     private fun loginWithCredentials() {
@@ -83,11 +106,13 @@ class LoginActivity : AppCompatActivity() {
         // Validación básica
         if (email.isEmpty()) {
             edtEmail.error = "Por favor ingrese su email"
+            edtEmail.requestFocus()
             return
         }
 
         if (password.isEmpty()) {
             edtPassword.error = "Por favor ingrese su contraseña"
+            edtPassword.requestFocus()
             return
         }
 
