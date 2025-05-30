@@ -119,6 +119,22 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
+        <!-- NUEVAS ACTIVIDADES PARA RECUPERACIÓN DE CONTRASEÑA -->
+        <activity
+            android:name=".Activities.ForgotPasswordActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".Activities.VerifyCodeActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".Activities.ResetPasswordActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
     </application>
 
 </manifest>

@@ -148,4 +148,33 @@
     <!-- Instrucciones para foto de perfil -->
     <string name="opcional_foto_perfil">Puedes agregar una foto de perfil ahora o después</string>
     <string name="tap_para_cambiar_foto">Toca para cambiar tu foto de perfil</string>
+
+        <!-- Strings para recuperación de contraseña -->
+    <string name="instrucciones_recuperacion">Ingresa tu email y te enviaremos un código para recuperar tu contraseña</string>
+    <string name="ingrese_email_recuperacion">Ingresa tu email</string>
+    <string name="enviar_codigo">Enviar Código</string>
+    <string name="volver_al_login">Volver al Login</string>
+    <string name="ayuda_recuperacion">Si tienes problemas, contacta con nuestro soporte</string>
+    <string name="email_icon">Ícono de email</string>
+
+    <!-- Strings para verificación de código -->
+    <string name="verificar_codigo">Verificar Código</string>
+    <string name="instrucciones_codigo">Ingresa el código de 6 dígitos que enviamos a tu email</string>
+    <string name="codigo_6_digitos">000000</string>
+    <string name="reenviar_codigo">Reenviar Código</string>
+    <string name="reenviar_codigo_en">Reenviar código en 60s</string>
+    <string name="volver_atras">Volver Atrás</string>
+    <string name="verification_icon">Ícono de verificación</string>
+
+    <!-- Strings para nueva contraseña -->
+    <string name="nueva_contrasena">Nueva Contraseña</string>
+    <string name="instrucciones_nueva_contrasena">Ingresa tu nueva contraseña. Debe tener al menos 6 caracteres.</string>
+    <string name="confirmar_contrasena">Confirmar Contraseña</string>
+    <string name="cambiar_contrasena">Cambiar Contraseña</string>
+    <string name="info_seguridad_contrasena">Tu contraseña debe ser segura y fácil de recordar</string>
+    <string name="password_icon">Ícono de contraseña</string>
+
+    <!-- Mensajes de validación y error -->
+    <string name="codigo_incorrecto">Código incorrecto. Intenta nuevamente.</string>
+    <string name="codigo_enviado">Código enviado a tu email</string>
 </resources>

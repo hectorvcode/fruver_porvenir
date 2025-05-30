@@ -28,6 +28,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var edtEmail: EditText
     private lateinit var edtPassword: EditText
     private lateinit var tvRegister: TextView
+    private lateinit var tvRecuperarContrasena: TextView // Nueva vista
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var sessionManager: SessionManager
     private lateinit var userDao: UserDao
@@ -48,12 +49,16 @@ class LoginActivity : AppCompatActivity() {
             return
         }
 
-        // Inicializar vistas
+        // Inicializar vistas PRIMERO
         btnIngresar = findViewById(R.id.btn_ingresar)
         edtEmail = findViewById(R.id.edt_email_login)
         edtPassword = findViewById(R.id.edt_password_login)
         tvRegister = findViewById(R.id.tv_registrarse)
+        tvRecuperarContrasena = findViewById(R.id.tv_recuperar_contrasena) // Nueva vista
         btnGoogle = findViewById(R.id.btn_continuar_google)
+
+        // Verificar si viene de un reset de contraseña exitoso DESPUÉS de inicializar vistas
+        checkPasswordResetSuccess()
 
         // Configurar Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -77,6 +82,11 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
 
+        // Nuevo listener para recuperar contraseña
+        tvRecuperarContrasena.setOnClickListener {
+            startActivity(Intent(this, ForgotPasswordActivity::class.java))
+        }
+
         // Configurar listener para el botón "Done" del teclado en el campo de contraseña
         edtPassword.setOnEditorActionListener { _, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE ||
@@ -95,6 +105,24 @@ class LoginActivity : AppCompatActivity() {
                 true
             } else {
                 false
+            }
+        }
+    }
+
+    private fun checkPasswordResetSuccess() {
+        // Verificar si viene de un cambio de contraseña exitoso
+        if (intent.getBooleanExtra("password_reset_success", false)) {
+            val email = intent.getStringExtra("email")
+            Toast.makeText(
+                this,
+                "Contraseña cambiada exitosamente. Ya puedes iniciar sesión.",
+                Toast.LENGTH_LONG
+            ).show()
+
+            // Pre-llenar el email si está disponible
+            email?.let {
+                edtEmail.setText(it)
+                edtPassword.requestFocus()
             }
         }
     }
