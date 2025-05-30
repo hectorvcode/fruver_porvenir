@@ -11,10 +11,11 @@ import com.example.online_store.R
 
 class ProductsFragment : Fragment() {
 
+    private lateinit var btnTodos: Button
     private lateinit var btnFrutas: Button
     private lateinit var btnVerduras: Button
     private lateinit var btnBebidas: Button
-    private var currentCategory = "Frutas"
+    private var currentCategory = "Todos" // Cambiar categoría por defecto
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,6 +28,7 @@ class ProductsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Initialize category buttons
+        btnTodos = view.findViewById(R.id.btn_todos)
         btnFrutas = view.findViewById(R.id.btn_frutas)
         btnVerduras = view.findViewById(R.id.btn_verduras)
         btnBebidas = view.findViewById(R.id.btn_bebidas)
@@ -34,11 +36,16 @@ class ProductsFragment : Fragment() {
         // Setup button click listeners
         setupCategoryButtons()
 
-        // Load default category (Frutas)
+        // Load default category (Todos)
         loadCategoryFragment(currentCategory)
     }
 
     private fun setupCategoryButtons() {
+        btnTodos.setOnClickListener {
+            updateButtonStyles(btnTodos)
+            loadCategoryFragment("Todos")
+        }
+
         btnFrutas.setOnClickListener {
             updateButtonStyles(btnFrutas)
             loadCategoryFragment("Frutas")
@@ -57,6 +64,7 @@ class ProductsFragment : Fragment() {
 
     private fun updateButtonStyles(selectedButton: Button) {
         // Reset all buttons to gray
+        btnTodos.background = ContextCompat.getDrawable(requireContext(), R.drawable.btn_category_gray)
         btnFrutas.background = ContextCompat.getDrawable(requireContext(), R.drawable.btn_category_gray)
         btnVerduras.background = ContextCompat.getDrawable(requireContext(), R.drawable.btn_category_gray)
         btnBebidas.background = ContextCompat.getDrawable(requireContext(), R.drawable.btn_category_gray)

@@ -25,7 +25,7 @@ class ProductCategoryFragment : Fragment() {
     private lateinit var productDao: ProductDao
     private lateinit var cartManager: CartManager
     private lateinit var favoritesManager: FavoritesManager
-    private var category: String = "Frutas" // Default category
+    private var category: String = "Todos" // Cambiar categoría por defecto
 
     companion object {
         private const val ARG_CATEGORY = "category"
@@ -42,7 +42,7 @@ class ProductCategoryFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            category = it.getString(ARG_CATEGORY, "Frutas")
+            category = it.getString(ARG_CATEGORY, "Todos")
         }
 
         // Initialize DAOs and managers
@@ -98,11 +98,25 @@ class ProductCategoryFragment : Fragment() {
     }
 
     private fun loadProducts() {
-        val products = productDao.getProductsByCategory(category)
+        // Obtener productos según la categoría
+        val products = if (category == "Todos") {
+            // Si es "Todos", obtener todos los productos
+            productDao.getAllProducts()
+        } else {
+            // Si es una categoría específica, filtrar por categoría
+            productDao.getProductsByCategory(category)
+        }
 
         if (products.isEmpty()) {
             tvEmptyCategory.visibility = View.VISIBLE
             rvCategoryProducts.visibility = View.GONE
+
+            // Personalizar el mensaje según la categoría
+            tvEmptyCategory.text = if (category == "Todos") {
+                "No hay productos registrados"
+            } else {
+                "No hay productos en la categoría $category"
+            }
         } else {
             tvEmptyCategory.visibility = View.GONE
             rvCategoryProducts.visibility = View.VISIBLE

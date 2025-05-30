@@ -97,6 +97,7 @@
     <string name="directions">Cómo llegar</string>
     <string name="call_store">Llamar</string>
     <string name="stores">Tiendas</string>
+    <string name="todos">Todos</string>
 
     <!-- Strings para manejo de imágenes -->
     <string name="tomar_foto">Tomar Foto</string>
