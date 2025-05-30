@@ -2,6 +2,8 @@ package com.example.online_store.Activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -53,16 +55,7 @@ class CartActivity : AppCompatActivity() {
 
         // Configurar botón de pago
         btnPagar.setOnClickListener {
-            // Aquí iría la lógica de pago (en implementación futura)
-            Toast.makeText(this, "Procesando pago de ${currencyFormat.format(cartManager.getTotal())}", Toast.LENGTH_SHORT).show()
-
-            // Simulación de pago exitoso
-            cartManager.clearCart()
-
-            // Redirigir a la página de productos
-            startActivity(Intent(this, ListActivity::class.java))
-            Toast.makeText(this, "¡Compra realizada con éxito!", Toast.LENGTH_LONG).show()
-            finish()
+            processPayment()
         }
 
         // Cargar datos del carrito
@@ -181,5 +174,40 @@ class CartActivity : AppCompatActivity() {
         // Calcular y mostrar total
         val total = cartManager.getTotal()
         tvTotalValue.text = currencyFormat.format(total)
+    }
+
+    private fun processPayment() {
+        // Obtener información del carrito antes de limpiarlo
+        val cartItems = cartManager.getCartItems()
+        val totalAmount = cartManager.getTotal()
+        val itemCount = cartItems.size
+
+        if (cartItems.isEmpty()) {
+            Toast.makeText(this, "El carrito está vacío", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Mostrar mensaje de procesamiento
+        Toast.makeText(this, "Procesando pago de ${currencyFormat.format(totalAmount)}", Toast.LENGTH_SHORT).show()
+
+        // Simular un pequeño delay para el procesamiento
+        btnPagar.isEnabled = false
+        btnPagar.text = "Procesando..."
+
+        // Procesar pago después de un breve delay
+        Handler(Looper.getMainLooper()).postDelayed({
+            // Limpiar el carrito
+            cartManager.clearCart()
+
+            // Crear intent para la pantalla de éxito
+            val intent = Intent(this, PaymentSuccessActivity::class.java)
+            intent.putExtra("total_amount", totalAmount)
+            intent.putExtra("item_count", itemCount)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+            // Iniciar la actividad de éxito
+            startActivity(intent)
+            finish()
+        }, 1500) // 1.5 segundos de delay para simular procesamiento
     }
 }

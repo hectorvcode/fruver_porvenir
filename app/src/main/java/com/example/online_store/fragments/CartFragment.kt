@@ -1,15 +1,20 @@
 package com.example.online_store.fragments
 
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.online_store.Activities.PaymentSuccessActivity
 import com.example.online_store.R
 import com.example.online_store.adapter.CartAdapter
 import com.example.online_store.utils.CartManager
@@ -54,8 +59,7 @@ class CartFragment : Fragment() {
 
         // Configurar botón de pago
         btnPagar.setOnClickListener {
-            // Aquí iría la lógica de pago (en implementación futura)
-            // Puedes mostrar un diálogo, navegar a otro fragmento, etc.
+            processPayment()
         }
 
         // Cargar datos del carrito
@@ -121,6 +125,41 @@ class CartFragment : Fragment() {
         // Calcular y mostrar total
         val total = cartManager.getTotal()
         tvTotalValue.text = currencyFormat.format(total)
+    }
+
+    private fun processPayment() {
+        // Obtener información del carrito antes de limpiarlo
+        val cartItems = cartManager.getCartItems()
+        val totalAmount = cartManager.getTotal()
+        val itemCount = cartItems.size
+
+        if (cartItems.isEmpty()) {
+            Toast.makeText(requireContext(), "El carrito está vacío", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Mostrar mensaje de procesamiento
+        Toast.makeText(requireContext(), "Procesando pago de ${currencyFormat.format(totalAmount)}", Toast.LENGTH_SHORT).show()
+
+        // Simular un pequeño delay para el procesamiento
+        btnPagar.isEnabled = false
+        btnPagar.text = "Procesando..."
+
+        // Procesar pago después de un breve delay
+        Handler(Looper.getMainLooper()).postDelayed({
+            // Limpiar el carrito
+            cartManager.clearCart()
+
+            // Crear intent para la pantalla de éxito
+            val intent = Intent(requireContext(), PaymentSuccessActivity::class.java)
+            intent.putExtra("total_amount", totalAmount)
+            intent.putExtra("item_count", itemCount)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+            // Iniciar la actividad de éxito
+            startActivity(intent)
+            requireActivity().finish()
+        }, 1500) // 1.5 segundos de delay para simular procesamiento
     }
 
     companion object {

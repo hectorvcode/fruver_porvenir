@@ -119,7 +119,7 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
-        <!-- NUEVAS ACTIVIDADES PARA RECUPERACIÓN DE CONTRASEÑA -->
+        <!-- ACTIVIDADES PARA RECUPERACIÓN DE CONTRASEÑA -->
         <activity
             android:name=".Activities.ForgotPasswordActivity"
             android:exported="false"
@@ -132,6 +132,12 @@
 
         <activity
             android:name=".Activities.ResetPasswordActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- NUEVA ACTIVIDAD PARA PAGO EXITOSO -->
+        <activity
+            android:name=".Activities.PaymentSuccessActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 

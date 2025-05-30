@@ -116,6 +116,7 @@
     <string name="imagen_seleccionada">Imagen seleccionada exitosamente</string>
     <string name="error_guardar_foto">Error al guardar la foto</string>
     <string name="error_procesar_imagen">Error al procesar la imagen</string>
+
     <!-- Strings para favoritos -->
     <string name="favorito">Favorito</string>
     <string name="mis_favoritos">Mis Favoritos</string>
@@ -149,8 +150,6 @@
     <string name="opcional_foto_perfil">Puedes agregar una foto de perfil ahora o después</string>
     <string name="tap_para_cambiar_foto">Toca para cambiar tu foto de perfil</string>
 
-    <!-- Agregar estos strings al archivo strings.xml existente -->
-
     <!-- Strings para recuperación de contraseña -->
     <string name="instrucciones_recuperacion">Ingresa tu email y te enviaremos un código para recuperar tu contraseña</string>
     <string name="ingrese_email_recuperacion">Ingresa tu email</string>
@@ -179,4 +178,21 @@
     <!-- Mensajes de validación y error -->
     <string name="codigo_incorrecto">Código incorrecto. Intenta nuevamente.</string>
     <string name="codigo_enviado">Código enviado a tu email</string>
+
+    <!-- Strings para pantalla de pago exitoso -->
+    <string name="pago_exitoso">Pago exitoso</string>
+    <string name="compra_exitosa_mensaje">¡Gracias!\nTu compra se realizó exitosamente</string>
+    <string name="detalles_compra">Detalles de la compra</string>
+    <string name="numero_orden">Número de orden:</string>
+    <string name="total_pagado">Total pagado:</string>
+    <string name="fecha_compra">Fecha:</string>
+    <string name="informacion_entrega">Información de entrega</string>
+    <string name="entrega">Entrega</string>
+    <string name="mensaje_entrega_24_48">Tus productos serán entregados en las próximas 24-48 horas.</string>
+    <string name="seguir_comprando">Seguir Comprando</string>
+    <string name="ver_mis_pedidos">Ver mis pedidos</string>
+    <string name="gracias_preferencia">¡Gracias por elegir Fruver Porvenir!\nTe mantendremos informado sobre el estado de tu pedido.</string>
+    <string name="orden_numero_formato">#%1$s</string>
+    <string name="procesando_pago">Procesando pago...</string>
+    <string name="pago_procesado">Pago procesado exitosamente</string>
 </resources>
