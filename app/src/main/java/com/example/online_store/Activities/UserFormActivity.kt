@@ -351,22 +351,26 @@ class UserFormActivity : AppCompatActivity() {
         val password = etPassword.text.toString().trim()
         val role = if (rbAdmin.isChecked) User.ROLE_ADMIN else User.ROLE_USER
 
+        // Crear objeto usuario
         val user = User(
             id = 0,
             email = email,
             name = nombre,
             role = role,
+            password = password, // La contraseña se procesará adecuadamente en UserDao
             profilePicPath = currentProfileImagePath
         )
 
         if (isEditMode) {
             if (email != originalEmail) {
+                // Si cambió el email, eliminar el usuario antiguo y crear uno nuevo
                 userDao.deleteUser(originalEmail)
                 val newUserId = userDao.insertUser(user)
 
                 if (newUserId > 0) {
                     if (password.isNotEmpty()) {
-                        updateUserPassword(email, password)
+                        // Si se proporcionó una contraseña nueva, actualizarla
+                        userDao.updatePassword(email, password)
                     }
                     Toast.makeText(this, "Usuario actualizado correctamente", Toast.LENGTH_SHORT).show()
                     finish()
@@ -374,11 +378,13 @@ class UserFormActivity : AppCompatActivity() {
                     Toast.makeText(this, "Error al actualizar el usuario", Toast.LENGTH_SHORT).show()
                 }
             } else {
+                // Si no cambió el email, actualizar los datos existentes
                 val rowsAffected = userDao.updateUserComplete(email, nombre, role, currentProfileImagePath)
 
                 if (rowsAffected > 0) {
                     if (password.isNotEmpty()) {
-                        updateUserPassword(email, password)
+                        // Si se proporcionó una contraseña nueva, actualizarla
+                        userDao.updatePassword(email, password)
                     }
                     Toast.makeText(this, "Usuario actualizado correctamente", Toast.LENGTH_SHORT).show()
                     finish()
@@ -387,12 +393,10 @@ class UserFormActivity : AppCompatActivity() {
                 }
             }
         } else {
+            // Crear nuevo usuario
             val id = userDao.insertUser(user)
 
             if (id > 0) {
-                if (password.isNotEmpty()) {
-                    updateUserPassword(email, password)
-                }
                 Toast.makeText(this, "Usuario agregado correctamente", Toast.LENGTH_SHORT).show()
                 finish()
             } else if (id == -1L) {
@@ -401,14 +405,6 @@ class UserFormActivity : AppCompatActivity() {
                 Toast.makeText(this, "Error al agregar el usuario", Toast.LENGTH_SHORT).show()
             }
         }
-    }
-
-    private fun updateUserPassword(email: String, password: String) {
-        val currentUserEmail = sessionManager.getUserDetails()["email"]
-        if (email == currentUserEmail) {
-            sessionManager.updateSessionPassword(password)
-        }
-        Toast.makeText(this, "Contraseña actualizada", Toast.LENGTH_SHORT).show()
     }
 
     private fun validateForm(): Boolean {

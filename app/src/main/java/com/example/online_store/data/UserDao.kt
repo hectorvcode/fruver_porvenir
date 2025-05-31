@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import com.example.online_store.model.User
+import com.example.online_store.utils.PasswordUtils
 
 /**
  * Data Access Object para operaciones relacionadas con usuarios
@@ -29,7 +30,12 @@ class UserDao(context: Context) {
             put(DatabaseHelper.COLUMN_USER_NAME, user.name)
             put(DatabaseHelper.COLUMN_USER_ROLE, user.role)
             put(DatabaseHelper.COLUMN_USER_PROFILE_PIC, user.profilePicUrl)
-            put(DatabaseHelper.COLUMN_USER_PROFILE_PIC_PATH, user.profilePicPath) // Nueva columna
+            put(DatabaseHelper.COLUMN_USER_PROFILE_PIC_PATH, user.profilePicPath)
+
+            // Hashear la contraseña antes de guardarla
+            if (user.password.isNotEmpty()) {
+                put(DatabaseHelper.COLUMN_USER_PASSWORD, PasswordUtils.hashPassword(user.password))
+            }
         }
 
         val id = db.insert(DatabaseHelper.TABLE_USERS, null, values)
@@ -63,6 +69,65 @@ class UserDao(context: Context) {
 
         cursor.close()
         return user
+    }
+
+    /**
+     * Verifica si las credenciales de un usuario son válidas
+     * @return User si las credenciales son correctas, null en caso contrario
+     */
+    fun validateCredentials(email: String, password: String): User? {
+        val user = getUserByEmail(email) ?: return null
+
+        // Obtener la contraseña hasheada directamente de la base de datos
+        val db = dbHelper.readableDatabase
+        val projection = arrayOf(DatabaseHelper.COLUMN_USER_PASSWORD)
+        val selection = "${DatabaseHelper.COLUMN_USER_EMAIL} = ?"
+        val selectionArgs = arrayOf(email)
+
+        val cursor = db.query(
+            DatabaseHelper.TABLE_USERS,
+            projection,
+            selection,
+            selectionArgs,
+            null,
+            null,
+            null
+        )
+
+        var hashedPassword: String? = null
+        if (cursor.moveToFirst()) {
+            val passwordIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_USER_PASSWORD)
+            if (passwordIndex >= 0) {
+                hashedPassword = cursor.getString(passwordIndex)
+            }
+        }
+        cursor.close()
+
+        // Especial para el usuario administrador predeterminado
+        if (email == "admin@example.com" && (hashedPassword.isNullOrEmpty() || PasswordUtils.verifyPassword(password, hashedPassword))) {
+            return user
+        }
+
+        // Para usuarios normales, verificar la contraseña
+        return if (PasswordUtils.verifyPassword(password, hashedPassword)) user else null
+    }
+
+    /**
+     * Actualiza la contraseña de un usuario
+     * @return Número de filas afectadas
+     */
+    fun updatePassword(email: String, newPassword: String): Int {
+        val db = dbHelper.writableDatabase
+
+        val values = ContentValues().apply {
+            put(DatabaseHelper.COLUMN_USER_PASSWORD, PasswordUtils.hashPassword(newPassword))
+        }
+
+        val selection = "${DatabaseHelper.COLUMN_USER_EMAIL} = ?"
+        val selectionArgs = arrayOf(email)
+
+        val count = db.update(DatabaseHelper.TABLE_USERS, values, selection, selectionArgs)
+        return count
     }
 
     /**
@@ -205,6 +270,7 @@ class UserDao(context: Context) {
         val emailIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_USER_EMAIL)
         val nameIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_USER_NAME)
         val roleIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_USER_ROLE)
+        val passwordIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_USER_PASSWORD)
         val profilePicIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_USER_PROFILE_PIC)
         val profilePicPathIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_USER_PROFILE_PIC_PATH)
 
@@ -212,6 +278,8 @@ class UserDao(context: Context) {
         val email = if (emailIndex >= 0) cursor.getString(emailIndex) else ""
         val name = if (nameIndex >= 0) cursor.getString(nameIndex) else ""
         val role = if (roleIndex >= 0) cursor.getString(roleIndex) else User.ROLE_USER
+        val password = if (passwordIndex >= 0 && !cursor.isNull(passwordIndex))
+            cursor.getString(passwordIndex) else ""
         val profilePicUrl = if (profilePicIndex >= 0 && !cursor.isNull(profilePicIndex))
             cursor.getString(profilePicIndex) else null
         val profilePicPath = if (profilePicPathIndex >= 0 && !cursor.isNull(profilePicPathIndex))
@@ -222,6 +290,7 @@ class UserDao(context: Context) {
             email = email,
             name = name,
             role = role,
+            password = password,
             profilePicUrl = profilePicUrl,
             profilePicPath = profilePicPath
         )

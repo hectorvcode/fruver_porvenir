@@ -103,12 +103,14 @@ class OnlineStoreApplication : Application() {
                 User(
                     email = "admin@example.com",
                     name = "Administrador",
-                    role = User.ROLE_ADMIN
+                    role = User.ROLE_ADMIN,
+                    password = "admin123" // Contraseña por defecto para el admin
                 ),
                 User(
                     email = "user@example.com",
                     name = "Usuario Regular",
-                    role = User.ROLE_USER
+                    role = User.ROLE_USER,
+                    password = "user123" // Contraseña por defecto para el usuario regular
                 )
             )
 

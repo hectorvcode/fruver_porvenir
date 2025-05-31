@@ -121,26 +121,25 @@ class ResetPasswordActivity : AppCompatActivity() {
             return
         }
 
-        // En una implementación real, aquí guardarías la contraseña hasheada
-        // Por simplicidad, solo mostramos un mensaje de éxito
-
-        // Simular actualización de contraseña
+        // Actualizar la contraseña en la base de datos
         try {
-            // Aquí iría la lógica para actualizar la contraseña en la base de datos
-            // userDao.updatePassword(email, hashedPassword)
+            val result = userDao.updatePassword(email, newPassword)
 
-            Toast.makeText(this, "Contraseña actualizada exitosamente", Toast.LENGTH_LONG).show()
+            if (result > 0) {
+                Toast.makeText(this, "Contraseña actualizada exitosamente", Toast.LENGTH_LONG).show()
 
-            // Redirigir al login
-            val intent = Intent(this, LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            intent.putExtra("password_reset_success", true)
-            intent.putExtra("email", email)
-            startActivity(intent)
-            finish()
-
+                // Redirigir al login
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                intent.putExtra("password_reset_success", true)
+                intent.putExtra("email", email)
+                startActivity(intent)
+                finish()
+            } else {
+                Toast.makeText(this, "Error al actualizar la contraseña", Toast.LENGTH_SHORT).show()
+            }
         } catch (e: Exception) {
-            Toast.makeText(this, "Error al actualizar la contraseña", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Error al actualizar la contraseña: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
 

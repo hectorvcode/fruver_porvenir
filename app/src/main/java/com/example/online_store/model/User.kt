@@ -8,6 +8,7 @@ data class User(
     val email: String,              // Email (usado como identificador único)
     val name: String,               // Nombre completo
     val role: String,               // Rol: "ADMIN" o "USER"
+    val password: String = "",      // Contraseña (hasheada para seguridad)
     val profilePicUrl: String? = null, // URL de foto de perfil (Google)
     val profilePicPath: String? = null // Ruta de imagen personalizada (cámara/galería)
 ) {

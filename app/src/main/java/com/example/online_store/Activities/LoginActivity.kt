@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.online_store.R
 import com.example.online_store.data.UserDao
 import com.example.online_store.model.User
+import com.example.online_store.utils.PasswordUtils
 import com.example.online_store.utils.SessionManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -144,23 +145,17 @@ class LoginActivity : AppCompatActivity() {
             return
         }
 
-        // Verificar si el usuario existe en la base de datos
-        val user = userDao.getUserByEmail(email)
+        // Verificar credenciales
+        val user = userDao.validateCredentials(email, password)
 
         if (user != null) {
-            // En una aplicación real, verificarías la contraseña con hash.
-            // Para este ejemplo, consideramos que cualquier contraseña es válida
-            // para el usuario "admin@example.com" para simplificar el proceso.
-
             // Guardar sesión
             sessionManager.createLoginSession(user)
-
             Toast.makeText(this, "Bienvenido ${user.name}", Toast.LENGTH_SHORT).show()
-
             // Redireccionar según el rol
             redirectBasedOnRole()
         } else {
-            Toast.makeText(this, "Usuario no encontrado", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Email o contraseña incorrectos", Toast.LENGTH_SHORT).show()
         }
     }
 

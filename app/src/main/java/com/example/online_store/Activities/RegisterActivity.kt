@@ -310,12 +310,13 @@ class RegisterActivity : AppCompatActivity() {
             return
         }
 
-        // Crear nuevo usuario (siempre con rol USER) incluyendo imagen de perfil
+        // Crear nuevo usuario (siempre con rol USER) incluyendo imagen de perfil y contraseña
         val user = User(
             email = email,
             name = fullName,
             role = User.ROLE_USER,
-            profilePicPath = currentProfileImagePath // Agregar la imagen de perfil
+            password = password, // La contraseña se hasheará en UserDao.insertUser
+            profilePicPath = currentProfileImagePath
         )
 
         // Insertar en la base de datos

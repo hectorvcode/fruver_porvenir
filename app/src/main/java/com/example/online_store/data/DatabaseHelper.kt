@@ -11,7 +11,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
 
     companion object {
         private const val DATABASE_NAME = "online_store.db"
-        private const val DATABASE_VERSION = 8 // Incrementado para la nueva tabla de unidades
+        private const val DATABASE_VERSION = 9 // Incrementado para la nueva columna de contraseña
 
         // Tabla Productos
         const val TABLE_PRODUCTS = "products"
@@ -30,6 +30,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         const val COLUMN_USER_EMAIL = "email"
         const val COLUMN_USER_NAME = "name"
         const val COLUMN_USER_ROLE = "role"
+        const val COLUMN_USER_PASSWORD = "password" // Nueva columna para contraseña
         const val COLUMN_USER_PROFILE_PIC = "profile_pic_url"
         const val COLUMN_USER_PROFILE_PIC_PATH = "profile_pic_path"
 
@@ -40,7 +41,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         const val COLUMN_FAVORITE_PRODUCT_ID = "product_id"
         const val COLUMN_FAVORITE_DATE_ADDED = "date_added"
 
-        // Tabla Unidades (NUEVA)
+        // Tabla Unidades
         const val TABLE_UNITS = "units"
         const val COLUMN_UNIT_ID = "id"
         const val COLUMN_UNIT_NAME = "name"
@@ -70,6 +71,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
                 $COLUMN_USER_EMAIL TEXT NOT NULL UNIQUE,
                 $COLUMN_USER_NAME TEXT NOT NULL,
                 $COLUMN_USER_ROLE TEXT NOT NULL,
+                $COLUMN_USER_PASSWORD TEXT, 
                 $COLUMN_USER_PROFILE_PIC TEXT,
                 $COLUMN_USER_PROFILE_PIC_PATH TEXT
             )
@@ -86,7 +88,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
             )
         """
 
-        // Script para crear la tabla de unidades (NUEVO)
+        // Script para crear la tabla de unidades
         private const val SQL_CREATE_UNITS_TABLE = """
             CREATE TABLE $TABLE_UNITS (
                 $COLUMN_UNIT_ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -108,6 +110,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         private const val SQL_ADD_IMAGE_PATH_COLUMN = "ALTER TABLE $TABLE_PRODUCTS ADD COLUMN $COLUMN_IMAGE_PATH TEXT"
         private const val SQL_ADD_PROFILE_PIC_PATH_COLUMN = "ALTER TABLE $TABLE_USERS ADD COLUMN $COLUMN_USER_PROFILE_PIC_PATH TEXT"
         private const val SQL_ADD_UNIT_COLUMN = "ALTER TABLE $TABLE_PRODUCTS ADD COLUMN $COLUMN_UNIT TEXT NOT NULL DEFAULT 'lb'"
+        private const val SQL_ADD_PASSWORD_COLUMN = "ALTER TABLE $TABLE_USERS ADD COLUMN $COLUMN_USER_PASSWORD TEXT"
     }
 
     override fun onCreate(db: SQLiteDatabase) {
@@ -115,7 +118,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         db.execSQL(SQL_CREATE_PRODUCTS_TABLE)
         db.execSQL(SQL_CREATE_USERS_TABLE)
         db.execSQL(SQL_CREATE_FAVORITES_TABLE)
-        db.execSQL(SQL_CREATE_UNITS_TABLE) // Nueva tabla
+        db.execSQL(SQL_CREATE_UNITS_TABLE)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -175,6 +178,16 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
                     db.execSQL(SQL_DELETE_FAVORITES_TABLE)
                     db.execSQL(SQL_DELETE_UNITS_TABLE)
                     onCreate(db)
+                }
+            }
+            oldVersion < 9 -> {
+                // Actualización de versión 8 a 9: agregar columna password
+                try {
+                    db.execSQL(SQL_ADD_PASSWORD_COLUMN)
+                } catch (e: Exception) {
+                    // Si falla, recrear la tabla de usuarios
+                    db.execSQL(SQL_DELETE_USERS_TABLE)
+                    db.execSQL(SQL_CREATE_USERS_TABLE)
                 }
             }
             else -> {

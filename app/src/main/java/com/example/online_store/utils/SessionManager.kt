@@ -18,7 +18,7 @@ class SessionManager(context: Context) {
         private const val KEY_NAME = "name"
         private const val KEY_ROLE = "role"
         private const val KEY_PROFILE_PIC = "profilePic"
-        private const val KEY_PROFILE_PIC_PATH = "profilePicPath" // Nueva clave
+        private const val KEY_PROFILE_PIC_PATH = "profilePicPath"
     }
 
     /**
@@ -30,7 +30,7 @@ class SessionManager(context: Context) {
         editor.putString(KEY_NAME, user.name)
         editor.putString(KEY_ROLE, user.role)
         user.profilePicUrl?.let { editor.putString(KEY_PROFILE_PIC, it) }
-        user.profilePicPath?.let { editor.putString(KEY_PROFILE_PIC_PATH, it) } // Guardar imagen personalizada
+        user.profilePicPath?.let { editor.putString(KEY_PROFILE_PIC_PATH, it) }
         editor.apply()
     }
 
@@ -43,7 +43,7 @@ class SessionManager(context: Context) {
         user[KEY_NAME] = pref.getString(KEY_NAME, null)
         user[KEY_ROLE] = pref.getString(KEY_ROLE, null)
         user[KEY_PROFILE_PIC] = pref.getString(KEY_PROFILE_PIC, null)
-        user[KEY_PROFILE_PIC_PATH] = pref.getString(KEY_PROFILE_PIC_PATH, null) // Obtener imagen personalizada
+        user[KEY_PROFILE_PIC_PATH] = pref.getString(KEY_PROFILE_PIC_PATH, null)
         return user
     }
 
@@ -103,9 +103,13 @@ class SessionManager(context: Context) {
 
     /**
      * Actualiza la contraseña en la sesión
+     * Nota: No se almacena la contraseña en la sesión por seguridad,
+     * pero registramos la acción para mantener la coherencia de la aplicación
      */
     fun updateSessionPassword(password: String) {
-        editor.putString("password", password)
+        // No guardamos la contraseña en SharedPreferences por seguridad
+        // Solo registramos que se realizó una actualización
+        editor.putLong("password_updated_at", System.currentTimeMillis())
         editor.apply()
     }
 }
