@@ -62,7 +62,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
             android:name=".Activities.HomeActivity"
@@ -72,82 +72,82 @@
         <activity
             android:name=".Activities.LoginActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
             android:name=".Activities.ListActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
             android:name=".Activities.CartActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
             android:name=".Activities.RegisterActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
             android:name=".Activities.ProductFormActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
             android:name=".Activities.ProductAdminActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
             android:name=".Activities.ProfileActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
             android:name=".Activities.UserAdminActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
             android:name=".Activities.UserFormActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
             android:name=".Activities.MainContainerActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
             android:name=".Activities.ForgotPasswordActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
             android:name=".Activities.VerifyCodeActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
             android:name=".Activities.ResetPasswordActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
             android:name=".Activities.PaymentSuccessActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
             android:name=".Activities.UnitAdminActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
             android:name=".Activities.UnitFormActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
     </application>
 

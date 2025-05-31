@@ -1,115 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_gradient"
-    android:padding="24dp">
+    android:fillViewport="true">
 
-    <ImageView
-        android:id="@+id/iv_verification_icon"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="32dp"
-        android:contentDescription="@string/verification_icon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_usuario" />
-
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="@string/verificar_codigo"
-        android:textColor="@color/black"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_verification_icon" />
+        android:background="@drawable/background_gradient"
+        android:padding="24dp">
 
-    <TextView
-        android:id="@+id/tv_instructions"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/instrucciones_codigo"
-        android:textAlignment="center"
-        android:textColor="@color/gray"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+        <ImageView
+            android:id="@+id/iv_verification_icon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="32dp"
+            android:contentDescription="@string/verification_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_usuario" />
 
-    <EditText
-        android:id="@+id/edt_verification_code"
-        style="@style/EditTextRounded"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="32dp"
-        android:hint="@string/codigo_6_digitos"
-        android:imeOptions="actionDone"
-        android:inputType="number"
-        android:maxLength="6"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_instructions" />
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/verificar_codigo"
+            android:textColor="@color/black"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_verification_icon" />
 
-    <Button
-        android:id="@+id/btn_verificar_codigo"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="24dp"
-        android:backgroundTint="@color/green_mint"
-        android:text="@string/verificar_codigo"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_verification_code" />
+        <TextView
+            android:id="@+id/tv_instructions"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/instrucciones_codigo"
+            android:textAlignment="center"
+            android:textColor="@color/gray"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
-    <TextView
-        android:id="@+id/tv_tiempo_restante"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/reenviar_codigo_en"
-        android:textColor="@color/gray"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_verificar_codigo" />
+        <EditText
+            android:id="@+id/edt_verification_code"
+            style="@style/EditTextRounded"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="32dp"
+            android:hint="@string/codigo_6_digitos"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:maxLength="6"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_instructions" />
 
-    <Button
-        android:id="@+id/btn_reenviar_codigo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@android:color/transparent"
-        android:text="@string/reenviar_codigo"
-        android:textColor="@color/green_mint"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_tiempo_restante" />
+        <Button
+            android:id="@+id/btn_verificar_codigo"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/green_mint"
+            android:text="@string/verificar_codigo"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edt_verification_code" />
 
-    <TextView
-        android:id="@+id/tv_volver_atras"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="@string/volver_atras"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_reenviar_codigo" />
+        <TextView
+            android:id="@+id/tv_tiempo_restante"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/reenviar_codigo_en"
+            android:textColor="@color/gray"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_verificar_codigo" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/btn_reenviar_codigo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
+            android:text="@string/reenviar_codigo"
+            android:textColor="@color/green_mint"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_tiempo_restante" />
+
+        <TextView
+            android:id="@+id/tv_volver_atras"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/volver_atras"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_reenviar_codigo" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
+
+
