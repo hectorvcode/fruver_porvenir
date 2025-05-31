@@ -13,7 +13,8 @@ import com.example.online_store.model.Store
 class StoreAdapter(
     private var stores: List<Store>,
     private val onStoreClickListener: (Store) -> Unit,
-    private val onMapButtonClickListener: (Store) -> Unit
+    private val onMapButtonClickListener: (Store) -> Unit,
+    private val onDetailsButtonClickListener: (Store) -> Unit // Nueva función para el botón de detalles
 ) : RecyclerView.Adapter<StoreAdapter.StoreViewHolder>() {
 
     class StoreViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -22,6 +23,7 @@ class StoreAdapter(
         val tvStoreAddress: TextView = itemView.findViewById(R.id.tv_store_address)
         val tvStoreDistance: TextView = itemView.findViewById(R.id.tv_store_distance)
         val btnViewOnMap: Button = itemView.findViewById(R.id.btn_view_on_map)
+        val btnViewDetails: Button = itemView.findViewById(R.id.btn_view_details) // Nuevo botón
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoreViewHolder {
@@ -50,9 +52,14 @@ class StoreAdapter(
             onStoreClickListener(store)
         }
 
-        // Asegúrate de que este botón esté funcionando correctamente
+        // Botón para ver en el mapa
         holder.btnViewOnMap.setOnClickListener {
             onMapButtonClickListener(store)
+        }
+
+        // Nuevo botón para ver detalles
+        holder.btnViewDetails.setOnClickListener {
+            onDetailsButtonClickListener(store)
         }
     }
 

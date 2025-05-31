@@ -78,12 +78,16 @@ class StoresMapFragment : Fragment(), OnMapReadyCallback {
         storeAdapter = StoreAdapter(
             stores = emptyList(),
             onStoreClickListener = { store ->
-                // Mostrar detalles de la tienda (podría implementarse en otro fragmento)
+                // Mantener la funcionalidad existente para mostrar detalles cuando se toca la tarjeta
                 showStoreDetails(store)
             },
             onMapButtonClickListener = { store ->
                 // Centrar el mapa en esta tienda
                 centerMapOnStore(store)
+            },
+            onDetailsButtonClickListener = { store ->
+                // Nueva funcionalidad: mostrar detalles cuando se presiona el botón
+                showStoreDetails(store)
             }
         )
 

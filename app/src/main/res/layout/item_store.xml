@@ -15,23 +15,26 @@
 
         <ImageView
             android:id="@+id/iv_store_image"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="92dp"
+            android:layout_height="82dp"
             android:contentDescription="@string/store_image"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.882"
             tools:src="@drawable/app_logo" />
 
         <TextView
             android:id="@+id/tv_store_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:textSize="16sp"
             android:textStyle="bold"
+            android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/iv_store_image"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Fruver Porvenir - Sede Principal" />
 
@@ -39,36 +42,74 @@
             android:id="@+id/tv_store_address"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
+            android:textAlignment="center"
             app:layout_constraintStart_toEndOf="@+id/iv_store_image"
             app:layout_constraintTop_toBottomOf="@+id/tv_store_name"
             tools:text="Calle 80 #20-45, Bogotá" />
 
+        <!-- LinearLayout para contener ambos botones -->
         <TextView
             android:id="@+id/tv_store_distance"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
             android:textSize="12sp"
             android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textAlignment="center"
             app:layout_constraintStart_toEndOf="@+id/iv_store_image"
             app:layout_constraintTop_toBottomOf="@+id/tv_store_address"
             tools:text="A 2.5 km de distancia" />
 
-        <Button
-            android:id="@+id/btn_view_on_map"
+        <LinearLayout
+            android:id="@+id/ll_buttons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:backgroundTint="@color/green_mint"
-            android:text="@string/view_on_map"
-            android:textSize="12sp"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_store_address" />
+            app:layout_constraintHorizontal_bias="0.51"
+
+            app:layout_constraintStart_toEndOf="@+id/iv_store_image"
+            app:layout_constraintTop_toBottomOf="@+id/tv_store_distance"
+            app:layout_constraintVertical_bias="1.0">
+
+            <Button
+                android:id="@+id/btn_view_on_map"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="4dp"
+                android:backgroundTint="@color/green_mint"
+                android:minWidth="80dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:text="@string/view_on_map"
+                android:textAllCaps="false"
+                android:textSize="11sp"
+                app:cornerRadius="8dp" />
+
+            <Button
+                android:id="@+id/btn_view_details"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:backgroundTint="@android:color/transparent"
+                android:minWidth="80dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:text="@string/ver_detalles"
+                android:textAllCaps="false"
+                android:textColor="@color/green_mint"
+                android:textSize="11sp"
+                app:cornerRadius="8dp"
+                app:strokeColor="@color/green_mint"
+                app:strokeWidth="1dp" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

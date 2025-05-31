@@ -194,4 +194,8 @@
     <string name="orden_numero_formato">#%1$s</string>
     <string name="procesando_pago">Procesando pago...</string>
     <string name="pago_procesado">Pago procesado exitosamente</string>
+
+    <!-- Strings para botón de detalles de tienda -->
+    <string name="ver_detalles">Ver Detalles</string>
+    <string name="detalles_tienda">Detalles de la tienda</string>
 </resources>

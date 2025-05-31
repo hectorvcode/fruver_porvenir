@@ -190,9 +190,12 @@
     <string name="entrega">Entrega</string>
     <string name="mensaje_entrega_24_48">Tus productos serán entregados en las próximas 24-48 horas.</string>
     <string name="seguir_comprando">Seguir Comprando</string>
-    <string name="ver_mis_pedidos">Ver mis pedidos</string>
     <string name="gracias_preferencia">¡Gracias por elegir Fruver Porvenir!\nTe mantendremos informado sobre el estado de tu pedido.</string>
     <string name="orden_numero_formato">#%1$s</string>
     <string name="procesando_pago">Procesando pago...</string>
     <string name="pago_procesado">Pago procesado exitosamente</string>
+
+    <!-- Strings para botón de detalles de tienda -->
+    <string name="ver_detalles">Ver Detalles</string>
+    <string name="detalles_tienda">Detalles de la tienda</string>
 </resources>
