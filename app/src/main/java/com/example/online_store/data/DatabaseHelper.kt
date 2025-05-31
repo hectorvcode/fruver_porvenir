@@ -11,7 +11,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
 
     companion object {
         private const val DATABASE_NAME = "online_store.db"
-        private const val DATABASE_VERSION = 6 // Incrementado para la nueva columna de imagen de perfil
+        private const val DATABASE_VERSION = 7 // Incrementado para la nueva columna de unidad
 
         // Tabla Productos
         const val TABLE_PRODUCTS = "products"
@@ -19,6 +19,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         const val COLUMN_NAME = "name"
         const val COLUMN_PRICE = "price"
         const val COLUMN_CATEGORY = "category"
+        const val COLUMN_UNIT = "unit" // Nueva columna
         const val COLUMN_IMAGE_RESOURCE = "image_resource"
         const val COLUMN_IMAGE_PATH = "image_path"
         const val COLUMN_DESCRIPTION = "description"
@@ -30,7 +31,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         const val COLUMN_USER_NAME = "name"
         const val COLUMN_USER_ROLE = "role"
         const val COLUMN_USER_PROFILE_PIC = "profile_pic_url"
-        const val COLUMN_USER_PROFILE_PIC_PATH = "profile_pic_path" // Nueva columna
+        const val COLUMN_USER_PROFILE_PIC_PATH = "profile_pic_path"
 
         // Tabla Favoritos
         const val TABLE_FAVORITES = "favorites"
@@ -39,20 +40,21 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         const val COLUMN_FAVORITE_PRODUCT_ID = "product_id"
         const val COLUMN_FAVORITE_DATE_ADDED = "date_added"
 
-        // Script para crear la tabla de productos
+        // Script para crear la tabla de productos (actualizado)
         private const val SQL_CREATE_PRODUCTS_TABLE = """
             CREATE TABLE $TABLE_PRODUCTS (
                 $COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT,
                 $COLUMN_NAME TEXT NOT NULL,
                 $COLUMN_PRICE REAL NOT NULL,
                 $COLUMN_CATEGORY TEXT NOT NULL,
+                $COLUMN_UNIT TEXT NOT NULL DEFAULT 'lb',
                 $COLUMN_IMAGE_RESOURCE INTEGER,
                 $COLUMN_IMAGE_PATH TEXT,
                 $COLUMN_DESCRIPTION TEXT
             )
         """
 
-        // Script para crear la tabla de usuarios (actualizado)
+        // Script para crear la tabla de usuarios
         private const val SQL_CREATE_USERS_TABLE = """
             CREATE TABLE $TABLE_USERS (
                 $COLUMN_USER_ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -83,6 +85,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         // Scripts para agregar nuevas columnas
         private const val SQL_ADD_IMAGE_PATH_COLUMN = "ALTER TABLE $TABLE_PRODUCTS ADD COLUMN $COLUMN_IMAGE_PATH TEXT"
         private const val SQL_ADD_PROFILE_PIC_PATH_COLUMN = "ALTER TABLE $TABLE_USERS ADD COLUMN $COLUMN_USER_PROFILE_PIC_PATH TEXT"
+        private const val SQL_ADD_UNIT_COLUMN = "ALTER TABLE $TABLE_PRODUCTS ADD COLUMN $COLUMN_UNIT TEXT NOT NULL DEFAULT 'lb'"
     }
 
     override fun onCreate(db: SQLiteDatabase) {
@@ -126,6 +129,16 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
                     // Si falla, recrear la tabla de usuarios
                     db.execSQL(SQL_DELETE_USERS_TABLE)
                     db.execSQL(SQL_CREATE_USERS_TABLE)
+                }
+            }
+            oldVersion < 7 -> {
+                // Actualización de versión 6 a 7: agregar columna unit
+                try {
+                    db.execSQL(SQL_ADD_UNIT_COLUMN)
+                } catch (e: Exception) {
+                    // Si falla, recrear la tabla de productos
+                    db.execSQL(SQL_DELETE_PRODUCTS_TABLE)
+                    db.execSQL(SQL_CREATE_PRODUCTS_TABLE)
                 }
             }
             else -> {

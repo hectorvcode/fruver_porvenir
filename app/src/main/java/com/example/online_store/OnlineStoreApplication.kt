@@ -32,12 +32,13 @@ class OnlineStoreApplication : Application() {
         val products = productDao.getAllProducts()
 
         if (products.isEmpty()) {
-            // Si no hay productos, añadir solo dos productos predeterminados
+            // Si no hay productos, añadir productos predeterminados con diferentes unidades
             val defaultProducts = listOf(
                 Product(
                     name = "Banano",
                     price = 1500.0,
                     category = "Frutas",
+                    unit = "lb",
                     imageResource = R.drawable.banano,
                     description = "Banano fresco por libra"
                 ),
@@ -45,8 +46,25 @@ class OnlineStoreApplication : Application() {
                     name = "Naranja",
                     price = 2500.0,
                     category = "Frutas",
+                    unit = "lb",
                     imageResource = R.drawable.naranja,
                     description = "Naranja dulce por libra"
+                ),
+                Product(
+                    name = "Agua Mineral",
+                    price = 1200.0,
+                    category = "Bebidas",
+                    unit = "litro",
+                    imageResource = null,
+                    description = "Agua mineral natural"
+                ),
+                Product(
+                    name = "Jugo de Naranja",
+                    price = 3500.0,
+                    category = "Bebidas",
+                    unit = "unidad",
+                    imageResource = null,
+                    description = "Jugo de naranja natural 500ml"
                 )
             )
 

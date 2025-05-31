@@ -160,7 +160,8 @@ class ProductDetailFragment : Fragment() {
         // Mostrar los datos del producto
         product?.let {
             tvProductTitle.text = it.name
-            tvProductPrice.text = "${currencyFormat.format(it.price)}/lb"
+            // Usar la unidad dinámica del producto
+            tvProductPrice.text = "${currencyFormat.format(it.price)}/${it.unit}"
             tvProductCategory.text = "Categoría: ${it.category}"
 
             // Mostrar descripción si existe
@@ -229,9 +230,16 @@ class ProductDetailFragment : Fragment() {
     private fun addToCart() {
         product?.let {
             cartManager.addToCart(it, quantity)
+
+            // Mensaje personalizado según la unidad
+            val unitDisplay = when (it.unit) {
+                "unidad" -> if (quantity == 1) "unidad" else "unidades"
+                else -> "${it.unit}${if (quantity > 1) "s" else ""}"
+            }
+
             Toast.makeText(
                 requireContext(),
-                "${quantity} ${it.name}(s) añadido al carrito",
+                "${quantity} ${unitDisplay} de ${it.name} añadido al carrito",
                 Toast.LENGTH_SHORT
             ).show()
             // Volver a la lista de productos

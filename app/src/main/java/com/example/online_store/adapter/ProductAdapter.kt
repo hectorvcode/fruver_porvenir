@@ -10,12 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.online_store.R
 import com.example.online_store.model.Product
 import com.example.online_store.utils.ImageUtils
+import java.text.NumberFormat
+import java.util.Locale
 
 class ProductAdapter(
     private var products: List<Product>,
     private val onEditClickListener: (Product) -> Unit,
     private val onDeleteClickListener: (Product) -> Unit
 ) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+
+    private val currencyFormat = NumberFormat.getCurrencyInstance(Locale("es", "CO"))
 
     class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ivProduct: ImageView = itemView.findViewById(R.id.iv_product)
@@ -37,7 +41,8 @@ class ProductAdapter(
 
         // Configurar los datos del producto en la vista
         holder.tvProductName.text = product.name
-        holder.tvProductPrice.text = "$${product.price}/lb"
+        // Usar la unidad dinámica del producto
+        holder.tvProductPrice.text = "${currencyFormat.format(product.price)}/${product.unit}"
         holder.tvProductCategory.text = "Categoría: ${product.category}"
 
         // Configurar la imagen del producto

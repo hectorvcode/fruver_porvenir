@@ -54,6 +54,7 @@
     <string name="gestion_de_producto">Gestión de Producto</string>
     <string name="nombre_del_producto">Nombre del producto</string>
     <string name="precio_por_libra">Precio por libra</string>
+    <string name="precio_por_unidad">Precio por unidad</string>
     <string name="categor_a">Categoría:</string>
     <string name="descripcion_opcional">Descripción (opcional)</string>
     <string name="guardar">Guardar</string>
@@ -98,6 +99,17 @@
     <string name="call_store">Llamar</string>
     <string name="stores">Tiendas</string>
     <string name="todos">Todos</string>
+
+    <!-- Strings para unidades de medida -->
+    <string name="unidad_medida">Unidad de medida</string>
+    <string name="libra">lb</string>
+    <string name="kilogramo">kg</string>
+    <string name="unidad">unidad</string>
+    <string name="litro">litro</string>
+    <string name="gramo">gramo</string>
+    <string name="onza">onza</string>
+    <string name="caja">caja</string>
+    <string name="paquete">paquete</string>
 
     <!-- Strings para manejo de imágenes -->
     <string name="tomar_foto">Tomar Foto</string>

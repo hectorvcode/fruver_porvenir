@@ -82,6 +82,7 @@ class FavoriteDao(context: Context) {
 
     /**
      * Obtiene todos los productos favoritos de un usuario
+     * ACTUALIZADO: Ahora incluye la columna unit
      */
     fun getFavoriteProducts(userId: String): List<Product> {
         val favoritesList = mutableListOf<Product>()
@@ -203,13 +204,15 @@ class FavoriteDao(context: Context) {
     }
 
     /**
-     * Convierte un cursor a un objeto Product (usando la lógica del ProductDao)
+     * Convierte un cursor a un objeto Product
+     * ACTUALIZADO: Ahora incluye la columna unit
      */
     private fun cursorToProduct(cursor: Cursor): Product {
         val idIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_ID)
         val nameIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_NAME)
         val priceIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_PRICE)
         val categoryIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_CATEGORY)
+        val unitIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_UNIT) // Nueva columna
         val imageResourceIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_IMAGE_RESOURCE)
         val imagePathIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_IMAGE_PATH)
         val descriptionIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_DESCRIPTION)
@@ -218,6 +221,7 @@ class FavoriteDao(context: Context) {
         val name = if (nameIndex >= 0) cursor.getString(nameIndex) else ""
         val price = if (priceIndex >= 0) cursor.getDouble(priceIndex) else 0.0
         val category = if (categoryIndex >= 0) cursor.getString(categoryIndex) else ""
+        val unit = if (unitIndex >= 0) cursor.getString(unitIndex) else "lb" // Valor por defecto
         val imageResource = if (imageResourceIndex >= 0 && !cursor.isNull(imageResourceIndex))
             cursor.getInt(imageResourceIndex) else null
         val imagePath = if (imagePathIndex >= 0 && !cursor.isNull(imagePathIndex))
@@ -229,6 +233,7 @@ class FavoriteDao(context: Context) {
             name = name,
             price = price,
             category = category,
+            unit = unit, // Nueva propiedad
             imageResource = imageResource,
             imagePath = imagePath,
             description = description

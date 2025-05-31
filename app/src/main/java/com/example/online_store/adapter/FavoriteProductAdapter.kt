@@ -45,7 +45,8 @@ class FavoriteProductAdapter(
 
         // Configurar datos del producto
         holder.tvProductName.text = product.name
-        holder.tvProductPrice.text = currencyFormat.format(product.price)
+        // Usar la unidad dinámica del producto
+        holder.tvProductPrice.text = "${currencyFormat.format(product.price)}/${product.unit}"
         holder.tvProductCategory.text = product.category
 
         // Configurar imagen del producto
@@ -74,9 +75,16 @@ class FavoriteProductAdapter(
 
         holder.ibAddToCart.setOnClickListener {
             cartManager.addToCart(product, 1)
+
+            // Mensaje personalizado según la unidad
+            val unitDisplay = when (product.unit) {
+                "unidad" -> "unidad"
+                else -> product.unit
+            }
+
             Toast.makeText(
                 holder.itemView.context,
-                "${product.name} añadido al carrito",
+                "1 ${unitDisplay} de ${product.name} añadido al carrito",
                 Toast.LENGTH_SHORT
             ).show()
         }

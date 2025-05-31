@@ -18,6 +18,8 @@ import com.example.online_store.model.Product
 import com.example.online_store.utils.CartManager
 import com.example.online_store.utils.FavoritesManager
 import com.example.online_store.utils.ImageUtils
+import java.text.NumberFormat
+import java.util.Locale
 
 class ProductListAdapter(
     private var products: List<Product>,
@@ -28,6 +30,7 @@ class ProductListAdapter(
 
     // Mapa para guardar las cantidades seleccionadas por producto
     private val quantityMap = mutableMapOf<Int, Int>()
+    private val currencyFormat = NumberFormat.getCurrencyInstance(Locale("es", "CO"))
 
     init {
         // Inicializar todas las cantidades a 1
@@ -60,7 +63,8 @@ class ProductListAdapter(
 
         // Configurar los datos del producto en la vista
         holder.tvProductName.text = product.name
-        holder.tvProductPrice.text = "$${product.price}/lb"
+        // Usar la unidad dinámica del producto
+        holder.tvProductPrice.text = "${currencyFormat.format(product.price)}/${product.unit}"
         holder.tvProductCategory.text = "Categoría: ${product.category}"
         holder.etQuantity.setText(quantity.toString())
 
@@ -133,9 +137,16 @@ class ProductListAdapter(
         holder.ibAddToCart.setOnClickListener {
             val quantity = quantityMap[product.id] ?: 1
             cartManager.addToCart(product, quantity)
+
+            // Mensaje personalizado según la unidad
+            val unitDisplay = when (product.unit) {
+                "unidad" -> if (quantity == 1) "unidad" else "unidades"
+                else -> "${product.unit}${if (quantity > 1) "s" else ""}"
+            }
+
             Toast.makeText(
                 holder.itemView.context,
-                "${quantity} ${product.name} añadido al carrito",
+                "${quantity} ${unitDisplay} de ${product.name} añadido al carrito",
                 Toast.LENGTH_SHORT
             ).show()
         }

@@ -49,11 +49,12 @@ class CartAdapter(
 
         // Configurar vistas con datos del producto
         holder.tvProductName.text = product.name
-        holder.tvProductPrice.text = "${currencyFormat.format(product.price)}/lb"
+        // Usar la unidad dinámica del producto
+        holder.tvProductPrice.text = "${currencyFormat.format(product.price)}/${product.unit}"
         holder.etQuantity.setText(cartItem.quantity.toString())
         holder.tvSubtotal.text = currencyFormat.format(cartItem.getSubtotal())
 
-        // Establecer imagen del producto (aquí está el cambio importante)
+        // Establecer imagen del producto
         loadProductImage(product, holder.ivProductImage)
 
         // Configurar listeners para controles de cantidad

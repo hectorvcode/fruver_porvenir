@@ -9,6 +9,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.MenuItem
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.RadioButton
@@ -36,6 +38,7 @@ class ProductFormActivity : AppCompatActivity() {
     private lateinit var btnTakePhoto: Button
     private lateinit var etNombre: TextInputEditText
     private lateinit var etPrecio: TextInputEditText
+    private lateinit var actUnidad: AutoCompleteTextView // Nuevo campo
     private lateinit var rgCategoria: RadioGroup
     private lateinit var etDescripcion: TextInputEditText
     private lateinit var btnGuardar: Button
@@ -71,6 +74,9 @@ class ProductFormActivity : AppCompatActivity() {
         // Configurar Activity Result Launchers
         setupActivityResultLaunchers()
 
+        // Configurar el selector de unidades
+        setupUnitSelector()
+
         // Verificar si estamos en modo edición
         checkEditMode()
 
@@ -84,10 +90,21 @@ class ProductFormActivity : AppCompatActivity() {
         btnTakePhoto = findViewById(R.id.btn_take_photo)
         etNombre = findViewById(R.id.et_nombre)
         etPrecio = findViewById(R.id.et_precio)
+        actUnidad = findViewById(R.id.act_unidad) // Nueva vista
         rgCategoria = findViewById(R.id.rg_categoria)
         etDescripcion = findViewById(R.id.et_descripcion)
         btnGuardar = findViewById(R.id.btn_guardar)
         btnCancelar = findViewById(R.id.btn_cancelar)
+    }
+
+    private fun setupUnitSelector() {
+        // Configurar el adaptador para el selector de unidades
+        val units = Product.AVAILABLE_UNITS
+        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, units)
+        actUnidad.setAdapter(adapter)
+
+        // Establecer unidad por defecto
+        actUnidad.setText("lb", false)
     }
 
     private fun setupActivityResultLaunchers() {
@@ -287,6 +304,7 @@ class ProductFormActivity : AppCompatActivity() {
             // Llenar el formulario con los datos del producto
             etNombre.setText(it.name)
             etPrecio.setText(it.price.toString())
+            actUnidad.setText(it.unit, false) // Establecer la unidad
             etDescripcion.setText(it.description)
 
             // Establecer la imagen
@@ -330,6 +348,7 @@ class ProductFormActivity : AppCompatActivity() {
         // Obtener los valores del formulario
         val nombre = etNombre.text.toString().trim()
         val precio = etPrecio.text.toString().toDoubleOrNull() ?: 0.0
+        val unidad = actUnidad.text.toString().trim().ifEmpty { "lb" } // Nueva línea
 
         // Obtener la categoría seleccionada
         val categoriaId = rgCategoria.checkedRadioButtonId
@@ -344,6 +363,7 @@ class ProductFormActivity : AppCompatActivity() {
             name = nombre,
             price = precio,
             category = categoria,
+            unit = unidad, // Nueva propiedad
             imageResource = null, // Ya no usamos imágenes predeterminadas
             imagePath = currentImagePath, // Solo imágenes personalizadas
             description = descripcion
@@ -393,6 +413,13 @@ class ProductFormActivity : AppCompatActivity() {
                 etPrecio.error = "Ingrese un precio válido"
                 isValid = false
             }
+        }
+
+        // Validar unidad
+        val unidad = actUnidad.text.toString().trim()
+        if (unidad.isEmpty()) {
+            actUnidad.error = "Seleccione una unidad de medida"
+            isValid = false
         }
 
         return isValid

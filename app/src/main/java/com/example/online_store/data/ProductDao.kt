@@ -24,8 +24,9 @@ class ProductDao(context: Context) {
             put(DatabaseHelper.COLUMN_NAME, product.name)
             put(DatabaseHelper.COLUMN_PRICE, product.price)
             put(DatabaseHelper.COLUMN_CATEGORY, product.category)
+            put(DatabaseHelper.COLUMN_UNIT, product.unit) // Nueva columna
             product.imageResource?.let { put(DatabaseHelper.COLUMN_IMAGE_RESOURCE, it) }
-            put(DatabaseHelper.COLUMN_IMAGE_PATH, product.imagePath) // Nueva columna
+            put(DatabaseHelper.COLUMN_IMAGE_PATH, product.imagePath)
             put(DatabaseHelper.COLUMN_DESCRIPTION, product.description)
         }
 
@@ -132,8 +133,9 @@ class ProductDao(context: Context) {
             put(DatabaseHelper.COLUMN_NAME, product.name)
             put(DatabaseHelper.COLUMN_PRICE, product.price)
             put(DatabaseHelper.COLUMN_CATEGORY, product.category)
+            put(DatabaseHelper.COLUMN_UNIT, product.unit) // Nueva columna
             product.imageResource?.let { put(DatabaseHelper.COLUMN_IMAGE_RESOURCE, it) }
-            put(DatabaseHelper.COLUMN_IMAGE_PATH, product.imagePath) // Nueva columna
+            put(DatabaseHelper.COLUMN_IMAGE_PATH, product.imagePath)
             put(DatabaseHelper.COLUMN_DESCRIPTION, product.description)
         }
 
@@ -194,14 +196,16 @@ class ProductDao(context: Context) {
         val nameIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_NAME)
         val priceIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_PRICE)
         val categoryIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_CATEGORY)
+        val unitIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_UNIT) // Nueva columna
         val imageResourceIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_IMAGE_RESOURCE)
-        val imagePathIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_IMAGE_PATH) // Nueva columna
+        val imagePathIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_IMAGE_PATH)
         val descriptionIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_DESCRIPTION)
 
         val id = if (idIndex >= 0) cursor.getInt(idIndex) else 0
         val name = if (nameIndex >= 0) cursor.getString(nameIndex) else ""
         val price = if (priceIndex >= 0) cursor.getDouble(priceIndex) else 0.0
         val category = if (categoryIndex >= 0) cursor.getString(categoryIndex) else ""
+        val unit = if (unitIndex >= 0) cursor.getString(unitIndex) else "lb" // Valor por defecto
         val imageResource = if (imageResourceIndex >= 0 && !cursor.isNull(imageResourceIndex))
             cursor.getInt(imageResourceIndex) else null
         val imagePath = if (imagePathIndex >= 0 && !cursor.isNull(imagePathIndex))
@@ -213,8 +217,9 @@ class ProductDao(context: Context) {
             name = name,
             price = price,
             category = category,
+            unit = unit, // Nueva propiedad
             imageResource = imageResource,
-            imagePath = imagePath, // Nueva propiedad
+            imagePath = imagePath,
             description = description
         )
     }
