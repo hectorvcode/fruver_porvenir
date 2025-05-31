@@ -2,8 +2,10 @@ package com.example.online_store
 
 import android.app.Application
 import com.example.online_store.data.ProductDao
+import com.example.online_store.data.UnitDao
 import com.example.online_store.data.UserDao
 import com.example.online_store.model.Product
+import com.example.online_store.model.Unit
 import com.example.online_store.model.User
 
 class OnlineStoreApplication : Application() {
@@ -19,13 +21,30 @@ class OnlineStoreApplication : Application() {
         // Crear una única instancia de los DAOs
         val productDao = ProductDao(this)
         val userDao = UserDao(this)
+        val unitDao = UnitDao(this) // Nuevo DAO
 
-        // Inicializar productos y usuarios con los mismos DAOs
+        // Inicializar datos con los mismos DAOs
+        initializeUnits(unitDao) // Inicializar unidades primero
         initializeProducts(productDao)
         initializeUsers(userDao)
 
         // Cerrar la base de datos al final
         productDao.closeDatabase()
+        unitDao.closeDatabase() // Cerrar nuevo DAO
+    }
+
+    private fun initializeUnits(unitDao: UnitDao) {
+        val units = unitDao.getAllUnits()
+
+        if (units.isEmpty()) {
+            // Si no hay unidades, añadir unidades predeterminadas
+            val defaultUnits = Unit.getDefaultUnits()
+
+            // Insertar las unidades predeterminadas
+            for (unit in defaultUnits) {
+                unitDao.insertUnit(unit)
+            }
+        }
     }
 
     private fun initializeProducts(productDao: ProductDao) {
@@ -54,7 +73,7 @@ class OnlineStoreApplication : Application() {
                     name = "Agua Mineral",
                     price = 1200.0,
                     category = "Bebidas",
-                    unit = "litro",
+                    unit = "l",
                     imageResource = null,
                     description = "Agua mineral natural"
                 ),

@@ -11,7 +11,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
 
     companion object {
         private const val DATABASE_NAME = "online_store.db"
-        private const val DATABASE_VERSION = 7 // Incrementado para la nueva columna de unidad
+        private const val DATABASE_VERSION = 8 // Incrementado para la nueva tabla de unidades
 
         // Tabla Productos
         const val TABLE_PRODUCTS = "products"
@@ -19,7 +19,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         const val COLUMN_NAME = "name"
         const val COLUMN_PRICE = "price"
         const val COLUMN_CATEGORY = "category"
-        const val COLUMN_UNIT = "unit" // Nueva columna
+        const val COLUMN_UNIT = "unit"
         const val COLUMN_IMAGE_RESOURCE = "image_resource"
         const val COLUMN_IMAGE_PATH = "image_path"
         const val COLUMN_DESCRIPTION = "description"
@@ -40,7 +40,16 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         const val COLUMN_FAVORITE_PRODUCT_ID = "product_id"
         const val COLUMN_FAVORITE_DATE_ADDED = "date_added"
 
-        // Script para crear la tabla de productos (actualizado)
+        // Tabla Unidades (NUEVA)
+        const val TABLE_UNITS = "units"
+        const val COLUMN_UNIT_ID = "id"
+        const val COLUMN_UNIT_NAME = "name"
+        const val COLUMN_UNIT_ABBREVIATION = "abbreviation"
+        const val COLUMN_UNIT_CATEGORY = "category"
+        const val COLUMN_UNIT_CONVERSION_FACTOR = "conversion_factor"
+        const val COLUMN_UNIT_IS_ACTIVE = "is_active"
+
+        // Script para crear la tabla de productos
         private const val SQL_CREATE_PRODUCTS_TABLE = """
             CREATE TABLE $TABLE_PRODUCTS (
                 $COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -77,10 +86,23 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
             )
         """
 
+        // Script para crear la tabla de unidades (NUEVO)
+        private const val SQL_CREATE_UNITS_TABLE = """
+            CREATE TABLE $TABLE_UNITS (
+                $COLUMN_UNIT_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                $COLUMN_UNIT_NAME TEXT NOT NULL,
+                $COLUMN_UNIT_ABBREVIATION TEXT NOT NULL UNIQUE,
+                $COLUMN_UNIT_CATEGORY TEXT NOT NULL,
+                $COLUMN_UNIT_CONVERSION_FACTOR REAL NOT NULL DEFAULT 1.0,
+                $COLUMN_UNIT_IS_ACTIVE INTEGER NOT NULL DEFAULT 1
+            )
+        """
+
         // Scripts para eliminar las tablas
         private const val SQL_DELETE_PRODUCTS_TABLE = "DROP TABLE IF EXISTS $TABLE_PRODUCTS"
         private const val SQL_DELETE_USERS_TABLE = "DROP TABLE IF EXISTS $TABLE_USERS"
         private const val SQL_DELETE_FAVORITES_TABLE = "DROP TABLE IF EXISTS $TABLE_FAVORITES"
+        private const val SQL_DELETE_UNITS_TABLE = "DROP TABLE IF EXISTS $TABLE_UNITS"
 
         // Scripts para agregar nuevas columnas
         private const val SQL_ADD_IMAGE_PATH_COLUMN = "ALTER TABLE $TABLE_PRODUCTS ADD COLUMN $COLUMN_IMAGE_PATH TEXT"
@@ -93,6 +115,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         db.execSQL(SQL_CREATE_PRODUCTS_TABLE)
         db.execSQL(SQL_CREATE_USERS_TABLE)
         db.execSQL(SQL_CREATE_FAVORITES_TABLE)
+        db.execSQL(SQL_CREATE_UNITS_TABLE) // Nueva tabla
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -141,11 +164,25 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
                     db.execSQL(SQL_CREATE_PRODUCTS_TABLE)
                 }
             }
+            oldVersion < 8 -> {
+                // Actualización de versión 7 a 8: crear tabla de unidades
+                try {
+                    db.execSQL(SQL_CREATE_UNITS_TABLE)
+                } catch (e: Exception) {
+                    // Si falla, recrear toda la base de datos
+                    db.execSQL(SQL_DELETE_PRODUCTS_TABLE)
+                    db.execSQL(SQL_DELETE_USERS_TABLE)
+                    db.execSQL(SQL_DELETE_FAVORITES_TABLE)
+                    db.execSQL(SQL_DELETE_UNITS_TABLE)
+                    onCreate(db)
+                }
+            }
             else -> {
                 // Para versiones futuras, recrear todo
                 db.execSQL(SQL_DELETE_PRODUCTS_TABLE)
                 db.execSQL(SQL_DELETE_USERS_TABLE)
                 db.execSQL(SQL_DELETE_FAVORITES_TABLE)
+                db.execSQL(SQL_DELETE_UNITS_TABLE)
                 onCreate(db)
             }
         }
@@ -156,6 +193,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         db.execSQL(SQL_DELETE_PRODUCTS_TABLE)
         db.execSQL(SQL_DELETE_USERS_TABLE)
         db.execSQL(SQL_DELETE_FAVORITES_TABLE)
+        db.execSQL(SQL_DELETE_UNITS_TABLE)
         onCreate(db)
     }
 }

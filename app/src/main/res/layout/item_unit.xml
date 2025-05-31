@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- Icono de categoría -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_category_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:cardBackgroundColor="@color/green_mint"
+            app:cardCornerRadius="25dp"
+            app:cardElevation="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_category_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/icono_categoria"
+                android:src="@drawable/baseline_straighten_24"
+                android:tint="@color/white" />
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Nombre de la unidad -->
+        <TextView
+            android:id="@+id/tv_unit_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/iv_toggle_active"
+            app:layout_constraintStart_toEndOf="@+id/cv_category_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Kilogramo" />
+
+        <!-- Abreviación -->
+        <TextView
+            android:id="@+id/tv_unit_abbreviation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/green_mint"
+            app:layout_constraintEnd_toStartOf="@+id/iv_toggle_active"
+            app:layout_constraintStart_toEndOf="@+id/cv_category_icon"
+            app:layout_constraintTop_toBottomOf="@+id/tv_unit_name"
+            tools:text="kg" />
+
+        <!-- Categoría -->
+        <TextView
+            android:id="@+id/tv_unit_category"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toStartOf="@+id/iv_toggle_active"
+            app:layout_constraintStart_toEndOf="@+id/cv_category_icon"
+            app:layout_constraintTop_toBottomOf="@+id/tv_unit_abbreviation"
+            tools:text="Categoría: Peso" />
+
+        <!-- Factor de conversión (se muestra solo si es diferente de 1.0) -->
+        <TextView
+            android:id="@+id/tv_unit_conversion_factor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:textSize="12sp"
+            android:textColor="@color/gray"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@+id/iv_toggle_active"
+            app:layout_constraintStart_toEndOf="@+id/cv_category_icon"
+            app:layout_constraintTop_toBottomOf="@+id/tv_unit_category"
+            tools:text="Factor: 2.2046"
+            tools:visibility="visible" />
+
+        <!-- Estado de la unidad -->
+        <TextView
+            android:id="@+id/tv_unit_status"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/iv_toggle_active"
+            app:layout_constraintStart_toEndOf="@+id/cv_category_icon"
+            app:layout_constraintTop_toBottomOf="@+id/tv_unit_conversion_factor"
+            tools:text="Activa" />
+
+        <!-- Botones de acción -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- Botón toggle activar/desactivar -->
+            <ImageView
+                android:id="@+id/iv_toggle_active"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/toggle_estado"
+                android:padding="8dp"
+                android:src="@drawable/baseline_visibility_24"
+                app:tint="@color/green_mint" />
+
+            <!-- Botón editar -->
+            <ImageView
+                android:id="@+id/iv_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/editar"
+                android:padding="8dp"
+                android:src="@android:drawable/ic_menu_edit"
+                app:tint="@color/gray" />
+
+            <!-- Botón eliminar -->
+            <ImageView
+                android:id="@+id/iv_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/eliminar"
+                android:padding="8dp"
+                android:src="@android:drawable/ic_menu_delete"
+                app:tint="@color/red_heart" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

@@ -14,6 +14,7 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import com.example.online_store.Activities.LoginActivity
 import com.example.online_store.Activities.ProductAdminActivity
+import com.example.online_store.Activities.UnitAdminActivity // Nueva importación
 import com.example.online_store.Activities.UserAdminActivity
 import com.example.online_store.R
 import com.example.online_store.utils.ImageUtils
@@ -28,6 +29,7 @@ class ProfileFragment : Fragment() {
     private lateinit var switchAdminMode: SwitchCompat
     private lateinit var tvAdminModeExplanation: TextView
     private lateinit var btnAdminProducts: Button
+    private lateinit var btnAdminUnits: Button // Nuevo botón
     private lateinit var btnLogout: Button
     private lateinit var sessionManager: SessionManager
     private lateinit var btnAdminUsers: Button
@@ -57,6 +59,7 @@ class ProfileFragment : Fragment() {
         switchAdminMode = view.findViewById(R.id.switch_admin_mode)
         tvAdminModeExplanation = view.findViewById(R.id.tv_admin_mode_explanation)
         btnAdminProducts = view.findViewById(R.id.btn_admin_products)
+        btnAdminUnits = view.findViewById(R.id.btn_admin_units) // Nueva vista
         btnLogout = view.findViewById(R.id.btn_logout)
         btnAdminUsers = view.findViewById(R.id.btn_admin_users)
 
@@ -66,7 +69,7 @@ class ProfileFragment : Fragment() {
         // Configurar switch de modo administrador
         setupAdminModeSwitch()
 
-        // Configurar botón de administración de productos
+        // Configurar botones de administración
         setupAdminButtons()
 
         // Configurar botón de cierre de sesión
@@ -149,6 +152,7 @@ class ProfileFragment : Fragment() {
     private fun updateAdminFeaturesVisibility() {
         // Mostrar u ocultar los botones de administración según el rol
         btnAdminProducts.visibility = if (isAdmin) View.VISIBLE else View.GONE
+        btnAdminUnits.visibility = if (isAdmin) View.VISIBLE else View.GONE // Nueva línea
         btnAdminUsers.visibility = if (isAdmin) View.VISIBLE else View.GONE
     }
 
@@ -184,6 +188,11 @@ class ProfileFragment : Fragment() {
         btnAdminProducts.setOnClickListener {
             // Navegar a la pantalla de administración de productos
             startActivity(Intent(requireContext(), ProductAdminActivity::class.java))
+        }
+
+        btnAdminUnits.setOnClickListener {
+            // Navegar a la pantalla de administración de unidades
+            startActivity(Intent(requireContext(), UnitAdminActivity::class.java))
         }
 
         btnAdminUsers.setOnClickListener {

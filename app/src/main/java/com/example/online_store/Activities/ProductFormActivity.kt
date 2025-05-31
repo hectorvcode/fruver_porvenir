@@ -26,6 +26,7 @@ import com.example.online_store.data.ProductDao
 import com.example.online_store.model.Product
 import com.example.online_store.utils.ImageUtils
 import com.example.online_store.utils.RoleHelper
+import com.example.online_store.data.UnitDao
 import com.google.android.material.textfield.TextInputEditText
 import java.io.File
 
@@ -98,13 +99,30 @@ class ProductFormActivity : AppCompatActivity() {
     }
 
     private fun setupUnitSelector() {
+        // Obtener unidades activas de la base de datos
+        val unitDao = UnitDao(this)
+        val activeUnits = unitDao.getActiveUnitAbbreviations()
+
+        // Si no hay unidades activas, usar las predeterminadas como respaldo
+        val units = if (activeUnits.isNotEmpty()) {
+            activeUnits
+        } else {
+            Product.AVAILABLE_UNITS
+        }
+
         // Configurar el adaptador para el selector de unidades
-        val units = Product.AVAILABLE_UNITS
         val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, units)
         actUnidad.setAdapter(adapter)
 
         // Establecer unidad por defecto
-        actUnidad.setText("lb", false)
+        if (units.contains("lb")) {
+            actUnidad.setText("lb", false)
+        } else if (units.isNotEmpty()) {
+            actUnidad.setText(units[0], false)
+        }
+
+        // Cerrar el DAO
+        unitDao.closeDatabase()
     }
 
     private fun setupActivityResultLaunchers() {
@@ -424,6 +442,11 @@ class ProductFormActivity : AppCompatActivity() {
 
         return isValid
     }
+
+    // ACTUALIZACIÓN PARCIAL PARA ProductFormActivity.kt
+// Solo mostrar la parte que cambia en el método setupUnitSelector()
+
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {

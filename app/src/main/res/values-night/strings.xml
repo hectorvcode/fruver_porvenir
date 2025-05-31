@@ -210,4 +210,36 @@
     <!-- Strings para botón de detalles de tienda -->
     <string name="ver_detalles">Ver Detalles</string>
     <string name="detalles_tienda">Detalles de la tienda</string>
+
+    <!-- Strings para administración de unidades -->
+    <string name="administrar_unidades">Administrar Unidades</string>
+    <string name="agregar_unidad">Agregar unidad</string>
+    <string name="gestion_de_unidad">Gestión de Unidad</string>
+    <string name="nombre_unidad">Nombre de la unidad</string>
+    <string name="abreviacion_unidad">Abreviación</string>
+    <string name="categoria_unidad">Categoría</string>
+    <string name="factor_conversion">Factor de conversión</string>
+    <string name="unidad_activa">Unidad activa</string>
+    <string name="icono_unidad">Ícono de unidad</string>
+    <string name="icono_categoria">Ícono de categoría</string>
+    <string name="toggle_estado">Cambiar estado</string>
+    <string name="categoria">Categoría</string>
+    <string name="estado">Estado</string>
+
+    <!-- Textos de ayuda -->
+    <string name="help_abreviacion">Máximo 10 caracteres (ej: kg, lb, ml)</string>
+    <string name="help_factor_conversion">Factor para convertir a unidad base de la categoría</string>
+    <string name="help_unidad_activa">Solo las unidades activas aparecen al crear productos</string>
+
+    <!-- Categorías de unidades -->
+    <string name="peso">Peso</string>
+    <string name="volumen">Volumen</string>
+    <string name="cantidad">Cantidad</string>
+
+    <!-- Estados -->
+    <string name="activa">Activa</string>
+    <string name="inactiva">Inactiva</string>
+    <string name="todas">Todas</string>
+    <string name="activas">Activas</string>
+    <string name="inactivas">Inactivas</string>
 </resources>
